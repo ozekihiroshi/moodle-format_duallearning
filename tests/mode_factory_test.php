@@ -29,6 +29,7 @@ use format_duallearning\local\mode\factory;
 /**
  * Verifies the separate presentation rules for both learning modes.
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(factory::class)]
 final class mode_factory_test extends \advanced_testcase {
     /**
      * Guided mode includes the question forum.

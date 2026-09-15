@@ -56,8 +56,14 @@ class overview {
             'next' => $next,
             'nextlabel' => get_string('next', 'format_duallearning'),
             'explanation' => get_string('explanation', 'format_duallearning'),
-            'progress' => !$teacher && $items['manualtotal'] ? get_string('progress', 'format_duallearning',
-                (object) ['done' => $items['manualdone'], 'total' => $items['manualtotal']]) : '',
+            'progress' => !$teacher && $items['manualtotal'] ? get_string(
+                'progress',
+                'format_duallearning',
+                (object) [
+                    'done' => $items['manualdone'],
+                    'total' => $items['manualtotal'],
+                ]
+            ) : '',
             'progresshint' => get_string('progresshint', 'format_duallearning'),
             'shortcutheading' => get_string('shortcutheading', 'format_duallearning'),
             'hasshortcuts' => !empty($items['shortcuts']),
