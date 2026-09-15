@@ -1,22 +1,29 @@
 # Marketplace screenshots
 
-Store the final PNG files in this directory using these names:
+The final application screenshots were captured from Moodle 5.2 using the standard Boost theme. The two learner images use Moodle's student-role preview, and the settings image uses the teacher course-settings page. Browser chrome, account names, notifications, and the localhost address are excluded.
 
-1. `01-self-paced-learner.png`
-   - Course 24, learner view, self-paced mode.
-   - Show the Dual Learning overview and the beginning of the standard course sections.
-2. `02-teacher-guided-learner.png`
-   - Course 23, learner view, teacher-guided mode.
-   - Show current work, the visible question route, assignment state, and the beginning of the sections.
-3. `03-learning-mode-setting.png`
-   - Teacher course-settings view.
-   - Show Course format = Dual Learning and the Learning mode selector.
+## 1. Self-paced learner overview
 
-Capture guidelines:
+![Self-paced learner overview](01-self-paced-learner.png)
 
-- Use a desktop viewport near 1440 x 900 and save as PNG.
-- Capture the Moodle content area without browser chrome or the `localhost` address.
-- Do not include passwords, email addresses, personal names, notifications, or unrelated browser tabs.
-- Keep the Moodle interface in English for Marketplace images.
-- Use meaningful sample activity names and avoid test-only identifiers.
-- Verify that text is readable at the saved size and that no menu obscures the feature.
+File: `01-self-paced-learner.png`
+
+Caption: The next visible incomplete activity, completion progress, work links, and assignment state appear above the standard course sections.
+
+## 2. Teacher-guided learner overview
+
+![Teacher-guided learner overview](02-teacher-guided-learner.png)
+
+File: `02-teacher-guided-learner.png`
+
+Caption: The same course format adds the visible question forum to current work while retaining progress, next activity, and assignment state.
+
+## 3. Learning mode setting
+
+![Learning mode setting](03-learning-mode-setting.png)
+
+File: `03-learning-mode-setting.png`
+
+Caption: Teachers select Dual Learning and switch the learning mode in Moodle's standard course settings.
+
+The screenshots intentionally use the Japanese translation and Japanese demonstration content to show that the bundled localisation works. The Marketplace description, reviewer guide, and source documentation remain available in English.

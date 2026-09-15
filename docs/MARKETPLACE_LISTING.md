@@ -80,6 +80,6 @@ Initial Marketplace candidate. Adds a single Topics-based course format with swi
 
 ## Screenshot captions
 
-1. **Self-paced learner overview** — The next visible incomplete activity, completion progress, work links, and assignment state appear above the standard course sections.
-2. **Teacher-guided learner overview** — The same course highlights current work, visible question forums, and submission destinations without changing learning records.
-3. **Learning mode setting** — Teachers switch between Self paced and Teacher guided in the standard course settings page.
+1. **Self-paced learner overview** — The Japanese-localised learner view shows the next visible incomplete activity, completion progress, work links, and assignment state above the standard course sections.
+2. **Teacher-guided learner overview** — The Japanese-localised learner view shows the same course highlighting current work, a visible question forum, and the submission destination without changing learning records.
+3. **Learning mode setting** — The Japanese-localised teacher view shows Dual Learning and its learning-mode selector in the standard course settings page.

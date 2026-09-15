@@ -15,6 +15,19 @@ other standard Moodle learning data.
 - The format inherits Moodle's Topics format and works with standard Moodle themes.
 - The plugin stores no additional personal data.
 
+## Screenshots
+
+### Self-paced learner overview
+
+![Self-paced learner overview](docs/screenshots/01-self-paced-learner.png)
+
+### Teacher-guided learner overview
+
+![Teacher-guided learner overview](docs/screenshots/02-teacher-guided-learner.png)
+
+### Learning mode setting
+
+![Learning mode setting](docs/screenshots/03-learning-mode-setting.png)
 ## Requirements
 
 - Moodle 5.2 (`2026042000`)
