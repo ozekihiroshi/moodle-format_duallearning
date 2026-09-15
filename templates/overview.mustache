@@ -1,0 +1,18 @@
+<section class="card mb-4" aria-labelledby="dual-learning-heading">
+    <div class="card-body">
+        <h2 id="dual-learning-heading">{{heading}}</h2>
+        {{#hasshortcuts}}
+        <h3>{{shortcutheading}}</h3>
+        <ul>{{#shortcuts}}<li><a href="{{url}}">{{{name}}}</a></li>{{/shortcuts}}</ul>
+        {{#lablaunchhint}}<p class="small">{{lablaunchhint}}</p>{{/lablaunchhint}}
+        {{/hasshortcuts}}
+        {{#progress}}<p><strong>{{progress}}</strong><br>{{progresshint}}</p>{{/progress}}
+        {{#next}}<p><a class="btn btn-primary text-wrap" href="{{url}}">{{nextlabel}}：{{{name}}}</a></p>
+        <p class="small">{{explanation}}</p>{{/next}}
+        {{#finished}}<p>{{finishedlabel}}</p>{{/finished}}
+        <h3>{{assignmentheading}}</h3>
+        <ul>{{#assignments}}<li class="mb-3"><a href="{{url}}">{{{name}}}</a><br>
+            <strong>{{status}}</strong><br>{{deadlinehint}} {{deadline}}</li>{{/assignments}}</ul>
+        <p class="small">{{timezone}} · {{statehint}}</p>
+    </div>
+</section>
