@@ -53,6 +53,12 @@ Copyright 2026 Hiroshi Ozeki.
 
 This plugin is licensed under the GNU GPL v3 or later. See `LICENSE`.
 
+## Documentation
+
+- [Reviewer guide](docs/REVIEWER_GUIDE.md)
+- [Marketplace listing text](docs/MARKETPLACE_LISTING.md)
+- [Marketplace screenshots](docs/screenshots/README.md)
+
 ## Development and support
 
 - Source: https://github.com/ozekihiroshi/moodle-format_duallearning
