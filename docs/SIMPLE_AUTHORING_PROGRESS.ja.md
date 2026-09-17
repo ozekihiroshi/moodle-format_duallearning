@@ -1,5 +1,7 @@
 # シンプルな作成支援：初回改修記録
 
+追記：この記録の未実施項目は[自動検査・画面操作結果](SIMPLE_AUTHORING_UI_RESULTS.ja.md)で更新した。PHPUnit・PHPDoc等のCI、教師画面操作、標準バックアップ復元まで確認済み。以下は初回時点の履歴。
+
 2026-09-18。開発ブランチ `codex/simple-authoring`。申請済みalpha1のZIP・バージョンは変更しない。
 
 ## 実装した範囲
