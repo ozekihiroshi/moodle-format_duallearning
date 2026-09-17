@@ -25,6 +25,16 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($displaysection === null) {
+    $context = context_course::instance($course->id);
+    if ($PAGE->user_is_editing() && has_all_capabilities([
+        'moodle/course:update',
+        'moodle/course:sectionvisibility',
+    ], $context)) {
+        $url = new moodle_url('/course/format/duallearning/author.php', ['courseid' => $course->id]);
+        echo html_writer::div(html_writer::link($url, get_string('startunit', 'format_duallearning'), [
+            'class' => 'btn btn-secondary',
+        ]), 'mb-3');
+    }
     $panel = \format_duallearning\local\overview::build($course, $USER->id);
     echo $OUTPUT->render_from_template('format_duallearning/overview', $panel);
 }

@@ -207,6 +207,14 @@ The format does not send that data to an external service.
 
 ## Documentation and support
 
+- [Simple authoring specification and first implementation scope (Japanese)](docs/SIMPLE_AUTHORING_SPEC.ja.md)
+
+Development work now includes an editing-only **Start a unit from an outline**
+entry. It uses the course's current learning mode and creates a hidden standard
+section from a title and editable learner-facing text. Replace the examples and
+add activities before showing the unit. This is an initial authoring aid, not a
+complete course builder or a change to the submitted alpha1 release package.
+
 Design documents for the next iteration (Japanese; not released features):
 
 - [Review and resumption feature inventory](docs/REVIEW_FEATURE_INVENTORY.ja.md)
