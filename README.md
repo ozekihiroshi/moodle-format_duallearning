@@ -17,8 +17,8 @@ records stay in the same course, so learners return to work they already know.
   guided mode, forums alongside assignment information.
 - **Keep progress understandable:** distinguish materials marked complete from
   assignment submission and published-grade status.
-- **Change the learning context without duplicating the course:** select a
-  mode in the normal course settings and retain the existing learning history.
+- **Keep a consistent learning context:** select the course learning mode and retain
+  materials and learning history for continued study and revision.
 
 Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
 The current release, [0.1.0-alpha1](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha1),
@@ -45,23 +45,28 @@ next step is to compare authoring effort and learner navigation using one
 small unit before selecting new functionality. See the
 [design direction and evaluation plan (Japanese)](docs/PRODUCT_DIRECTION.ja.md).
 
-## Why two modes in one course?
+## Choose the learning design before authoring
 
-A course may begin with a teacher present to explain tasks and answer questions,
-then remain open for learners to revisit at their own pace. Maintaining separate
-courses for these stages can mean duplicating materials and separating the
-learning history.
+Authors normally choose **Teacher guided** or **Self paced** when they begin
+building the course and keep that direction throughout its use. The design
+choice determines which explanations, feedback, and guidance the course must
+provide and which support a teacher will supply.
 
-Dual Learning makes this transition a presentation choice within one course.
-Teachers keep Moodle's normal activities and Topics structure; learners get an
-overview that brings the next activity, work links, and assignment state into
-one place.
+Preparation and revision belong in both designs. A teacher-guided course can
+support pre-class preparation and post-class review without switching modes.
+Independent review of a lesson is not the same as a complete self-study course.
+Completed materials and existing learning records remain useful for revisiting
+and practising what has been learned.
 
-For example, a workshop can start in **Teacher guided** mode with a discussion
-forum, practice activities, and an assignment. After the workshop, the teacher
-can select **Self paced** and revise the course instructions for independent
-review. Learners continue with the same activities, submissions, and feedback.
-The teacher can switch back when another supported session is needed.
+Changing direction later is an exceptional redesign task. The current mode
+selector changes the overview; it cannot make materials educationally suitable
+for a different learning design. Planned change support will help authors
+identify settings to check and content that needs human review.
+
+The [learning-design specification (Japanese)](docs/LEARNING_DESIGN_SPEC.ja.md)
+defines the requirements for mode-specific authoring support, learner follow-up,
+preservation of preparation/revision paths, and exceptional design changes.
+These are requirements for future development, not claims about the current alpha.
 
 ## What the two modes do
 
