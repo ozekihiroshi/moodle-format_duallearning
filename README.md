@@ -1,6 +1,6 @@
 # Dual Learning course format
 
-**One Moodle course, from a teacher-guided class to independent study.**
+**Design for how learners are supported: by a teacher, or primarily by the course itself.**
 
 Dual Learning helps learners find where to continue, where to ask for help,
 and where to submit their work. It adds a focused overview above Moodle's
@@ -23,6 +23,27 @@ records stay in the same course, so learners return to work they already know.
 Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
 The current release, [0.1.0-alpha1](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha1),
 is an alpha for evaluation.
+
+## Design direction and current scope
+
+Teacher-guided and primarily self-paced courses ask different things of their
+materials. A teacher may explain, pace activities, and respond to difficulties
+in a class; an independent learner needs those directions, explanations, and
+recovery paths available in the course. Self-paced study can still include
+support staff, questions, and teacher assessment.
+
+Dual Learning's broader aim is to help course authors make these choices
+explicit, reducing their design burden and the ambiguity learners encounter.
+Switching modes and showing an overview are means to that end, not the whole
+purpose. Reusing a course does not automatically make its materials suitable
+for independent study.
+
+**The current alpha provides the learner overview and course-level mode switch.**
+Authoring guidance, readiness checks, and support for adapting teacher-led
+materials to self-study are design candidates, not implemented features. The
+next step is to compare authoring effort and learner navigation using one
+small unit before selecting new functionality. See the
+[design direction and evaluation plan (Japanese)](docs/PRODUCT_DIRECTION.ja.md).
 
 ## Why two modes in one course?
 
