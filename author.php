@@ -51,7 +51,12 @@ if ($data = $form->get_data()) {
         (int) $data->summary_editor['format']
     );
     $returnurl->set_anchor('section-' . $section->section);
-    redirect($returnurl, get_string('unitdraftcreated', 'format_duallearning'));
+    $editurl = new moodle_url('/course/editsection.php', ['id' => $section->id]);
+    $message = get_string('unitdraftcreated', 'format_duallearning') . ' ' . html_writer::link(
+        $editurl,
+        get_string('editunittext', 'format_duallearning')
+    );
+    redirect($returnurl, $message);
 }
 $form->set_data((object) [
     'summary_editor' => ['text' => \format_duallearning\local\unit_starter::summary($mode), 'format' => FORMAT_HTML],
