@@ -1,79 +1,195 @@
 # Dual Learning course format
 
-Dual Learning is a Moodle course format that lets a teacher switch one course between
-self-paced and teacher-guided presentation. The switch changes the course overview; it
-does not rewrite activities, completion records, submissions, grades, deadlines, or
-other standard Moodle learning data.
+**One Moodle course, from a teacher-guided class to independent study.**
 
-## Features
+Dual Learning helps learners find where to continue, where to ask for help,
+and where to submit their work. It adds a focused overview above Moodle's
+familiar Topics sections and lets teachers switch the course between
+**Teacher guided** and **Self paced** modes.
 
-- Self-paced mode points each learner to the first visible incomplete activity.
-- Teacher-guided mode adds visible question forums to the work links.
-- Both modes show visible Lab links and assignment status using standard Moodle state.
-- Course settings contain one explicit **Learning mode** selector.
-- English is the source language and a Japanese translation is included.
-- The format inherits Moodle's Topics format and works with standard Moodle themes.
-- The plugin stores no additional personal data.
+Use the course during a supported class, then keep it available for practice
+and revision afterwards. The materials, activities, submissions, and learning
+records stay in the same course, so learners return to work they already know.
+
+- **Give learners a clear starting point:** link to the first accessible,
+  incomplete activity with completion tracking enabled, in course order.
+- **Bring work and help closer together:** show external-tool links and, in
+  guided mode, forums alongside assignment information.
+- **Keep progress understandable:** distinguish materials marked complete from
+  assignment submission and published-grade status.
+- **Change the learning context without duplicating the course:** select a
+  mode in the normal course settings and retain the existing learning history.
+
+Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
+The current release, [0.1.0-alpha1](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha1),
+is an alpha for evaluation.
+
+## Why two modes in one course?
+
+A course may begin with a teacher present to explain tasks and answer questions,
+then remain open for learners to revisit at their own pace. Maintaining separate
+courses for these stages can mean duplicating materials and separating the
+learning history.
+
+Dual Learning makes this transition a presentation choice within one course.
+Teachers keep Moodle's normal activities and Topics structure; learners get an
+overview that brings the next activity, work links, and assignment state into
+one place.
+
+For example, a workshop can start in **Teacher guided** mode with a discussion
+forum, practice activities, and an assignment. After the workshop, the teacher
+can select **Self paced** and revise the course instructions for independent
+review. Learners continue with the same activities, submissions, and feedback.
+The teacher can switch back when another supported session is needed.
+
+## What the two modes do
+
+| | Self paced | Teacher guided |
+| --- | --- | --- |
+| Intended use | Independent study, practice, and revision | Teacher-supported lessons and workshops |
+| Overview emphasis | Review materials and continue your work | Current work and submissions |
+| Next activity | First accessible incomplete activity with completion tracking, in course order | The same learner-specific next-activity guidance |
+| Work links | Accessible external-tool / LTI activities, such as a Lab | The same external-tool links, plus accessible forums |
+| Assignment information | Submission state, published-grade status, and base deadline | The same information, with standard assignment links for teacher review |
+| Underlying course | Existing Topics sections, activities, and records | The same sections, activities, and records |
+
+The teacher chooses one **Learning mode** for the whole course. It is not a
+per-student mode selector. Both modes share the same overview foundation; the
+guided mode changes its heading and adds forum shortcuts. Forums remain normal
+course activities when the course is switched to self-paced mode.
+
+## What learners and teachers gain
+
+### A place to resume
+
+The next-activity link uses the learner's existing Moodle completion state and
+course order. Activities that Moodle makes unavailable to that learner are not
+offered as actions. Completed materials remain in the course for revision.
+Teachers control the sequence through normal course organisation and completion
+settings; this is a continuation aid, not an adaptive learning recommendation.
+
+### Reading, submitting, and being assessed are clearly separated
+
+The materials count shows manually marked completion for activities other than
+assignments. Assignment information is shown separately, including states such
+as not submitted, draft, submitted, resubmission required, and a published grade.
+
+A learner can therefore distinguish "I marked the reading complete" from "I
+submitted the assignment". Opening the standard assignment page gives access
+to submitted files, grades, and feedback. Teachers use the same assignment links
+to review work through Moodle's normal controls.
+
+### A familiar course, with less setup
+
+Dual Learning inherits Moodle's standard Topics format. The overview sits above
+the course sections rather than replacing them with a separate content system.
+It uses existing activities and learning records and stores no additional
+personal data.
+
+The format works with standard Moodle themes, including Boost. The separate
+Dual Learning theme is optional, and neither LessonMark nor a Python Lab is
+required. An external tool is linked when an accessible LTI activity is present;
+the format itself does not provide or manage the external service.
 
 ## Screenshots
 
+These examples use Boost with Japanese interface text and demonstration
+materials. The plugin includes English interface strings and a Japanese
+translation. English-language demonstration screenshots are planned as a
+separate documentation update; the current images are retained here.
+
 ### Self-paced learner overview
+
+The learner sees where to continue, materials marked complete, work links,
+and assignment information above the normal course sections.
 
 ![Self-paced learner overview](docs/screenshots/01-self-paced-learner.png)
 
 ### Teacher-guided learner overview
 
+Forum shortcuts bring the course's help and discussion channels alongside
+work links and submissions.
+
 ![Teacher-guided learner overview](docs/screenshots/02-teacher-guided-learner.png)
 
 ### Learning mode setting
 
+Teachers switch the whole course through one setting, without installing
+separate formats for the two modes.
+
 ![Learning mode setting](docs/screenshots/03-learning-mode-setting.png)
-## Requirements
 
-- Moodle 5.2 (`2026042000`)
-- The standard Topics course format
+## Requirements and installation
 
-No external service or JavaScript build step is required. Activities such as an LTI
-Lab are optional; when present and visible, the format includes their standard Moodle
-links.
+- Moodle 5.2 (`2026042000`).
+- Moodle's standard Topics course format (`format_topics`).
+- No external account, service, API key, or JavaScript build step is required
+  by the format itself.
 
-## Installation
+1. Download the installable ZIP from [GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
+2. Install through **Site administration > Plugins > Install plugins**, or place
+   the extracted `duallearning` directory in `course/format/duallearning`.
+3. Complete Moodle's standard plugin upgrade.
+4. Edit a course and select **Dual Learning** as its course format.
+5. Choose **Self paced** or **Teacher guided** under **Learning mode**, then save.
 
-Install the directory as `course/format/duallearning`, then complete Moodle's standard
-plugin upgrade. To use it, edit a course, select **Dual Learning** as the course format,
-and choose **Self paced** or **Teacher guided** under **Learning mode**.
+## Prepare a useful learner overview
 
-## Behaviour and limitations
+1. Arrange sections and activities in the order learners should follow.
+2. Enable course and activity completion tracking for activities that should
+   contribute to the next-activity link. Use manual completion for materials
+   learners should mark as reviewed.
+3. Add assignments using Moodle's usual submission and grading settings.
+4. For a guided course, add and clearly name a forum for questions. Guided work
+   links include accessible forum activities; the format does not distinguish
+   a question forum from other forum purposes or types.
+5. Optionally add LTI activities for practical work. Accessible LTI activities
+   appear as work links; no Python-specific LTI configuration is required by
+   this format's link selection.
+6. Check the course as a learner, including activity access restrictions.
 
-The overview is read-only. Moodle activities remain the source of truth for access
-restrictions, completion, submissions, grading, extensions, and calendar dates.
-Assignment deadlines shown in the overview are the base deadlines; learners should
-open the assignment for individual overrides and extensions. Group submission status
-is deliberately delegated to the standard assignment page.
+If no accessible activities have completion tracking enabled, the overview
+cannot provide a next-activity link. Moodle's course sections remain available.
 
-Switching learning mode does not change learning data. Switching away from this format
-uses Moodle's normal course-format migration behaviour; create a course backup before
-making structural changes to a production course.
+## Switching modes and interpreting the overview
+
+Changing **Learning mode** changes the overview. It does not copy activities or
+rewrite completion, submissions, grades, deadlines, groups, restrictions, or
+calendar events. It also does not rewrite course instructions: update any
+teacher-dependent directions when moving to independent study.
+
+The overview is read-only. Moodle activities remain authoritative for learning
+and assessment:
+
+- The materials count measures manual completion, not mastery or assignment
+  acceptance. It excludes assignments and automatically tracked activities.
+- Displayed deadlines are assignment base deadlines. Open the assignment to
+  check individual overrides and extensions.
+- Group submission details are delegated to the standard assignment page.
+- Published-grade status is a summary; grades and feedback are read on the
+  assignment page.
+
+Switching **Learning mode** within Dual Learning is different from changing
+**Course format** to another plugin. The latter uses Moodle's normal format
+migration; back up production courses before structural format changes.
 
 ## Privacy
 
-Dual Learning stores only its course-level format option. It reads existing Moodle data
-for the current request and does not store additional personal data.
+Dual Learning stores its course-level learning-mode option. It reads existing
+Moodle data for the current request and stores no additional personal data.
+The format does not send that data to an external service.
+
+## Documentation and support
+
+- [Reviewer guide and functional checks](docs/REVIEWER_GUIDE.md)
+- [Marketplace listing text](docs/MARKETPLACE_LISTING.md)
+- [Screenshot details](docs/screenshots/README.md)
+- [Change log](CHANGELOG.md)
+- [Source code](https://github.com/ozekihiroshi/moodle-format_duallearning)
+- [Issues](https://github.com/ozekihiroshi/moodle-format_duallearning/issues)
+- [Security policy](SECURITY.md)
 
 ## Licence
 
-Copyright 2026 Hiroshi Ozeki.
-
-This plugin is licensed under the GNU GPL v3 or later. See `LICENSE`.
-
-## Documentation
-
-- [Reviewer guide](docs/REVIEWER_GUIDE.md)
-- [Marketplace listing text](docs/MARKETPLACE_LISTING.md)
-- [Marketplace screenshots](docs/screenshots/README.md)
-
-## Development and support
-
-- Source: https://github.com/ozekihiroshi/moodle-format_duallearning
-- Issues: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
-- Security: https://github.com/ozekihiroshi/moodle-format_duallearning/security/policy
+Copyright 2026 Hiroshi Ozeki. Licensed under the GNU GPL v3 or later.
+See [LICENSE](LICENSE).
