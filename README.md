@@ -207,6 +207,12 @@ The format does not send that data to an external service.
 
 ## Documentation and support
 
+Design documents for the next iteration (Japanese; not released features):
+
+- [Review and resumption feature inventory](docs/REVIEW_FEATURE_INVENTORY.ja.md)
+- [Unit authoring support: detailed design](docs/AUTHORING_DESIGN.ja.md)
+
+
 - [Reviewer guide and functional checks](docs/REVIEWER_GUIDE.md)
 - [Marketplace listing text](docs/MARKETPLACE_LISTING.md)
 - [Screenshot details](docs/screenshots/README.md)
