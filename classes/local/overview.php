@@ -227,8 +227,40 @@ class overview {
             'reopened' => 'reopened',
             default => 'notsubmitted',
         };
+        if (self::has_returned_comments($assignment, $instance, $submission, $userid)) {
+            return 'commentsreturned';
+        }
         return self::has_published_grade($course, $assignment, $instance, $submission, $userid)
             ? 'graded' : $status;
+    }
+
+    /**
+     * Detect released comments for an ungraded individual submission.
+     *
+     * @param \assign $assignment Assignment API object.
+     * @param \stdClass $instance Assignment instance record.
+     * @param \stdClass|null $submission Current submission record.
+     * @param int $userid User identifier.
+     * @return bool Whether comments are available for the current attempt.
+     */
+    private static function has_returned_comments(
+        \assign $assignment,
+        \stdClass $instance,
+        ?\stdClass $submission,
+        int $userid
+    ): bool {
+        if ((int) $instance->grade !== 0 || !$submission || $submission->status !== 'submitted') {
+            return false;
+        }
+        if ($instance->markingworkflow
+                && $assignment->get_grading_status($userid) !== ASSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
+            return false;
+        }
+        // Pass the attempt explicitly: the default lookup can create a submission record.
+        $grade = $assignment->get_user_grade($userid, false, $submission->attemptnumber);
+        $comments = $assignment->get_feedback_plugin_by_type('comments');
+        return $grade && $comments && $comments->is_enabled() && $comments->is_visible()
+            && !$comments->is_empty($grade);
     }
 
     /**

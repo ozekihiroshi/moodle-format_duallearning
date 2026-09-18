@@ -52,4 +52,57 @@ final class overview_test extends \advanced_testcase {
         $html = $OUTPUT->render_from_template('format_duallearning/overview', $data);
         $this->assertStringContainsString($data['assignmentheading'], $html);
     }
+    /**
+     * Ungraded comments respect release, attempt, and plugin visibility.
+     */
+    public function test_ungraded_comments_returned(): void {
+        global $DB, $CFG;
+        require_once($CFG->dirroot . '/mod/assign/locallib.php');
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
+        $student = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
+        $instance = $this->getDataGenerator()->create_module('assign', [
+            'course' => $course->id, 'grade' => 0, 'assignfeedback_comments_enabled' => 1,
+        ]);
+        $cm = get_coursemodule_from_instance('assign', $instance->id);
+        $assignment = new \assign(\context_module::instance($cm->id), $cm, $course);
+        $this->setUser($student);
+        $before = $DB->count_records('assign_submission');
+        overview::build($course, $student->id);
+        $this->assertEquals($before, $DB->count_records('assign_submission'));
+        $submission = $assignment->get_user_submission($student->id, true);
+        $submission->status = 'submitted';
+        $DB->update_record('assign_submission', $submission);
+        $grade = $assignment->get_user_grade($student->id, true, 0);
+        $readstatus = fn() => overview::build($course, $student->id)['assignments'][0]['status'];
+        $submitted = get_string('submitted', 'format_duallearning');
+        $returned = get_string('commentsreturned', 'format_duallearning');
+        $this->assertSame($submitted, $readstatus());
+        $DB->insert_record('assignfeedback_comments', (object) [
+            'assignment' => $instance->id, 'grade' => $grade->id,
+            'commenttext' => 'Please compare the two calculations.', 'commentformat' => FORMAT_PLAIN,
+        ]);
+        $this->assertSame($returned, $readstatus());
+        $comments = $assignment->get_feedback_plugin_by_type('comments');
+        $comments->set_config('enabled', 0);
+        $this->assertSame($submitted, $readstatus());
+        $comments->set_config('enabled', 1);
+        $DB->set_field('assign', 'markingworkflow', 1, ['id' => $instance->id]);
+        $flags = $assignment->get_user_flags($student->id, true);
+        $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_INMARKING;
+        $DB->update_record('assign_user_flags', $flags);
+        $this->assertSame($submitted, $readstatus());
+        $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
+        $DB->update_record('assign_user_flags', $flags);
+        $this->assertSame($returned, $readstatus());
+        $submission->status = 'reopened';
+        $DB->update_record('assign_submission', $submission);
+        $this->assertSame(get_string('reopened', 'format_duallearning'), $readstatus());
+        $submission->status = 'submitted';
+        $submission->attemptnumber = 1;
+        $DB->update_record('assign_submission', $submission);
+        $this->assertSame($submitted, $readstatus());
+    }
 }

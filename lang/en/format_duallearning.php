@@ -41,6 +41,7 @@ $string['chooseunit'] = 'Choose the unit you want to work on.';
 $string['continueunit'] = 'Continue building a unit';
 $string['createunitdraft'] = 'Create hidden draft';
 $string['currentsection'] = 'Current section';
+$string['commentsreturned'] = 'Submitted; comments returned';
 $string['deadlinehint'] = 'Base deadline (check the assignment for individual extensions):';
 $string['draft'] = 'Draft (not submitted)';
 $string['editmaterial'] = 'Edit content/settings';
