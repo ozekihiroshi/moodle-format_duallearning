@@ -1,13 +1,13 @@
 # Moodle Marketplace listing
 
-Copy-ready metadata for the alpha5 update to the existing format_duallearning submission.
+Copy-ready metadata for the alpha6 update to the existing format_duallearning submission.
 
 ## Identity
 
 - Name: Dual Learning
 - Component: `format_duallearning`
 - Plugin type: Course format
-- Version: `0.1.0-alpha5` (`2026091803`)
+- Version: `0.1.0-alpha6` (`2026091900`)
 - Maturity: Alpha
 - Supported Moodle version: Moodle 5.2
 - Licence: GNU GPL v3 or later
@@ -46,18 +46,18 @@ The plugin stores its course-level learning-mode option. Author-created outlines
 - Source: https://github.com/ozekihiroshi/moodle-format_duallearning
 - Documentation: https://github.com/ozekihiroshi/moodle-format_duallearning#readme
 - Issues: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
-- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha5
+- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha6
 - Branch: main
-- Tag: v0.1.0-alpha5
+- Tag: v0.1.0-alpha6
 
 ## Version release notes
 
 Fix next-activity navigation in courses containing subsections.
 
-- Follow the displayed course order, including activities inside subsections, using Moodle's standard sorting API.
+- Follow the displayed course order in the overview, previous/next links and activity selector, including activities inside subsections.
 - Preserve completion, visibility, availability and deletion filtering.
 - Add regression coverage for moved subsections, restricted or hidden content and flat courses.
-- Add learner browser tests for both self-paced and teacher-guided modes.
+- Verify actual forward/backward navigation across subsections in both self-paced and teacher-guided modes.
 
 Moodle 5.2; Alpha maturity. No changes to course content, submissions, grades or completion records. Fixes GitHub issue #2.
 

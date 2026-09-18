@@ -6,7 +6,7 @@ Dual Learning supports authoring for a teacher-guided or primarily self-paced co
 
 ## Installation and upgrade
 
-Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091803 upgrades alpha1 and alpha2 through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
+Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091900 upgrades earlier alpha releases through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
 
 ## Authoring check
 
@@ -33,6 +33,10 @@ Standard activity settings and quiz question editing are not replaced. Assignmen
 
 ## Automated checks
 
-GitHub Actions checks Moodle 5.2 with PHP 8.3 and 8.4: lint, Code Checker and PHPDoc with zero warnings, plugin validation, savepoints, PHPUnit (14 tests), and reproducible ZIP generation. Tests cover draft creation, authorisation, cross-course section rejection, module permissions, and return routes after moving activities.
+GitHub Actions checks Moodle 5.2 with PHP 8.3 and 8.4: lint, Code Checker and PHPDoc with zero warnings, plugin validation, savepoints, PHPUnit (20 tests / 100 assertions), Chrome Behat (4 scenarios / 72 steps), and reproducible ZIP generation. Tests cover draft creation, authorisation, cross-course section rejection, module permissions, and return routes after moving activities.
 
 Workflow runs: https://github.com/ozekihiroshi/moodle-format_duallearning/actions
+
+## Subsection navigation check
+
+Create a subsection between two standard activities. As a learner, verify that the overview, previous/next links and activity selector follow displayed order in both learning modes. Test entry into and return from the subsection. Hidden/restricted content remains excluded. The replacement footer is used only when necessary; themes using Moodle's course index retain standard index navigation.

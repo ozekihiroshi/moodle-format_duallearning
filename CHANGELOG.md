@@ -1,5 +1,12 @@
 # Change log
 
+## 0.1.0-alpha6 - 2026-09-19
+
+- Fix previous/next links and the activity selector across subsection boundaries, completing issue #2.
+- Preserve visibility/access filtering and theme course-index behaviour without modifying Moodle core.
+- Add end-to-end forward/backward browser coverage in both learning modes.
+- Update review guidance and audit the implemented trial feedback against Issues.
+
 ## 0.1.0-alpha5 - 2026-09-18
 
 - Fix next-activity order in courses with subsections using Moodle display-order sorting (issue #2).
