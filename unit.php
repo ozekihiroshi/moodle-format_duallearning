@@ -96,18 +96,30 @@ if (!$section) {
         }
         echo html_writer::alist($rows, ['class' => 'list-unstyled']);
     }
-    echo html_writer::tag('p', get_string('unitactionshint', 'format_duallearning'));
+    echo $OUTPUT->heading(get_string('addmaterials', 'format_duallearning'), 4);
     $actions = \format_duallearning\local\unit_actions::build($course, $sectionid);
     foreach ($actions as $action) {
         $link = html_writer::link($action['url'], $action['title'], ['class' => 'btn btn-primary']);
-        echo html_writer::div($link . html_writer::tag('p', $action['hint'], ['class' => 'mt-2']), 'mb-4');
+        $help = html_writer::tag(
+            'details',
+            html_writer::tag('summary', get_string('actionhelp', 'format_duallearning', $action['title']))
+                . html_writer::tag('p', $action['hint'], ['class' => 'mt-2']),
+            ['class' => 'mt-2']
+        );
+        echo html_writer::div($link . $help, 'mb-3');
     }
     if (!$actions) {
         echo html_writer::tag('p', get_string('noaddactions', 'format_duallearning'));
     }
     $viewurl = new moodle_url('/course/section.php', ['id' => $sectionid]);
     echo html_writer::tag('p', html_writer::link($viewurl, get_string('viewunit', 'format_duallearning')));
-    echo html_writer::tag('p', get_string('unitreturnhint', 'format_duallearning'));
+    echo html_writer::tag(
+        'details',
+        html_writer::tag('summary', get_string('authoringhelp', 'format_duallearning'))
+            . html_writer::tag('p', get_string('unitactionshint', 'format_duallearning'), ['class' => 'mt-2'])
+            . html_writer::tag('p', get_string('unitreturnhint', 'format_duallearning')),
+        ['class' => 'mt-3']
+    );
 }
 $backurl = new moodle_url('/course/view.php', ['id' => $courseid]);
 $backlink = html_writer::link($backurl, get_string('backtocourse', 'format_duallearning'));

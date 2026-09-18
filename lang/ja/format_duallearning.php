@@ -22,14 +22,17 @@
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['actionhelp'] = '{$a}：操作のヒント';
 $string['addassign'] = '提出を受ける';
 $string['addassignhint'] = '文章を入力してもらうなら「提出タイプ」の「オンラインテキスト」、添付なら「ファイル提出」を選びます。締切の有無は「利用」、点数は「評点」で確認します。説明には提出するものと評価の観点を書きましょう。';
+$string['addmaterials'] = '教材を追加する';
 $string['addpage'] = '説明を加える';
 $string['addpagehint'] = '文章・画像・リンクを載せるページを作ります。単元の導入文を直す場合は「本文を編集する」を使います。';
 $string['addquiz'] = '練習問題を作る';
 $string['addquizhint'] = '「保存して表示する」→「問題を追加する」から問題と解説を作ります。再挑戦回数は「評点」、解説を見せる時期は「レビューオプション」で確認できます。公開前にプレビューで誤答したときの解説も確かめましょう。';
 $string['addsections'] = 'セクションを追加する';
 $string['assignmentheading'] = '提出物・提出と評価の状態';
+$string['authoringhelp'] = '保存と戻り方のヒント';
 $string['backtocourse'] = 'コースに戻る';
 $string['checkassignment'] = 'グループの提出状況を課題画面で確認';
 $string['chooseunit'] = '作業を続ける単元を選んでください。';

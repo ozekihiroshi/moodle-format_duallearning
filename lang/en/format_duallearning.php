@@ -22,14 +22,17 @@
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['actionhelp'] = 'How to: {$a}';
 $string['addassign'] = 'Collect submitted work';
 $string['addassignhint'] = 'Under Submission types, choose Online text for typed answers or File submissions for attachments. Check dates under Availability and marks under Grade. Explain what to submit and how it will be assessed.';
+$string['addmaterials'] = 'Add materials';
 $string['addpage'] = 'Add an explanation';
 $string['addpagehint'] = 'Create a page with text, images or links. To change the unit introduction, use Edit the unit text instead.';
 $string['addquiz'] = 'Add practice questions';
 $string['addquizhint'] = 'Choose Save and display, then Add question to create questions and feedback. Check repeat attempts under Grade and when feedback appears under Review options. Before showing the unit, preview a wrong answer to check the explanation.';
 $string['addsections'] = 'Add sections';
 $string['assignmentheading'] = 'Deliverables, submission and assessment';
+$string['authoringhelp'] = 'How saving and returning work';
 $string['backtocourse'] = 'Back to the course';
 $string['checkassignment'] = 'Open assignment to check group submission';
 $string['chooseunit'] = 'Choose the unit you want to work on.';
