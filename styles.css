@@ -1,0 +1,5 @@
+/* Replace core navigation only when the ordered, server-rendered alternative is present.
+   This also removes stale links from keyboard and screen-reader navigation without JavaScript. */
+body:has(.duallearning-activity-navigation) .activity-navigation {
+    display: none;
+}

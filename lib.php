@@ -50,6 +50,16 @@ class format_duallearning extends format_topics {
     }
 
     /**
+     * Correct activity links across subsection boundaries through the standard format footer.
+     *
+     * @return \renderable|null Ordered activity navigation when needed.
+     */
+    public function course_content_footer() {
+        global $PAGE;
+        return \format_duallearning\output\ordered_activity_navigation::for_page($PAGE);
+    }
+
+    /**
      * Return course format options.
      *
      * @param bool $foreditform Whether options are requested for the edit form.
