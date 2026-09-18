@@ -105,4 +105,94 @@ final class overview_test extends \advanced_testcase {
         $DB->update_record('assign_submission', $submission);
         $this->assertSame($submitted, $readstatus());
     }
+    /**
+     * Next activity follows moved subsections and keeps visibility restrictions.
+     */
+    public function test_next_activity_follows_subsections(): void {
+        global $DB, $CFG;
+        require_once($CFG->dirroot . '/course/lib.php');
+        require_once($CFG->libdir . '/completionlib.php');
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $CFG->enablecompletion = 1;
+        foreach (['path', 'guided'] as $mode) {
+            $course = $this->getDataGenerator()->create_course([
+                'format' => 'duallearning', 'learningmode' => $mode, 'enablecompletion' => 1,
+            ]);
+            $student = $this->getDataGenerator()->create_user();
+            $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
+            $page = fn($name, $section) => $this->getDataGenerator()->create_module('page', [
+                'course' => $course->id, 'name' => $name, 'section' => $section,
+                'completion' => COMPLETION_TRACKING_MANUAL,
+            ]);
+            $first = $page('First', 1);
+            $last = $page('Last', 1);
+            $suba = $this->getDataGenerator()->create_module('subsection', ['course' => $course->id, 'section' => 1]);
+            $subb = $this->getDataGenerator()->create_module('subsection', ['course' => $course->id, 'section' => 1]);
+            $modinfo = get_fast_modinfo($course);
+            $a = $page('Inside A', $modinfo->get_cm($suba->cmid)->get_delegated_section_info()->sectionnum);
+            $b = $page('Inside B', $modinfo->get_cm($subb->cmid)->get_delegated_section_info()->sectionnum);
+            $section = get_fast_modinfo($course)->get_section_info(1);
+            moveto_module(get_coursemodule_from_id('subsection', $suba->cmid), $section, $last->cmid);
+            moveto_module(get_coursemodule_from_id('subsection', $subb->cmid), $section, $last->cmid);
+            $this->setUser($student);
+            $next = fn() => overview::build($course, $student->id)['next']['name'];
+            $this->assertSame('First', $next());
+            $completion = new \completion_info($course);
+            $completion->update_state(get_fast_modinfo($course)->get_cm($first->cmid), COMPLETION_COMPLETE, $student->id);
+            $this->assertSame('Inside A', $next());
+            $this->setAdminUser();
+            moveto_module(get_coursemodule_from_id('subsection', $subb->cmid), $section, $suba->cmid);
+            $this->setUser($student);
+            $this->assertSame('Inside B', $next());
+            $completion->update_state(get_fast_modinfo($course)->get_cm($b->cmid), COMPLETION_COMPLETE, $student->id);
+            $this->assertSame('Inside A', $next());
+            $this->setAdminUser();
+            set_coursemodule_visible($suba->cmid, 0);
+            $this->setUser($student);
+            $this->assertSame('Last', $next());
+            $this->setAdminUser();
+            set_coursemodule_visible($suba->cmid, 1);
+            $DB->set_field('course_modules', 'availability', json_encode([
+                'op' => '&', 'c' => [['type' => 'date', 'd' => '>=', 't' => time() + 86400]], 'showc' => [false],
+            ]), ['id' => $suba->cmid]);
+            rebuild_course_cache($course->id, true);
+            $this->setUser($student);
+            $this->assertSame('Last', $next());
+            $DB->set_field('course_modules', 'availability', null, ['id' => $suba->cmid]);
+            $DB->set_field('course_modules', 'deletioninprogress', 1, ['id' => $a->cmid]);
+            rebuild_course_cache($course->id, true);
+            $this->assertSame('Last', $next());
+            $this->setAdminUser();
+        }
+    }
+
+    /**
+     * Flat courses keep completion-based navigation and the finished state.
+     */
+    public function test_flat_course_completion_order(): void {
+        global $CFG;
+        require_once($CFG->libdir . '/completionlib.php');
+        $this->resetAfterTest();
+        $CFG->enablecompletion = 1;
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning', 'enablecompletion' => 1]);
+        $student = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
+        $pages = [];
+        foreach (['Start', 'End'] as $name) {
+            $pages[] = $this->getDataGenerator()->create_module('page', [
+                'course' => $course->id, 'section' => 1, 'name' => $name, 'completion' => COMPLETION_TRACKING_MANUAL,
+            ]);
+        }
+        $this->setUser($student);
+        $completion = new \completion_info($course);
+        foreach ($pages as $page) {
+            $this->assertSame($page->name, overview::build($course, $student->id)['next']['name']);
+            $completion->update_state(get_fast_modinfo($course)->get_cm($page->cmid), COMPLETION_COMPLETE, $student->id);
+        }
+        $data = overview::build($course, $student->id);
+        $this->assertNull($data['next']);
+        $this->assertTrue($data['finished']);
+    }
 }

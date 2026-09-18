@@ -99,7 +99,11 @@ class overview {
             'manualtotal' => 0,
             'manualdone' => 0,
         ];
-        foreach (get_fast_modinfo($course, $userid)->get_cms() as $cm) {
+        $modinfo = get_fast_modinfo($course, $userid);
+        $cms = $modinfo->get_cms();
+        // Include delegated sections at their displayed position, not their storage position.
+        $modinfo->sort_cm_array($cms);
+        foreach ($cms as $cm) {
             if (!$cm->uservisible || !$cm->url || $cm->deletioninprogress) {
                 continue;
             }
