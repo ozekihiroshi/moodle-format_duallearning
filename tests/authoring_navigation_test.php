@@ -46,7 +46,7 @@ final class authoring_navigation_test extends \advanced_testcase {
         $this->assertEquals($cm->section, authoring_navigation::target($page)->get_param('sectionid'));
 
         $destination = get_fast_modinfo($course)->get_section_info(2);
-        moveto_module($cm, $destination);
+        \core_courseformat\formatactions::cm($course)->move_end_section($cm->id, $destination->id);
         $moved = get_fast_modinfo($course)->get_cm($activity->cmid);
         $page = new \moodle_page();
         $page->set_cm($moved, $course);
@@ -58,6 +58,8 @@ final class authoring_navigation_test extends \advanced_testcase {
         $sectionpage = new \moodle_page();
         $sectionpage->set_course($course);
         $sectionpage->set_url('/course/section.php', ['id' => $destination->id]);
+        $this->assertEquals($destination->id, authoring_navigation::target($sectionpage)->get_param('sectionid'));
+        $sectionpage->set_url('/course/modedit.php', ['course' => $course->id, 'section' => 2, 'add' => 'page']);
         $this->assertEquals($destination->id, authoring_navigation::target($sectionpage)->get_param('sectionid'));
     }
 

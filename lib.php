@@ -43,7 +43,8 @@ class format_duallearning extends format_topics {
         }
         return new \format_duallearning\output\authoring_return(
             $url,
-            in_array($PAGE->pagetype, ['course-modedit', 'course-editsection'])
+            $PAGE->url->compare(new moodle_url('/course/modedit.php'), URL_MATCH_BASE)
+                || $PAGE->url->compare(new moodle_url('/course/editsection.php'), URL_MATCH_BASE)
                 || $PAGE->url->compare(new moodle_url('/question/bank/editquestion/question.php'), URL_MATCH_BASE)
         );
     }

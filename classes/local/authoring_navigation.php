@@ -52,6 +52,11 @@ class authoring_navigation {
             $sectionid = (int) $page->url->get_param('id');
         } else if ($page->url->compare(new \moodle_url('/course/modedit.php'), URL_MATCH_BASE)) {
             $sectionid = (int) $page->url->get_param('sectionid');
+            if (!$sectionid && $page->url->get_param('section') !== null) {
+                // Core normalises new-activity URLs to a section number.
+                $section = get_fast_modinfo($course)->get_section_info((int) $page->url->get_param('section'), IGNORE_MISSING);
+                $sectionid = $section ? (int) $section->id : 0;
+            }
         }
         if (!$sectionid) {
             return null;

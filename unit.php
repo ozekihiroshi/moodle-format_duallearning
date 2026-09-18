@@ -82,7 +82,8 @@ if (!$section) {
         foreach ($items as $item) {
             $name = $item['name'];
             $links = [];
-            foreach (['viewurl' => 'viewmaterial', 'editurl' => 'editmaterial', 'questionsurl' => 'editquestions'] as $key => $label) {
+            $labels = ['viewurl' => 'viewmaterial', 'editurl' => 'editmaterial', 'questionsurl' => 'editquestions'];
+            foreach ($labels as $key => $label) {
                 if ($item[$key]) {
                     $text = get_string($label, 'format_duallearning');
                     $links[] = html_writer::link($item[$key], $text, ['aria-label' => $text . ': ' . strip_tags($name)]);
