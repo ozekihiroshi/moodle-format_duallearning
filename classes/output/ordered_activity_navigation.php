@@ -23,7 +23,7 @@ namespace format_duallearning\output;
  * @copyright 2026 Hiroshi Ozeki
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class activity_navigation extends \core_course\output\activity_navigation {
+class ordered_activity_navigation extends \core_course\output\activity_navigation {
     /**
      * Replace navigation only where core's activity order differs from the course display.
      *

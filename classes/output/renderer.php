@@ -31,10 +31,10 @@ class renderer extends \format_topics\output\renderer {
     /**
      * Render subsection-aware links using standard Moodle link and selector components.
      *
-     * @param activity_navigation $navigation Ordered activity navigation.
+     * @param ordered_activity_navigation $navigation Ordered activity navigation.
      * @return string HTML.
      */
-    protected function render_activity_navigation(activity_navigation $navigation): string {
+    protected function render_ordered_activity_navigation(ordered_activity_navigation $navigation): string {
         return $this->render_from_template(
             'format_duallearning/activity_navigation',
             $navigation->export_for_template($this)

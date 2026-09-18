@@ -16,7 +16,7 @@
 
 namespace format_duallearning;
 
-use format_duallearning\output\activity_navigation;
+use format_duallearning\output\ordered_activity_navigation;
 
 /**
  * Regression coverage for activity links across subsection boundaries.
@@ -25,7 +25,7 @@ use format_duallearning\output\activity_navigation;
  * @copyright 2026 Hiroshi Ozeki
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#[\PHPUnit\Framework\Attributes\CoversClass(activity_navigation::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(ordered_activity_navigation::class)]
 final class activity_navigation_test extends \advanced_testcase {
     /**
      * Build a page with a theme that displays activity navigation.
@@ -69,7 +69,7 @@ final class activity_navigation_test extends \advanced_testcase {
         $this->setUser($student);
         $ordered = [$first, $inside, $second, $last];
         foreach ($ordered as $position => $activity) {
-            $nav = activity_navigation::for_page($this->page($course, $activity->cmid));
+            $nav = ordered_activity_navigation::for_page($this->page($course, $activity->cmid));
             $this->assertNotNull($nav);
             if ($position === 0) {
                 $this->assertNull($nav->prevlink);
@@ -83,7 +83,7 @@ final class activity_navigation_test extends \advanced_testcase {
             }
         }
         $page = $this->page($course, $inside->cmid);
-        $nav = activity_navigation::for_page($page);
+        $nav = ordered_activity_navigation::for_page($page);
         $data = $nav->export_for_template($OUTPUT);
         $this->assertSame('duallearning-prev-activity-link', $data->prevlink->id);
         $this->assertSame('duallearning-next-activity-link', $data->nextlink->id);
@@ -98,14 +98,14 @@ final class activity_navigation_test extends \advanced_testcase {
         $boostpage->set_cm(get_fast_modinfo($course)->get_cm($inside->cmid));
         $boostpage->set_pagelayout('incourse');
         $boostpage->force_theme('boost');
-        $this->assertNull(activity_navigation::for_page($boostpage));
+        $this->assertNull(ordered_activity_navigation::for_page($boostpage));
 
         // Restricted parents and activities being deleted must not leak into navigation.
         $this->setAdminUser();
         $DB->set_field('course_modules', 'deletioninprogress', 1, ['id' => $second->cmid]);
         rebuild_course_cache($course->id, true);
         $this->setUser($student);
-        $nav = activity_navigation::for_page($this->page($course, $inside->cmid));
+        $nav = ordered_activity_navigation::for_page($this->page($course, $inside->cmid));
         $this->assertEquals($last->cmid, $nav->nextlink->url->param('id'));
         $this->setAdminUser();
         $DB->set_field('course_modules', 'deletioninprogress', 0, ['id' => $second->cmid]);
@@ -114,7 +114,7 @@ final class activity_navigation_test extends \advanced_testcase {
         ]), ['id' => $unit->cmid]);
         rebuild_course_cache($course->id, true);
         $this->setUser($student);
-        $this->assertNull(activity_navigation::for_page($this->page($course, $first->cmid)));
+        $this->assertNull(ordered_activity_navigation::for_page($this->page($course, $first->cmid)));
         $this->setAdminUser();
         $DB->set_field('course_modules', 'availability', null, ['id' => $unit->cmid]);
         rebuild_course_cache($course->id, true);
@@ -123,7 +123,7 @@ final class activity_navigation_test extends \advanced_testcase {
         $this->setAdminUser();
         set_coursemodule_visible($unit->cmid, 0);
         $this->setUser($student);
-        $this->assertNull(activity_navigation::for_page($this->page($course, $first->cmid)));
+        $this->assertNull(ordered_activity_navigation::for_page($this->page($course, $first->cmid)));
     }
 
     /**
@@ -137,11 +137,11 @@ final class activity_navigation_test extends \advanced_testcase {
         $first = $generator->create_module('page', ['course' => $course->id]);
         $generator->create_module('page', ['course' => $course->id]);
         $page = $this->page($course, $first->cmid);
-        $this->assertNull(activity_navigation::for_page($page));
+        $this->assertNull(ordered_activity_navigation::for_page($page));
         $page = new \moodle_page();
         $page->set_course($course);
         $page->set_context(\context_course::instance($course->id));
         $page->set_pagelayout('course');
-        $this->assertNull(activity_navigation::for_page($page));
+        $this->assertNull(ordered_activity_navigation::for_page($page));
     }
 }

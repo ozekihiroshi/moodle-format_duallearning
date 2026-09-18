@@ -56,7 +56,7 @@ class format_duallearning extends format_topics {
      */
     public function course_content_footer() {
         global $PAGE;
-        return \format_duallearning\output\activity_navigation::for_page($PAGE);
+        return \format_duallearning\output\ordered_activity_navigation::for_page($PAGE);
     }
 
     /**
