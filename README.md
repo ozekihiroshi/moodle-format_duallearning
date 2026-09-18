@@ -22,7 +22,7 @@ records stay in the same course, so learners return to work they already know.
   materials and learning history for continued study and revision.
 
 Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
-The current release, [0.1.0-alpha2](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha2),
+The current release, [0.1.0-alpha3](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha3),
 is an alpha for evaluation.
 
 ## Design direction and current scope

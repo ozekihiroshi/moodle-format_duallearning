@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'format_duallearning';
-$plugin->version = 2026091800;
+$plugin->version = 2026091801;
 $plugin->requires = 2026042000;
 $plugin->dependencies = ['format_topics' => ANY_VERSION];
 $plugin->maturity = MATURITY_ALPHA;
-$plugin->release = '0.1.0-alpha2';
+$plugin->release = '0.1.0-alpha3';

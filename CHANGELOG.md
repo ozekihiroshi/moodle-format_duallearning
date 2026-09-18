@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 0.1.0-alpha3 - 2026-09-18
 
 - Offer a direct Markdown lesson authoring entry when LessonMark is available.
 - Hide assignment summaries when the learner has no accessible assignments.
