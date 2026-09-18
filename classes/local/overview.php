@@ -72,6 +72,7 @@ class overview {
             'finishedlabel' => get_string('finished', 'format_duallearning'),
             'shortcuts' => $items['shortcuts'],
             'assignments' => $items['assignments'],
+            'hasassignments' => !empty($items['assignments']),
             'assignmentheading' => get_string('assignmentheading', 'format_duallearning'),
             'deadlinehint' => get_string('deadlinehint', 'format_duallearning'),
             'timezone' => \core_date::get_user_timezone(),

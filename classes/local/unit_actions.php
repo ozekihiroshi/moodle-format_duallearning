@@ -71,7 +71,7 @@ class unit_actions {
         if (!has_capability('moodle/course:manageactivities', $context)) {
             return $actions;
         }
-        foreach (['page', 'quiz', 'assign'] as $module) {
+        foreach (['page', 'lessonmark', 'quiz', 'assign'] as $module) {
             if (!course_allowed_module($course, $module)) {
                 continue;
             }

@@ -25,6 +25,8 @@
 $string['actionhelp'] = 'How to: {$a}';
 $string['addassign'] = 'Collect submitted work';
 $string['addassignhint'] = 'Under Submission types, choose Online text for typed answers or File submissions for attachments. Check dates under Availability and marks under Grade. Explain what to submit and how it will be assessed.';
+$string['addlessonmark'] = 'Add a Markdown lesson';
+$string['addlessonmarkhint'] = 'Create Markdown content with LessonMark. The activity name is the page heading, so you do not need to repeat it as an H1 at the start of the content.';
 $string['addmaterials'] = 'Add materials';
 $string['addpage'] = 'Add an explanation';
 $string['addpagehint'] = 'Create a page with text, images or links. To change the unit introduction, use Edit the unit text instead.';
@@ -65,7 +67,7 @@ $string['pathheading'] = 'Review materials and continue your work';
 $string['pluginname'] = 'Dual Learning';
 $string['privacy:metadata'] = 'The overview does not store additional personal data.';
 $string['progress'] = 'Materials marked complete: {$a->done} / {$a->total}';
-$string['progresshint'] = 'This counts materials you marked complete, separately from submission status and grades. Completed materials remain available for review.';
+$string['progresshint'] = 'This counts materials you marked complete yourself. It does not verify successful code execution, understanding, submission or assessment. Completed materials remain available for review.';
 $string['reopened'] = 'Resubmission required';
 $string['returntounit'] = 'Back to unit authoring';
 $string['savebeforereturn'] = 'Save your changes before returning. This link does not save the form.';

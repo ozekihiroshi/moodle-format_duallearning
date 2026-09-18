@@ -25,6 +25,8 @@
 $string['actionhelp'] = '{$a}：操作のヒント';
 $string['addassign'] = '提出を受ける';
 $string['addassignhint'] = '文章を入力してもらうなら「提出タイプ」の「オンラインテキスト」、添付なら「ファイル提出」を選びます。締切の有無は「利用」、点数は「評点」で確認します。説明には提出するものと評価の観点を書きましょう。';
+$string['addlessonmark'] = 'Markdown教材を加える';
+$string['addlessonmarkhint'] = 'LessonMarkでMarkdown教材を作ります。活動名がページの見出しになるため、本文の先頭に同じH1見出しを重ねる必要はありません。';
 $string['addmaterials'] = '教材を追加する';
 $string['addpage'] = '説明を加える';
 $string['addpagehint'] = '文章・画像・リンクを載せるページを作ります。単元の導入文を直す場合は「本文を編集する」を使います。';
@@ -65,7 +67,7 @@ $string['pathheading'] = '教材の確認・作業の続き';
 $string['pluginname'] = 'Dual Learning';
 $string['privacy:metadata'] = '学習案内は個人データを追加保存しません。';
 $string['progress'] = '確認済みにした教材：{$a->done} / {$a->total} 件';
-$string['progresshint'] = '教材の「完了マーク」の件数です。提出の受付や点数とは別です。復習では確認済みの教材も開けます。';
+$string['progresshint'] = '自分で完了マークを付けた件数です。コードの実行成功や理解の確認、提出・採点を意味しません。復習では確認済みの教材も開けます。';
 $string['reopened'] = '再提出が必要';
 $string['returntounit'] = 'この単元の作成支援に戻る';
 $string['savebeforereturn'] = '入力を残すには先に保存してください。このリンクではフォームの内容は保存されません。';
