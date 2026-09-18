@@ -90,6 +90,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci phpunit --fail-on-warning
 
+      - name: Learner subsection browser test
+        if: ${{ !cancelled() && matrix.php == '8.3' }}
+        env:
+          MOODLE_BEHAT_SELENIUM_IMAGE: selenium/standalone-chrome:latest
+        run: |
+          echo '$CFG->behat_increasetimeout = 3;' >> moodle/config.php
+          moodle-plugin-ci behat --profile chrome --tags="@format_duallearning"
+
   release-zip:
     name: Reproducible release ZIP
     runs-on: ubuntu-24.04
@@ -102,14 +110,14 @@ jobs:
       - name: Build twice and compare
         run: |
           python3 scripts/build-release.py
-          cp build/moodle-format_duallearning-0.1.0-alpha4.zip /tmp/duallearning-first.zip
+          cp build/moodle-format_duallearning-0.1.0-alpha5.zip /tmp/duallearning-first.zip
           python3 scripts/build-release.py
-          cmp /tmp/duallearning-first.zip build/moodle-format_duallearning-0.1.0-alpha4.zip
+          cmp /tmp/duallearning-first.zip build/moodle-format_duallearning-0.1.0-alpha5.zip
 
       - name: Upload release candidate
         uses: actions/upload-artifact@v7
         with:
           name: format_duallearning-${{ github.sha }}
-          path: build/moodle-format_duallearning-0.1.0-alpha4.zip
+          path: build/moodle-format_duallearning-0.1.0-alpha5.zip
           if-no-files-found: error
           retention-days: 14

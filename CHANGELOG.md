@@ -1,5 +1,10 @@
 # Change log
 
+## 0.1.0-alpha5 - 2026-09-18
+
+- Fix next-activity order in courses with subsections using Moodle display-order sorting (issue #2).
+- Add nested/flat course regression tests and learner browser coverage for both learning modes.
+
 ## 0.1.0-alpha4 - 2026-09-18
 
 - Show returned comments for ungraded individual assignments, respecting feedback availability and marking workflow release.
