@@ -4,8 +4,9 @@
 
 Dual Learning helps learners find where to continue, where to ask for help,
 and where to submit their work. It adds a focused overview above Moodle's
-familiar Topics sections and lets teachers switch the course between
-**Teacher guided** and **Self paced** modes.
+familiar Topics sections and helps authors build units for either
+**Teacher guided** or **Self paced** learning. Choose the approach when starting
+the course; preparation and revision are available in both.
 
 Use the course during a supported class, then keep it available for practice
 and revision afterwards. The materials, activities, submissions, and learning
@@ -21,7 +22,7 @@ records stay in the same course, so learners return to work they already know.
   materials and learning history for continued study and revision.
 
 Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
-The current release, [0.1.0-alpha1](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha1),
+The current release, [0.1.0-alpha2](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha2),
 is an alpha for evaluation.
 
 ## Design direction and current scope
@@ -38,12 +39,17 @@ Switching modes and showing an overview are means to that end, not the whole
 purpose. Reusing a course does not automatically make its materials suitable
 for independent study.
 
-**The current alpha provides the learner overview and course-level mode switch.**
-Authoring guidance, readiness checks, and support for adapting teacher-led
-materials to self-study are design candidates, not implemented features. The
-next step is to compare authoring effort and learner navigation using one
-small unit before selecting new functionality. See the
-[design direction and evaluation plan (Japanese)](docs/PRODUCT_DIRECTION.ja.md).
+**This alpha combines the learner overview with practical authoring support.**
+Start with a mode-specific, editable outline; save a hidden draft; then add
+explanations, practice questions, and submission activities using standard
+Moodle forms. Reopen existing materials from one place and return directly to
+their unit from activity and editing pages. Optional hints can be expanded when
+needed; experienced authors can use the actions without reading them.
+
+Readiness checks, a redesigned initial mode-selection screen, and assisted
+changes between learning designs are not yet implemented. Standard activity
+forms retain their usual settings. Reduced authoring effort has not yet been
+measured with teachers or compared with Topics.
 
 ## Choose the learning design before authoring
 
@@ -66,7 +72,8 @@ identify settings to check and content that needs human review.
 The [learning-design specification (Japanese)](docs/LEARNING_DESIGN_SPEC.ja.md)
 defines the requirements for mode-specific authoring support, learner follow-up,
 preservation of preparation/revision paths, and exceptional design changes.
-These are requirements for future development, not claims about the current alpha.
+The specification includes future requirements as well as implemented work;
+see the current scope above and the reviewer guide for this release.
 
 ## What the two modes do
 
@@ -209,11 +216,22 @@ The format does not send that data to an external service.
 
 - [Simple authoring specification and first implementation scope (Japanese)](docs/SIMPLE_AUTHORING_SPEC.ja.md)
 
-Development work now includes an editing-only **Start a unit from an outline**
-entry. It uses the course's current learning mode and creates a hidden standard
-section from a title and editable learner-facing text. Replace the examples and
-add activities before showing the unit. This is an initial authoring aid, not a
-complete course builder or a change to the submitted alpha1 release package.
+### Build and revise a unit
+
+1. Choose the course learning mode and turn editing on.
+2. Select **Start a unit from an outline**, give it a title, and adapt the text.
+   Preparation, learning steps, help, and revision are part of the editable text,
+   not extra mandatory fields.
+3. Save the hidden draft. Use **Add an explanation**, **Add practice questions**,
+   or **Collect submitted work** as needed. These open standard Moodle forms.
+4. Use the existing-material links to revise content, settings, and quiz questions.
+   **Back to unit authoring** returns to the same unit. Save form changes first.
+5. Check the materials and use Moodle's normal visibility controls when ready.
+
+Hints start collapsed and are optional. Visibility information and unsaved-form
+reminders remain visible. This is an authoring aid, not an automatic course
+builder or a replacement for activity settings. The outline is stored as a
+standard section summary; activities, grading, and submissions remain standard.
 
 Design documents for the next iteration (Japanese; not released features):
 

@@ -1,5 +1,16 @@
 # Change log
 
+## 0.1.0-alpha2 - 2026-09-18
+
+- Clarify that authors choose a learning design at course creation; preparation and revision belong in both modes.
+- Add editable English/Japanese unit outlines and hidden draft creation.
+- Add entry points for standard explanation pages, quizzes, and assignments.
+- Add existing-material editing links and contextual return links to unit authoring.
+- Make instructional hints optional while retaining visibility and unsaved-form information.
+- Add permission, cross-course isolation, and activity-move regression tests.
+- Preserve standard activities, submissions, grades, and completion records.
+- Readiness checks and assisted learning-design changes remain future work.
+
 ## 0.1.0-alpha1 - 2026-09-15
 
 - Prepare the first Marketplace application candidate.

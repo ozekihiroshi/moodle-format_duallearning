@@ -1,85 +1,68 @@
 # Moodle Marketplace listing
 
-This file contains copy-ready text and metadata for the initial Marketplace application.
+Copy-ready metadata for the alpha2 update to the existing format_duallearning submission.
 
 ## Identity
 
 - Name: Dual Learning
 - Component: `format_duallearning`
 - Plugin type: Course format
-- Initial version: `0.1.0-alpha1` (`2026091500`)
+- Version: `0.1.0-alpha2` (`2026091800`)
 - Maturity: Alpha
 - Supported Moodle version: Moodle 5.2
 - Licence: GNU GPL v3 or later
-- Author and maintainer: Hiroshi Ozeki
+- Maintainer: Hiroshi Ozeki
 
 ## Short description
 
-Switch one Moodle course between self-paced and teacher-guided overviews while preserving its standard activities and learning records.
+Build teacher-guided or self-paced courses with editable unit outlines, focused authoring actions, and learner guidance. Keep standard Moodle activities and learning records.
 
 ## Full description
 
-Dual Learning is a course format for programmes that use the same Moodle course for two learning experiences: a teacher-guided class and later self-paced study or review.
+Dual Learning helps authors design a course for how learners will be supported: by a teacher, or primarily by the materials themselves. Choose Teacher guided or Self paced when starting a course. Preparation and revision belong in both approaches; reviewing a lesson does not require changing the learning mode.
 
-The format adds a focused overview above Moodle's standard Topics layout. In **Self paced** mode, each learner sees the first visible incomplete activity, useful work links, completion progress, and assignment state. In **Teacher guided** mode, the same overview also highlights visible question forums so that learners can find the current work, help channel, and submission destination.
+For authors, the format provides an editable unit outline suited to the chosen approach. Start with a title and learner-facing text, save a hidden draft, then add explanations, practice questions, and submission activities through Moodle's standard forms. Existing-material links make it easy to reopen content, settings, and quiz questions. A contextual return link leads back to the same unit from standard activity and editing pages.
 
-Teachers switch the learning mode in the normal course settings. The switch changes presentation only. It does not copy or replace activities and does not rewrite completion records, submissions, grades, deadlines, groups, restrictions, or calendar events. A course can therefore move from a guided class to self-paced review while retaining its learning history.
+Actions remain visible while optional hints can be opened when needed. Authors do not need to fill in an additional design questionnaire or choose an experience level. Visibility information and reminders to save form changes remain visible.
 
-Moodle remains the source of truth. The overview links learners and teachers back to the standard activity pages for detailed submission state, individual extensions, group submissions, grades, and feedback. Hidden and unavailable activities are excluded through Moodle's course information APIs.
+For learners, a focused overview above standard Topics sections shows the next accessible incomplete activity with completion tracking, work links, materials progress, and assignment state. Teacher-guided mode also includes accessible question forums. Materials marked complete, assignment submissions, and published grades are distinguished. Standard activity pages remain the place for detailed grades, feedback, individual extensions, and group submissions.
 
-The plugin:
+Changing the learning mode changes the overview; it does not automatically adapt the teaching content to a different learning design. It does not rewrite activities, completion records, submissions, grades, deadlines, or restrictions.
 
-- provides one course format with **Self paced** and **Teacher guided** modes;
-- inherits the standard Topics format and keeps its normal section layout;
-- identifies the learner's next visible incomplete activity;
-- lists visible Lab links and, in guided mode, visible question forums;
-- summarises visible assignment status and the base deadline;
-- includes English and Japanese interface strings;
-- requires no external service, API key, subscription, or JavaScript build step;
-- stores no additional personal data; and
-- works independently of the optional Dual Learning theme.
+The plugin includes English and Japanese interface strings, works with standard Moodle themes including Boost, and has no mandatory dependency on the Dual Learning theme, LessonMark, or an external Lab service. The only plugin dependency is Moodle's standard Topics course format.
+
+This is an alpha for evaluation. Standard activity forms retain their normal settings. Automated readiness checks, a redesigned initial mode-selection screen, and assisted learning-design changes are not yet implemented. Ease-of-use improvements have not yet been measured in a teacher study.
 
 ## Installation
 
-1. Download the release ZIP.
-2. Install it through **Site administration > Plugins > Install plugins**, or place the extracted `duallearning` directory in `course/format/duallearning`.
-3. Complete Moodle's standard plugin upgrade.
-4. Edit a course and select **Dual Learning** as its course format.
-5. Under **Learning mode**, select **Self paced** or **Teacher guided**.
-
-No non-standard post-installation step is required.
-
-## Requirements and limitations
-
-- Requires Moodle 5.2 (`2026042000`).
-- Depends only on Moodle's standard Topics course format.
-- Assignment details such as individual overrides and group submission membership remain on the standard assignment page.
-- The deadline displayed in the overview is the assignment's base deadline.
-- A mode change does not rewrite course instructions, deadlines, activities, or forums.
-- As with any structural course-format change, administrators should back up production courses before migrating formats.
+Install the ZIP through Site administration > Plugins > Install plugins, or place its duallearning folder in course/format/duallearning. Complete Moodle's standard upgrade. Choose Dual Learning in course settings and select the learning mode. No build step, external account, API key, or subscription is required.
 
 ## Privacy
 
-Dual Learning stores only its course-level format option. It reads existing course, activity, completion, assignment, and grade state for the current request and does not store additional personal data. It does not send data to an external service.
+The plugin stores its course-level learning-mode option. Author-created outlines are standard course sections and summaries; activities are created through standard Moodle forms. It uses standard Moodle storage rather than a separate personal-data store and does not send data to external services.
 
 ## Links
 
-- Source code: https://github.com/ozekihiroshi/moodle-format_duallearning
+- Source: https://github.com/ozekihiroshi/moodle-format_duallearning
 - Documentation: https://github.com/ozekihiroshi/moodle-format_duallearning#readme
-- Bug tracker: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
-- Security policy: https://github.com/ozekihiroshi/moodle-format_duallearning/security/policy
-- Initial release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha1
-
-## Suggested tags
-
-`course format`, `self-paced learning`, `teacher-guided learning`, `completion`, `blended learning`
+- Issues: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
+- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha2
+- Branch: main
+- Tag: v0.1.0-alpha2
 
 ## Version release notes
 
-Initial Marketplace candidate. Adds a single Topics-based course format with switchable self-paced and teacher-guided overviews. The mode switch preserves standard Moodle activities, completion, submissions, grades, deadlines, restrictions, and calendar data.
+This update focuses on course authoring, with Teacher guided or Self paced selected as the starting design. Both approaches retain preparation and revision.
 
-## Screenshot captions
+- Create a hidden unit draft from an editable, mode-specific outline (English and Japanese).
+- Add explanations, practice questions, and submissions through standard Moodle activity forms.
+- Reopen existing materials and quiz questions directly from unit authoring.
+- Return to the same unit from standard activity and editing pages.
+- Open instructional hints only when needed; keep actions, visibility information, and save reminders available.
+- Preserve standard Moodle activities, completion, submissions, and grades.
 
-1. **Self-paced learner overview** — The Japanese-localised learner view shows the next visible incomplete activity, completion progress, work links, and assignment state above the standard course sections.
-2. **Teacher-guided learner overview** — The Japanese-localised learner view shows the same course highlighting current work, a visible question forum, and the submission destination without changing learning records.
-3. **Learning mode setting** — The Japanese-localised teacher view shows Dual Learning and its learning-mode selector in the standard course settings page.
+Moodle 5.2; Alpha maturity. Readiness checks and assisted learning-design changes remain future work. Standard activity forms are not replaced or simplified by this release.
+
+## Screenshots
+
+Existing overview screenshots remain valid. They use Japanese demonstration content; English-language demonstration screenshots remain a separate documentation task.

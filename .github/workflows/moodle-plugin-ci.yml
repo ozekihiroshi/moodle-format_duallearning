@@ -102,14 +102,14 @@ jobs:
       - name: Build twice and compare
         run: |
           python3 scripts/build-release.py
-          cp build/moodle-format_duallearning-0.1.0-alpha1.zip /tmp/duallearning-first.zip
+          cp build/moodle-format_duallearning-0.1.0-alpha2.zip /tmp/duallearning-first.zip
           python3 scripts/build-release.py
-          cmp /tmp/duallearning-first.zip build/moodle-format_duallearning-0.1.0-alpha1.zip
+          cmp /tmp/duallearning-first.zip build/moodle-format_duallearning-0.1.0-alpha2.zip
 
       - name: Upload release candidate
         uses: actions/upload-artifact@v7
         with:
           name: format_duallearning-${{ github.sha }}
-          path: build/moodle-format_duallearning-0.1.0-alpha1.zip
+          path: build/moodle-format_duallearning-0.1.0-alpha2.zip
           if-no-files-found: error
           retention-days: 14
