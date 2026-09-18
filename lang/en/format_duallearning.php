@@ -22,9 +22,18 @@
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['addassign'] = 'Collect submitted work';
+$string['addassignhint'] = 'Create an assignment. Describe what to submit, choose text or file submissions, and set dates only if needed.';
+$string['addpage'] = 'Add an explanation';
+$string['addpagehint'] = 'Create a page with text, images or links. To change the unit introduction, use Edit the unit text instead.';
+$string['addquiz'] = 'Add practice questions';
+$string['addquizhint'] = 'Create a Moodle quiz, then add questions and feedback after saving. For practice, consider allowing further attempts.';
 $string['addsections'] = 'Add sections';
 $string['assignmentheading'] = 'Deliverables, submission and assessment';
+$string['backtocourse'] = 'Back to the course';
 $string['checkassignment'] = 'Open assignment to check group submission';
+$string['chooseunit'] = 'Choose the unit you want to work on.';
+$string['continueunit'] = 'Continue building a unit';
 $string['createunitdraft'] = 'Create hidden draft';
 $string['currentsection'] = 'Current section';
 $string['deadlinehint'] = 'Base deadline (check the assignment for individual extensions):';
@@ -41,8 +50,10 @@ $string['lablaunchhint'] = 'Open Lab once and wait for it to finish loading. If 
 $string['learningmode'] = 'Learning mode';
 $string['newsection'] = 'New section';
 $string['next'] = 'Next item to check';
+$string['noaddactions'] = 'These activity types are not available with your current permissions or site settings.';
 $string['nodeadline'] = 'None';
 $string['notsubmitted'] = 'Not submitted';
+$string['nounitsyet'] = 'Start with an outline to create your first unit.';
 $string['path'] = 'Self paced';
 $string['pathheading'] = 'Review materials and continue your work';
 $string['pluginname'] = 'Dual Learning';
@@ -72,8 +83,13 @@ $string['startunit'] = 'Start a unit from an outline';
 $string['statehint'] = 'Completion does not certify mastery. Open the assignment for submitted files, grades and feedback.';
 $string['submitted'] = 'Submitted; no published grade';
 $string['teacherstatus'] = 'Open assignment to review submissions and grades';
+$string['unitactionshint'] = 'Add only what this unit needs. Each choice opens the standard Moodle form; no activity is created until you save it.';
 $string['unitdraftcreated'] = 'Hidden draft created. Add your materials and activities, replace the examples, then show the unit when it is ready.';
+$string['unithiddenhint'] = 'This unit is hidden from learners. Keep it hidden while you prepare the content, then show it using the unit controls.';
 $string['unitmode'] = 'Course approach: {$a}. Preparation and review are available in both approaches.';
 $string['unitname'] = 'Unit title';
+$string['unitreturnhint'] = 'After saving or cancelling an activity, return to the course and choose Continue building a unit to add more. Quiz questions and assignment settings remain in the standard activity screens.';
+$string['unitshownhint'] = 'This unit is shown. Course visibility and access restrictions still apply. Check activity visibility before adding unfinished material.';
 $string['unitstarterhint'] = 'Give your unit a title and adapt the examples below. It will be hidden from learners. Then add materials or activities using the usual course controls, check the content, and show the unit when it is ready.';
 $string['unittext'] = 'What learners will read';
+$string['viewunit'] = 'View the unit and its activities';

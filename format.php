@@ -31,6 +31,10 @@ if ($displaysection === null) {
         'moodle/course:sectionvisibility',
     ], $context);
     if ($PAGE->user_is_editing() && $canauthor) {
+        $continueurl = new moodle_url('/course/format/duallearning/unit.php', ['courseid' => $course->id]);
+        echo html_writer::div(html_writer::link($continueurl, get_string('continueunit', 'format_duallearning'), [
+            'class' => 'btn btn-primary',
+        ]), 'mb-3');
         $url = new moodle_url('/course/format/duallearning/author.php', ['courseid' => $course->id]);
         echo html_writer::div(html_writer::link($url, get_string('startunit', 'format_duallearning'), [
             'class' => 'btn btn-secondary',

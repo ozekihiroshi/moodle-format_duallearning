@@ -22,9 +22,18 @@
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['addassign'] = '提出を受ける';
+$string['addassignhint'] = '課題を作ります。提出するものを説明し、文章入力・ファイルなどの提出方法と、必要なら締切を設定します。';
+$string['addpage'] = '説明を加える';
+$string['addpagehint'] = '文章・画像・リンクを載せるページを作ります。単元の導入文を直す場合は「本文を編集する」を使います。';
+$string['addquiz'] = '練習問題を作る';
+$string['addquizhint'] = '小テストを作り、保存後に問題と解説を追加します。練習なら繰り返し挑戦できる設定も検討してください。';
 $string['addsections'] = 'セクションを追加する';
 $string['assignmentheading'] = '提出物・提出と評価の状態';
+$string['backtocourse'] = 'コースに戻る';
 $string['checkassignment'] = 'グループの提出状況を課題画面で確認';
+$string['chooseunit'] = '作業を続ける単元を選んでください。';
+$string['continueunit'] = '単元づくりを続ける';
 $string['createunitdraft'] = '非表示の下書きを作る';
 $string['currentsection'] = '現在のセクション';
 $string['deadlinehint'] = '基本の締切（個別の延長等は課題画面で確認）：';
@@ -41,8 +50,10 @@ $string['lablaunchhint'] = 'Labは1回だけ開き、表示が完了するまで
 $string['learningmode'] = '学習方式';
 $string['newsection'] = '新しいセクション';
 $string['next'] = '次に確認する項目';
+$string['noaddactions'] = '現在の権限またはサイト設定では、これらの活動を追加できません。';
 $string['nodeadline'] = '設定なし';
 $string['notsubmitted'] = '未提出';
+$string['nounitsyet'] = 'まず、ひな型から最初の単元を作りましょう。';
 $string['path'] = '自学自習型';
 $string['pathheading'] = '教材の確認・作業の続き';
 $string['pluginname'] = 'Dual Learning';
@@ -72,8 +83,13 @@ $string['startunit'] = 'ひな型から単元を作る';
 $string['statehint'] = '完了は習熟の認定ではありません。提出内容・評点・コメントは課題画面で確認できます。';
 $string['submitted'] = '提出済み・公開された評点なし';
 $string['teacherstatus'] = '提出と採点を課題画面で確認';
+$string['unitactionshint'] = 'この単元に必要なものだけ加えてください。標準の作成画面が開き、そこで保存するまで活動は増えません。';
 $string['unitdraftcreated'] = '非表示の下書きを作りました。教材や活動を追加し、例文を書き換えてから単元を表示してください。';
+$string['unithiddenhint'] = 'この単元は学生から非表示です。教材を整えた後、単元のメニューから表示に変更できます。';
 $string['unitmode'] = 'このコースの方針：{$a}。どちらの方式でも予習・復習を利用できます。';
 $string['unitname'] = '単元名';
+$string['unitreturnhint'] = '活動の保存・取消後に続きを作るときは、コース上部の「単元づくりを続ける」から戻れます。小テストの問題編集や課題の設定は、それぞれの標準画面で行います。';
+$string['unitshownhint'] = 'この単元は表示中です。コースの公開状態と利用制限は引き続き適用されます。未完成の教材を加える場合は活動の表示設定も確認してください。';
 $string['unitstarterhint'] = '単元名を付け、下の例文をご自分の教材に合わせて書き換えてください。学生には非表示で保存します。その後、通常のコース編集で教材や活動を追加し、内容を確認してから単元を表示してください。';
 $string['unittext'] = '学生に伝える内容';
+$string['viewunit'] = '単元の内容と活動を見る';
