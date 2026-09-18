@@ -25,6 +25,36 @@ namespace format_duallearning\local;
  */
 class unit_actions {
     /**
+     * List existing unit content in course order with permitted editing links.
+     *
+     * @param \stdClass $course Course record.
+     * @param int $sectionid Stable section identifier.
+     * @return array Existing content and its permitted actions.
+     */
+    public static function existing(\stdClass $course, int $sectionid): array {
+        unit_starter::require_access($course);
+        $modinfo = get_fast_modinfo($course);
+        $section = $modinfo->get_section_info_by_id($sectionid, MUST_EXIST);
+        $items = [];
+        foreach ($modinfo->sections[$section->sectionnum] ?? [] as $cmid) {
+            $cm = $modinfo->get_cm($cmid);
+            if (!$cm->uservisible || $cm->deletioninprogress) {
+                continue;
+            }
+            $context = \context_module::instance($cmid);
+            $items[] = [
+                'name' => $cm->get_formatted_name(),
+                'viewurl' => $cm->url,
+                'editurl' => has_capability('moodle/course:manageactivities', $context)
+                    ? new \moodle_url('/course/modedit.php', ['update' => $cmid, 'sr' => $section->sectionnum]) : null,
+                'questionsurl' => $cm->modname === 'quiz' && has_capability('mod/quiz:manage', $context)
+                    ? new \moodle_url('/mod/quiz/edit.php', ['cmid' => $cmid]) : null,
+            ];
+        }
+        return $items;
+    }
+
+    /**
      * Build permitted authoring actions using a stable section identifier.
      *
      * @param \stdClass $course Course record.

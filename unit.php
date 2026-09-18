@@ -75,6 +75,26 @@ if (!$section) {
     $editurl = new moodle_url('/course/editsection.php', ['id' => $sectionid]);
     $editlink = html_writer::link($editurl, get_string('editunittext', 'format_duallearning'), ['class' => 'btn btn-secondary']);
     echo html_writer::tag('p', $editlink);
+    $items = \format_duallearning\local\unit_actions::existing($course, $sectionid);
+    if ($items) {
+        echo $OUTPUT->heading(get_string('existingmaterials', 'format_duallearning'), 4);
+        $rows = [];
+        foreach ($items as $item) {
+            $name = $item['name'];
+            $links = [];
+            foreach (['viewurl' => 'viewmaterial', 'editurl' => 'editmaterial', 'questionsurl' => 'editquestions'] as $key => $label) {
+                if ($item[$key]) {
+                    $text = get_string($label, 'format_duallearning');
+                    $links[] = html_writer::link($item[$key], $text, ['aria-label' => $text . ': ' . strip_tags($name)]);
+                }
+            }
+            $rows[] = html_writer::div(
+                html_writer::tag('strong', $name) . html_writer::div(implode(' · ', $links), 'mt-1'),
+                'mb-3'
+            );
+        }
+        echo html_writer::alist($rows, ['class' => 'list-unstyled']);
+    }
     echo html_writer::tag('p', get_string('unitactionshint', 'format_duallearning'));
     $actions = \format_duallearning\local\unit_actions::build($course, $sectionid);
     foreach ($actions as $action) {

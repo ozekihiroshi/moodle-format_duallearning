@@ -28,4 +28,19 @@ namespace format_duallearning\output;
  * Reuse the standard Topics renderer.
  */
 class renderer extends \format_topics\output\renderer {
+    /**
+     * Render a return link without changing standard activity forms.
+     *
+     * @param authoring_return $link Return route.
+     * @return string HTML.
+     */
+    protected function render_authoring_return(authoring_return $link): string {
+        $html = \html_writer::link($link->url, get_string('returntounit', 'format_duallearning'), [
+            'class' => 'btn btn-outline-secondary',
+        ]);
+        if ($link->editing) {
+            $html .= \html_writer::tag('p', get_string('savebeforereturn', 'format_duallearning'), ['class' => 'small mt-2']);
+        }
+        return \html_writer::div($html, 'mb-3');
+    }
 }

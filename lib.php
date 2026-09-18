@@ -31,6 +31,24 @@ require_once($CFG->dirroot . '/course/format/topics/lib.php');
  */
 class format_duallearning extends format_topics {
     /**
+     * Offer authors a return route to the current unit above standard content.
+     *
+     * @return \renderable|null Teacher-only authoring link.
+     */
+    public function course_content_header() {
+        global $PAGE;
+        $url = \format_duallearning\local\authoring_navigation::target($PAGE);
+        if (!$url) {
+            return null;
+        }
+        return new \format_duallearning\output\authoring_return(
+            $url,
+            in_array($PAGE->pagetype, ['course-modedit', 'course-editsection'])
+                || $PAGE->url->compare(new moodle_url('/question/bank/editquestion/question.php'), URL_MATCH_BASE)
+        );
+    }
+
+    /**
      * Return course format options.
      *
      * @param bool $foreditform Whether options are requested for the edit form.
