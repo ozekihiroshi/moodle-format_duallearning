@@ -252,8 +252,10 @@ class overview {
         if ((int) $instance->grade !== 0 || !$submission || $submission->status !== 'submitted') {
             return false;
         }
-        if ($instance->markingworkflow
-                && $assignment->get_grading_status($userid) !== ASSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
+        if (
+            $instance->markingworkflow
+            && $assignment->get_grading_status($userid) !== ASSIGN_MARKING_WORKFLOW_STATE_RELEASED
+        ) {
             return false;
         }
         // Pass the attempt explicitly: the default lookup can create a submission record.

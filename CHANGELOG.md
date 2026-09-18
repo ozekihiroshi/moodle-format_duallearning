@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- Show returned comments for ungraded individual assignments, respecting feedback availability and marking workflow release.
+
 ## 0.1.0-alpha3 - 2026-09-18
 
 - Offer a direct Markdown lesson authoring entry when LessonMark is available.
