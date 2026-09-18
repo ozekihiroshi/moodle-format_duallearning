@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased
+
+- Offer a direct Markdown lesson authoring entry when LessonMark is available.
+- Hide assignment summaries when the learner has no accessible assignments.
+- Clarify that manual progress marks do not verify code execution or understanding.
+- Handle students without an assignment submission record without a type error.
+
 ## 0.1.0-alpha2 - 2026-09-18
 
 - Clarify that authors choose a learning design at course creation; preparation and revision belong in both modes.

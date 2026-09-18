@@ -39,7 +39,11 @@ final class unit_actions_test extends \advanced_testcase {
         $section = unit_starter::create($course, 'Draft', '', FORMAT_HTML);
         $before = $DB->count_records('course_modules', ['course' => $course->id]);
         $actions = unit_actions::build($course, $section->id);
-        $this->assertSame(['page', 'quiz', 'assign'], array_column($actions, 'module'));
+        $expected = ['page', 'quiz', 'assign'];
+        if (\core\plugininfo\mod::get_enabled_plugin('lessonmark')) {
+            array_splice($expected, 1, 0, ['lessonmark']);
+        }
+        $this->assertSame($expected, array_column($actions, 'module'));
         foreach ($actions as $action) {
             $url = new \moodle_url($action['url']);
             $this->assertEquals($section->id, $url->get_param('sectionid'));

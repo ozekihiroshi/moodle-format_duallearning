@@ -220,7 +220,7 @@ class overview {
         if ($instance->teamsubmission) {
             return 'checkassignment';
         }
-        $submission = $assignment->get_user_submission($userid, false);
+        $submission = $assignment->get_user_submission($userid, false) ?: null;
         $status = match ($submission->status ?? '') {
             'submitted' => 'submitted',
             'draft' => 'draft',
