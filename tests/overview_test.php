@@ -132,9 +132,9 @@ final class overview_test extends \advanced_testcase {
             $modinfo = get_fast_modinfo($course);
             $a = $page('Inside A', $modinfo->get_cm($suba->cmid)->get_delegated_section_info()->sectionnum);
             $b = $page('Inside B', $modinfo->get_cm($subb->cmid)->get_delegated_section_info()->sectionnum);
-            $section = get_fast_modinfo($course)->get_section_info(1);
-            moveto_module(get_coursemodule_from_id('subsection', $suba->cmid), $section, $last->cmid);
-            moveto_module(get_coursemodule_from_id('subsection', $subb->cmid), $section, $last->cmid);
+            $actions = \core_courseformat\formatactions::cm($course);
+            $actions->move_before($suba->cmid, $last->cmid);
+            $actions->move_before($subb->cmid, $last->cmid);
             $this->setUser($student);
             $next = fn() => overview::build($course, $student->id)['next']['name'];
             $this->assertSame('First', $next());
@@ -142,7 +142,7 @@ final class overview_test extends \advanced_testcase {
             $completion->update_state(get_fast_modinfo($course)->get_cm($first->cmid), COMPLETION_COMPLETE, $student->id);
             $this->assertSame('Inside A', $next());
             $this->setAdminUser();
-            moveto_module(get_coursemodule_from_id('subsection', $subb->cmid), $section, $suba->cmid);
+            $actions->move_before($subb->cmid, $suba->cmid);
             $this->setUser($student);
             $this->assertSame('Inside B', $next());
             $completion->update_state(get_fast_modinfo($course)->get_cm($b->cmid), COMPLETION_COMPLETE, $student->id);
