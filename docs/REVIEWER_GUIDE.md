@@ -6,7 +6,7 @@ Dual Learning supports authoring for a teacher-guided or primarily self-paced co
 
 ## Installation and upgrade
 
-Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091801 upgrades alpha1 and alpha2 through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
+Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091802 upgrades alpha1 and alpha2 through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
 
 ## Authoring check
 

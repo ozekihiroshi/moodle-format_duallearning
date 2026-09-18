@@ -1,13 +1,13 @@
 # Moodle Marketplace listing
 
-Copy-ready metadata for the alpha3 update to the existing format_duallearning submission.
+Copy-ready metadata for the alpha4 update to the existing format_duallearning submission.
 
 ## Identity
 
 - Name: Dual Learning
 - Component: `format_duallearning`
 - Plugin type: Course format
-- Version: `0.1.0-alpha3` (`2026091801`)
+- Version: `0.1.0-alpha4` (`2026091802`)
 - Maturity: Alpha
 - Supported Moodle version: Moodle 5.2
 - Licence: GNU GPL v3 or later
@@ -46,21 +46,19 @@ The plugin stores its course-level learning-mode option. Author-created outlines
 - Source: https://github.com/ozekihiroshi/moodle-format_duallearning
 - Documentation: https://github.com/ozekihiroshi/moodle-format_duallearning#readme
 - Issues: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
-- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha3
+- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha4
 - Branch: main
-- Tag: v0.1.0-alpha3
+- Tag: v0.1.0-alpha4
 
 ## Version release notes
 
-This update addresses feedback from adapting a Japanese Python introductory unit to Dual Learning.
+This update improves feedback visibility for teacher-guided learning.
 
-- Add a direct Markdown lesson authoring action when LessonMark is enabled and the author has permission to add it. LessonMark remains optional.
-- Hide the assignment summary when the learner has no accessible assignments in the course.
-- Clarify that manual completion marks do not verify code execution, understanding, submission or assessment.
-- Add an optional hint to avoid repeating the activity title as an H1 in Markdown content.
-- Fix an overview type error for students without an assignment submission record.
+- Show "Submitted; comments returned" for ungraded individual assignments when feedback comments are available for the current submission attempt.
+- Respect feedback plugin availability and marking workflow release. Unreleased comments, reopened submissions and comments from older attempts are not shown as returned.
+- Preserve standard Moodle submission and grading behaviour. Group submissions continue to link to the standard assignment page.
 
-Existing activities, content, submissions and grades are preserved. Moodle 5.2; Alpha maturity.
+Moodle 5.2; Alpha maturity. Existing activities, submissions, grades and course content are preserved.
 
 ## Screenshots
 

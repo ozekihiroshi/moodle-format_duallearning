@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 0.1.0-alpha4 - 2026-09-18
 
 - Show returned comments for ungraded individual assignments, respecting feedback availability and marking workflow release.
 
