@@ -23,11 +23,11 @@
  */
 
 $string['addassign'] = 'Collect submitted work';
-$string['addassignhint'] = 'Create an assignment. Describe what to submit, choose text or file submissions, and set dates only if needed.';
+$string['addassignhint'] = 'Under Submission types, choose Online text for typed answers or File submissions for attachments. Check dates under Availability and marks under Grade. Explain what to submit and how it will be assessed.';
 $string['addpage'] = 'Add an explanation';
 $string['addpagehint'] = 'Create a page with text, images or links. To change the unit introduction, use Edit the unit text instead.';
 $string['addquiz'] = 'Add practice questions';
-$string['addquizhint'] = 'Create a Moodle quiz, then add questions and feedback after saving. For practice, consider allowing further attempts.';
+$string['addquizhint'] = 'Choose Save and display, then Add question to create questions and feedback. Check repeat attempts under Grade and when feedback appears under Review options. Before showing the unit, preview a wrong answer to check the explanation.';
 $string['addsections'] = 'Add sections';
 $string['assignmentheading'] = 'Deliverables, submission and assessment';
 $string['backtocourse'] = 'Back to the course';
