@@ -1,5 +1,13 @@
 # Change log
 
+## 0.1.0-alpha7 - 2026-09-19
+
+- Keep progress and the next learning action above work links and assignment lists (issue #8).
+- Use keyboard-accessible disclosures for lists; up to five entries start expanded and longer lists start collapsed. All accessible links remain available in course order.
+- Remove Python Lab-specific guidance from the generic overview in English and Japanese (issue #9).
+- Add regression coverage for both modes, list lengths, hidden activities and non-Python external tools.
+- Refresh English overview screenshots and prepare a teacher evaluation kit; actual teacher evaluation remains pending (issue #5).
+
 ## 0.1.0-alpha6 - 2026-09-19
 
 - Fix previous/next links and the activity selector across subsection boundaries, completing issue #2.

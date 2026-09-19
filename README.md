@@ -22,7 +22,7 @@ records stay in the same course, so learners return to work they already know.
   materials and learning history for continued study and revision.
 
 Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
-The current release, [0.1.0-alpha6](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha6),
+The current release, [0.1.0-alpha7](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha7),
 is an alpha for evaluation.
 
 ## Design direction and current scope
@@ -157,9 +157,10 @@ the separate developer-test unit, not changes to the completed Python courses.
 ### Progress and submission are separate
 
 The overview distinguishes manually marked materials from submission and
-published-grade state. This view is scrolled below the full work-link list;
-[issue #8](https://github.com/ozekihiroshi/moodle-format_duallearning/issues/8)
-tracks making the next learning action easier to reach in long courses.
+published-grade state. Progress and the next learning action appear first;
+long work-link and assignment lists open when needed. Lists with up to five
+entries start expanded. This alpha7 image uses a test teacher’s Student role
+preview, not an actual learner’s completion record.
 
 ![Self-paced progress and assignment state](docs/screenshots/01-self-paced-progress.jpg)
 

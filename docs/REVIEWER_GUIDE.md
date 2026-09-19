@@ -6,7 +6,7 @@ Dual Learning supports authoring for a teacher-guided or primarily self-paced co
 
 ## Installation and upgrade
 
-Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091900 upgrades earlier alpha releases through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
+Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091901 upgrades earlier alpha releases through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
 
 ## Authoring check
 
@@ -27,13 +27,15 @@ Use a test course for these checks. Standard Moodle visibility, grading, complet
 
 With visible materials, an assignment, and completion tracking enabled, check the next accessible incomplete activity and distinct materials/submission/grade states. Guided mode additionally lists accessible general-purpose question forums. Completed materials remain accessible under normal Moodle permissions. Changing the learning mode does not rewrite the activities or learner records.
 
+For long courses, verify the next action appears before the work links and assignments. Lists with more than five accessible entries start collapsed; shorter lists start expanded. Open and close the native disclosures using keyboard and pointer. Check that all links remain available and that courses without a Lab or with non-Python LTI tools show neutral guidance.
+
 ## Boundaries
 
 Standard activity settings and quiz question editing are not replaced. Assignment overrides and group submissions are detailed on standard activity pages; the overview shows the base deadline. Readiness checks and assisted changes of learning design are not implemented. Classroom usability improvements have not been quantified.
 
 ## Automated checks
 
-GitHub Actions checks Moodle 5.2 with PHP 8.3 and 8.4: lint, Code Checker and PHPDoc with zero warnings, plugin validation, savepoints, PHPUnit (20 tests / 100 assertions), Chrome Behat (4 scenarios / 72 steps), and reproducible ZIP generation. Tests cover draft creation, authorisation, cross-course section rejection, module permissions, and return routes after moving activities.
+GitHub Actions checks Moodle 5.2 with PHP 8.3 and 8.4: lint, Code Checker and PHPDoc with zero warnings, plugin validation, savepoints, PHPUnit, Chrome Behat (4 scenarios / 72 steps), and reproducible ZIP generation. Tests cover draft creation, authorisation, cross-course section rejection, module permissions, and return routes after moving activities.
 
 Workflow runs: https://github.com/ozekihiroshi/moodle-format_duallearning/actions
 
