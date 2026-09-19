@@ -67,7 +67,8 @@ class overview {
             'progresshint' => get_string('progresshint', 'format_duallearning'),
             'shortcutheading' => get_string('shortcutheading', 'format_duallearning'),
             'hasshortcuts' => !empty($items['shortcuts']),
-            'lablaunchhint' => $items['haslab'] ? get_string('lablaunchhint', 'format_duallearning') : '',
+            'collapseshortcuts' => count($items['shortcuts']) > 5,
+            'collapseassignments' => count($items['assignments']) > 5,
             'finished' => !$teacher && $items['targets'] && !$next,
             'finishedlabel' => get_string('finished', 'format_duallearning'),
             'shortcuts' => $items['shortcuts'],
@@ -95,7 +96,6 @@ class overview {
             'targets' => [],
             'assignments' => [],
             'shortcuts' => [],
-            'haslab' => false,
             'manualtotal' => 0,
             'manualdone' => 0,
         ];
@@ -114,7 +114,6 @@ class overview {
             if ($cm->modname === 'lti' || $mode->include_shortcut($cm->modname)) {
                 $items['shortcuts'][] = $link;
             }
-            $items['haslab'] = $items['haslab'] || $cm->modname === 'lti';
             self::collect_completion(
                 $items['targets'],
                 $items['manualtotal'],

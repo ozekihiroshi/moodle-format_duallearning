@@ -195,4 +195,70 @@ final class overview_test extends \advanced_testcase {
         $this->assertNull($data['next']);
         $this->assertTrue($data['finished']);
     }
+    /**
+     * Long lists never precede the next action, and preserve every visible link.
+     */
+    public function test_overview_discloses_long_lists_without_lab_assumptions(): void {
+        global $CFG, $OUTPUT;
+        require_once($CFG->libdir . '/completionlib.php');
+        $this->resetAfterTest();
+        $CFG->enablecompletion = 1;
+        foreach (['path', 'guided'] as $mode) {
+            $this->setAdminUser();
+            $course = $this->getDataGenerator()->create_course([
+                'format' => 'duallearning', 'learningmode' => $mode, 'enablecompletion' => 1,
+            ]);
+            $student = $this->getDataGenerator()->create_user();
+            $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
+            $this->getDataGenerator()->create_module('page', [
+                'course' => $course->id, 'name' => 'Read first', 'completion' => COMPLETION_TRACKING_MANUAL,
+            ]);
+            $this->setUser($student);
+            $empty = overview::build($course, $student->id);
+            $this->assertFalse($empty['hasshortcuts']);
+            $html = $OUTPUT->render_from_template('format_duallearning/overview', $empty);
+            $this->assertStringNotContainsString('Lab', $html);
+            $this->assertStringNotContainsString('<details', $html);
+            for ($i = 1; $i <= 6; $i++) {
+                $this->setAdminUser();
+                $this->getDataGenerator()->create_module('lti', [
+                    'course' => $course->id, 'name' => 'External reading ' . $i,
+                    'toolurl' => 'https://example.org/reading',
+                ]);
+                $this->getDataGenerator()->create_module('assign', [
+                    'course' => $course->id, 'name' => 'Submit reflection ' . $i,
+                ]);
+                $this->setUser($student);
+                $data = overview::build($course, $student->id);
+                $this->assertSame($i > 5, $data['collapseshortcuts']);
+                $this->assertSame($i > 5, $data['collapseassignments']);
+            }
+            $this->setAdminUser();
+            $this->getDataGenerator()->create_module('lti', [
+                'course' => $course->id, 'name' => 'Hidden external reading', 'visible' => 0,
+            ]);
+            $this->getDataGenerator()->create_module('assign', [
+                'course' => $course->id, 'name' => 'Hidden submission', 'visible' => 0,
+            ]);
+            $this->setUser($student);
+            $data = overview::build($course, $student->id);
+            $this->assertSame('Read first', $data['next']['name']);
+            $this->assertCount(6, $data['shortcuts']);
+            $this->assertCount(6, $data['assignments']);
+            $html = $OUTPUT->render_from_template('format_duallearning/overview', $data);
+            $dom = new \DOMDocument();
+            @$dom->loadHTML('<?xml encoding="utf-8" ?>' . $html);
+            $xpath = new \DOMXPath($dom);
+            $this->assertSame(2, $xpath->query('//details[not(@open)]')->length);
+            $this->assertSame(0, $xpath->query('//details/following-sibling::p/a')->length);
+            $this->assertSame(1, $xpath->query('//details[1]/preceding-sibling::p/a')->length);
+            $this->assertStringNotContainsString('Lab', $html);
+            $this->assertStringNotContainsString('Hidden external reading', $html);
+            $this->assertStringNotContainsString('Hidden submission', $html);
+            foreach ($data['shortcuts'] as $index => $shortcut) {
+                $this->assertSame('External reading ' . ($index + 1), $shortcut['name']);
+                $this->assertStringContainsString($shortcut['name'], $html);
+            }
+        }
+    }
 }
