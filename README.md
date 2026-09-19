@@ -126,31 +126,48 @@ the format itself does not provide or manage the external service.
 
 ## Screenshots
 
-These examples use Boost with Japanese interface text and demonstration
-materials. The plugin includes English interface strings and a Japanese
-translation. English-language demonstration screenshots are planned as a
-separate documentation update; the current images are retained here.
+These English examples use the completed **Python Foundations** courses with
+the optional Dual Learning theme. The course format also works with Boost;
+LessonMark and Python Lab are example activities, not required dependencies.
+The teaching sequences below are authored course content, not an automatic
+conversion performed by the mode selector.
 
-### Self-paced learner overview
+### Self-paced Python: read, practise, check
 
-The learner sees where to continue, materials marked complete, work links,
-and assignment information above the normal course sections.
+Learners follow the lesson, practical Lab and knowledge check in course order.
+The image shows units 1.1 and 1.2 of the completed English course.
 
-![Self-paced learner overview](docs/screenshots/01-self-paced-learner.png)
+![Self-paced English Python units](docs/screenshots/02-self-paced-python-units.jpg)
 
-### Teacher-guided learner overview
+### Teacher-guided Python: prepare, learn, review
 
-Forum shortcuts bring the course's help and discussion channels alongside
-work links and submissions.
+Preparation and post-class review remain alongside the lesson and practical
+work. Learners do not need to switch modes to revisit these materials.
 
-![Teacher-guided learner overview](docs/screenshots/02-teacher-guided-learner.png)
+![Teacher-guided English Python unit](docs/screenshots/05-teacher-guided-python-unit.jpg)
 
-### Learning mode setting
+### Continue authoring from one place
 
-Teachers switch the whole course through one setting, without installing
-separate formats for the two modes.
+Reopen content, activity settings and quiz questions directly. Add materials
+with visible actions; open optional hints only when needed. This image uses
+the separate developer-test unit, not changes to the completed Python courses.
 
-![Learning mode setting](docs/screenshots/03-learning-mode-setting.png)
+![Unit authoring actions with optional hints closed](docs/screenshots/06-authoring-actions.jpg)
+
+### Progress and submission are separate
+
+The overview distinguishes manually marked materials from submission and
+published-grade state. This view is scrolled below the full work-link list;
+[issue #8](https://github.com/ozekihiroshi/moodle-format_duallearning/issues/8)
+tracks making the next learning action easier to reach in long courses.
+
+![Self-paced progress and assignment state](docs/screenshots/01-self-paced-progress.jpg)
+
+See [all screenshots and captions](docs/screenshots/README.md), including the
+English learning-mode setting and an expanded authoring hint. The
+[developer walkthrough](docs/DEVELOPER_AUTHORING_CHECK_2026-09-19.md) records
+creation, re-editing, student submission and teacher feedback checks. A real
+teacher usability evaluation remains open in #5.
 
 ## Requirements and installation
 

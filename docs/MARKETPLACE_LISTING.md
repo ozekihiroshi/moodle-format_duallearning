@@ -63,4 +63,13 @@ Moodle 5.2; Alpha maturity. No changes to course content, submissions, grades or
 
 ## Screenshots
 
-Existing overview screenshots remain valid. They use Japanese demonstration content; English-language demonstration screenshots remain a separate documentation task.
+English screenshots now use the completed Python Foundations Self paced and
+Teacher guided courses, with separate test-unit authoring captures. See
+[files, suggested order and captions](screenshots/README.md).
+The optional Dual Learning theme supplies the visual styling; the course
+format also supports Boost. The work-link list in long courses is tracked in
+#8, and the progress screenshot is explicitly a scrolled view.
+
+These files are prepared for the listing. Marketplace upload has not been
+confirmed by this documentation update. No new plugin ZIP or version is
+needed solely to replace listing screenshots.
