@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+- Stack activity navigation on small screens with full-width touch targets, wrapping long lesson names while preserving keyboard order. Desktop navigation retains three columns.
+
 ## 0.1.0-alpha7 - 2026-09-19
 
 - Keep progress and the next learning action above work links and assignment lists (issue #8).

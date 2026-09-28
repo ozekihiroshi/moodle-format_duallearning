@@ -3,3 +3,48 @@
 body:has(.duallearning-activity-navigation) .activity-navigation {
     display: none;
 }
+
+.duallearning-activity-navigation {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: .75rem;
+}
+
+.duallearning-activity-navigation > div {
+    min-width: 0;
+}
+
+.duallearning-activity-navigation__jump {
+    text-align: center;
+}
+
+.duallearning-activity-navigation__next {
+    text-align: end;
+}
+
+.duallearning-activity-navigation .btn {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.duallearning-activity-navigation .urlselect,
+.duallearning-activity-navigation select {
+    max-width: 100%;
+}
+
+@media (max-width: 767.98px) {
+    .duallearning-activity-navigation {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .duallearning-activity-navigation .btn,
+    .duallearning-activity-navigation select {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .duallearning-activity-navigation > div:empty {
+        display: none;
+    }
+}

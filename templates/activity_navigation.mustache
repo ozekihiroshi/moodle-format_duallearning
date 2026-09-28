@@ -64,22 +64,14 @@
         }
     }
 }}
-<nav class="mt-5 mb-1 duallearning-activity-navigation container-fluid" aria-label="{{#str}}activitynavigation, course{{/str}}">
-{{< core/columns-1to1to1}}
-    {{$column1}}
-        <div class="float-start">
+<nav class="mt-5 mb-1 duallearning-activity-navigation" aria-label="{{#str}}activitynavigation, course{{/str}}">
+        <div class="duallearning-activity-navigation__previous">
             {{#prevlink}}{{> core/action_link }}{{/prevlink}}
         </div>
-    {{/column1}}
-    {{$column2}}
-        <div class="mdl-align">
+        <div class="duallearning-activity-navigation__jump">
             {{#activitylist}}{{> core/url_select }}{{/activitylist}}
         </div>
-    {{/column2}}
-    {{$column3}}
-        <div class="float-end">
+        <div class="duallearning-activity-navigation__next">
             {{#nextlink}}{{> core/action_link }}{{/nextlink}}
         </div>
-    {{/column3}}
-{{/ core/columns-1to1to1}}
 </nav>
