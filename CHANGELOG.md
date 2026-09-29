@@ -1,5 +1,10 @@
 # Change log
 
+## 0.1.0-alpha10 - 2026-09-30
+
+- Refresh course-index display state when switching to a student role or returning to the original role, including rapid transitions within the same second.
+- Add regression coverage for both learning modes under normal timing and same-second cache conditions. Moodle capability checks and course content remain unchanged.
+
 ## 0.1.0-alpha9 - 2026-09-29
 
 - Group existing materials with their visibility information and editing actions in unit authoring.
