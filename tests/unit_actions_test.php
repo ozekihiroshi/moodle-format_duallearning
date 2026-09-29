@@ -29,6 +29,51 @@ use format_duallearning\local\unit_starter;
 #[\PHPUnit\Framework\Attributes\CoversClass(unit_actions::class)]
 final class unit_actions_test extends \advanced_testcase {
     /**
+     * Hidden containers must not be mistaken for learner access to a shown activity.
+     */
+    public function test_existing_reports_settings_without_publishing(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning', 'visible' => 0]);
+        $section = unit_starter::create($course, 'Private draft', '', FORMAT_HTML);
+        $activity = $this->getDataGenerator()->create_module('page', [
+            'course' => $course->id, 'section' => $section->section,
+        ]);
+        $before = $DB->get_record('course_modules', ['id' => $activity->cmid], '*', MUST_EXIST);
+        $items = unit_actions::existing($course, $section->id);
+        $this->assertCount(1, $items);
+        $this->assertContains(get_string('materialcoursehidden', 'format_duallearning'), $items[0]['visibility']);
+        $this->assertContains(get_string('materialunithidden', 'format_duallearning'), $items[0]['visibility']);
+        $key = $before->visible ? 'materialshown' : 'materialhidden';
+        $this->assertContains(get_string($key, 'format_duallearning'), $items[0]['visibility']);
+        $this->assertEquals($activity->cmid, $items[0]['editurl']->get_param('update'));
+        $this->assertEquals($before, $DB->get_record('course_modules', ['id' => $activity->cmid]));
+        $this->assertEquals(0, $DB->get_field('course_sections', 'visible', ['id' => $section->id]));
+    }
+
+    /**
+     * A listed activity with restrictions is not described as accessible to everyone.
+     */
+    public function test_existing_reports_restrictions(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        set_config('enableavailability', 1);
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
+        $activity = $this->getDataGenerator()->create_module('page', [
+            'course' => $course->id, 'section' => 1,
+            'availability' => json_encode((object) [
+                'op' => '&', 'c' => [(object) ['type' => 'date', 'd' => '>=', 't' => time() + DAYSECS]],
+                'showc' => [true],
+            ]),
+        ]);
+        $cm = get_fast_modinfo($course)->get_cm($activity->cmid);
+        $items = unit_actions::existing($course, $cm->section);
+        $this->assertContains(get_string('materialrestricted', 'format_duallearning'), $items[0]['visibility']);
+        $this->assertContains(get_string('materialshown', 'format_duallearning'), $items[0]['visibility']);
+    }
+
+    /**
      * Actions target the selected section and reading them has no write effects.
      */
     public function test_actions_target_section(): void {

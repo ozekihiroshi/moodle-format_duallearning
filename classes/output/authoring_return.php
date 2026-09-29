@@ -29,12 +29,15 @@ class authoring_return implements \renderable {
      *
      * @param \moodle_url $url Unit authoring URL.
      * @param bool $editing Whether the page contains a standard editing form.
+     * @param bool $restoring Whether this action restores the user's real role.
      */
     public function __construct(
         /** @var \moodle_url Unit authoring URL. */
         public \moodle_url $url,
         /** @var bool Whether to remind the author to save first. */
         public bool $editing = false,
+        /** @var bool Whether to render a standard POST role-restoration action. */
+        public bool $restoring = false,
     ) {
     }
 }

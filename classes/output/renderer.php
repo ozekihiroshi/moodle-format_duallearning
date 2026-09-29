@@ -48,6 +48,13 @@ class renderer extends \format_topics\output\renderer {
      * @return string HTML.
      */
     protected function render_authoring_return(authoring_return $link): string {
+        if ($link->restoring) {
+            return \html_writer::div(
+                \html_writer::tag('p', get_string('studentviewactive', 'format_duallearning'))
+                    . $this->single_button($link->url, get_string('studentviewreturn', 'format_duallearning'), 'post'),
+                'alert alert-info'
+            );
+        }
         $html = \html_writer::link($link->url, get_string('returntounit', 'format_duallearning'), [
             'class' => 'btn btn-outline-secondary',
         ]);

@@ -75,9 +75,25 @@ if (!$section) {
     $editurl = new moodle_url('/course/editsection.php', ['id' => $sectionid]);
     $editlink = html_writer::link($editurl, get_string('editunittext', 'format_duallearning'), ['class' => 'btn btn-secondary']);
     echo html_writer::tag('p', $editlink);
+    $studentroles = \format_duallearning\local\student_view::roles($course);
+    if ($studentroles) {
+        echo html_writer::tag('p', get_string('studentviewhint', 'format_duallearning'));
+        foreach ($studentroles as $roleid => $rolename) {
+            $switchurl = \format_duallearning\local\student_view::start_url($course, $sectionid, $roleid);
+            echo $OUTPUT->single_button(
+                $switchurl,
+                get_string('studentviewstart', 'format_duallearning', $rolename),
+                'post'
+            );
+        }
+    } else {
+        $hint = $course->visible ? 'studentviewunavailable' : 'studentviewcoursehidden';
+        echo html_writer::tag('p', get_string($hint, 'format_duallearning'));
+    }
     $items = \format_duallearning\local\unit_actions::existing($course, $sectionid);
     if ($items) {
         echo $OUTPUT->heading(get_string('existingmaterials', 'format_duallearning'), 4);
+        echo html_writer::tag('p', get_string('teacherreviewhint', 'format_duallearning'));
         $rows = [];
         foreach ($items as $item) {
             $name = $item['name'];
@@ -86,12 +102,17 @@ if (!$section) {
             foreach ($labels as $key => $label) {
                 if ($item[$key]) {
                     $text = get_string($label, 'format_duallearning');
-                    $links[] = html_writer::link($item[$key], $text, ['aria-label' => $text . ': ' . strip_tags($name)]);
+                    $links[] = html_writer::link($item[$key], $text, [
+                        'aria-label' => $text . ': ' . strip_tags($name),
+                        'class' => 'btn btn-outline-secondary',
+                    ]);
                 }
             }
             $rows[] = html_writer::div(
-                html_writer::tag('strong', $name) . html_writer::div(implode(' · ', $links), 'mt-1'),
-                'mb-3'
+                html_writer::tag('strong', $name)
+                    . html_writer::tag('p', implode(' · ', $item['visibility']), ['class' => 'my-2'])
+                    . html_writer::div(implode(' ', $links), 'duallearning-authoring-actions'),
+                'border rounded p-3 mb-3'
             );
         }
         echo html_writer::alist($rows, ['class' => 'list-unstyled']);

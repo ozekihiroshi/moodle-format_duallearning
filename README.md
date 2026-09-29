@@ -232,6 +232,8 @@ The format does not send that data to an external service.
 
 ## Documentation and support
 
+- Next authoring UX milestone: understand through creating — [English](docs/AUTHORING_UX_MILESTONE.md) / [日本語](docs/AUTHORING_UX_MILESTONE.ja.md) (direction and evaluation plan; not a released feature)
+- Shared development principles: independence and cooperation — [English](docs/DEVELOPMENT_PRINCIPLES.md) / [日本語](docs/DEVELOPMENT_PRINCIPLES.ja.md)
 - [Simple authoring specification and first implementation scope (Japanese)](docs/SIMPLE_AUTHORING_SPEC.ja.md)
 
 ### Build and revise a unit

@@ -48,3 +48,14 @@ body:has(.duallearning-activity-navigation) .activity-navigation {
         display: none;
     }
 }
+
+.format-duallearning .duallearning-authoring-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.format-duallearning .duallearning-authoring-actions .btn {
+    min-height: 44px;
+    white-space: normal;
+}

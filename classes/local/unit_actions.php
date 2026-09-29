@@ -42,8 +42,21 @@ class unit_actions {
                 continue;
             }
             $context = \context_module::instance($cmid);
+            // Describe settings, not the effective access of an individual learner.
+            $visibility = [];
+            if (!$course->visible) {
+                $visibility[] = get_string('materialcoursehidden', 'format_duallearning');
+            }
+            if (!$section->visible) {
+                $visibility[] = get_string('materialunithidden', 'format_duallearning');
+            }
+            $visibility[] = get_string($cm->visible ? 'materialshown' : 'materialhidden', 'format_duallearning');
+            if ($cm->availability || $section->availability) {
+                $visibility[] = get_string('materialrestricted', 'format_duallearning');
+            }
             $items[] = [
                 'name' => $cm->get_formatted_name(),
+                'visibility' => $visibility,
                 'viewurl' => $cm->url,
                 'editurl' => has_capability('moodle/course:manageactivities', $context)
                     ? new \moodle_url('/course/modedit.php', ['update' => $cmid, 'sr' => $section->sectionnum]) : null,

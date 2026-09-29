@@ -37,6 +37,13 @@ class format_duallearning extends format_topics {
      */
     public function course_content_header() {
         global $PAGE;
+        $restoreurl = \format_duallearning\local\student_view::return_url(
+            $PAGE,
+            optional_param('duallearningunit', 0, PARAM_INT)
+        );
+        if ($restoreurl) {
+            return new \format_duallearning\output\authoring_return($restoreurl, false, true);
+        }
         $url = \format_duallearning\local\authoring_navigation::target($PAGE);
         if (!$url) {
             return null;
