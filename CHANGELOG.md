@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 0.1.0-alpha8 - 2026-09-29
 
 - Stack activity navigation on small screens with full-width touch targets, wrapping long lesson names while preserving keyboard order. Desktop navigation retains three columns.
 
