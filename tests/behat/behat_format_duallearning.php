@@ -25,6 +25,21 @@ require_once(__DIR__ . '/../../../../../lib/behat/behat_base.php');
  */
 class behat_format_duallearning extends behat_base {
     /**
+     * Prepare a hidden draft through the standard section API, before browser actions.
+     *
+     * @Given /^the Dual Learning section "(?P<sectionnum>\d+)" in course "(?P<shortname>[^"]+)" is hidden$/
+     * @param int $sectionnum Section position in the fixture.
+     * @param string $shortname Course short name.
+     */
+    public function prepare_hidden_unit($sectionnum, $shortname): void {
+        global $CFG, $DB;
+        require_once($CFG->dirroot . '/course/lib.php');
+        $course = $DB->get_record('course', ['shortname' => $shortname], '*', MUST_EXIST);
+        $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => $sectionnum], '*', MUST_EXIST);
+        course_update_section($course, $section, (object) ['visible' => 0]);
+    }
+
+    /**
      * Open authoring for a numbered section in a fixture course.
      *
      * @Given /^I open Dual Learning authoring for section "(?P<sectionnum>\d+)" in course "(?P<shortname>[^"]+)"$/

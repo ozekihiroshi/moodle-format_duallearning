@@ -20,10 +20,8 @@ Feature: Authors check student-role visibility and return to their draft
       | activity | name | course | section | content |
       | page | Private draft lesson | AUTHOR | 1 | Private draft body |
       | page | Available lesson | AUTHOR | 2 | Available lesson body |
+    And the Dual Learning section "1" in course "AUTHOR" is hidden
     When I log in as "author"
-    And I am on "Authoring course" course homepage
-    And I turn editing mode on
-    And I hide section "1"
     And I open Dual Learning authoring for section "1" in course "AUTHOR"
     Then I should see "Unit: hidden"
     When I press "Check with role: Student"

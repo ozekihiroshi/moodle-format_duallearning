@@ -52,7 +52,7 @@ class renderer extends \format_topics\output\renderer {
             return \html_writer::div(
                 \html_writer::tag('p', get_string('studentviewactive', 'format_duallearning'))
                     . $this->single_button($link->url, get_string('studentviewreturn', 'format_duallearning'), 'post'),
-                'alert alert-info'
+                'alert alert-info duallearning-student-view'
             );
         }
         $html = \html_writer::link($link->url, get_string('returntounit', 'format_duallearning'), [

@@ -55,7 +55,8 @@ body:has(.duallearning-activity-navigation) .activity-navigation {
     gap: .5rem;
 }
 
-.format-duallearning .duallearning-authoring-actions .btn {
+.format-duallearning .duallearning-authoring-actions .btn,
+.format-duallearning .duallearning-student-view .btn {
     min-height: 44px;
     white-space: normal;
 }

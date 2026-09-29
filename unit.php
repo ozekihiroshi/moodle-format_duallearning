@@ -80,10 +80,13 @@ if (!$section) {
         echo html_writer::tag('p', get_string('studentviewhint', 'format_duallearning'));
         foreach ($studentroles as $roleid => $rolename) {
             $switchurl = \format_duallearning\local\student_view::start_url($course, $sectionid, $roleid);
-            echo $OUTPUT->single_button(
-                $switchurl,
-                get_string('studentviewstart', 'format_duallearning', $rolename),
-                'post'
+            echo html_writer::div(
+                $OUTPUT->single_button(
+                    $switchurl,
+                    get_string('studentviewstart', 'format_duallearning', $rolename),
+                    'post'
+                ),
+                'duallearning-student-view mb-3'
             );
         }
     } else {
