@@ -97,6 +97,8 @@ jobs:
         run: |
           echo '$CFG->behat_increasetimeout = 3;' >> moodle/config.php
           echo '$CFG->behat_faildump_path = "/tmp/duallearning-behat-failures";' >> moodle/config.php
+          cp moodle-format_duallearning/scripts/behat-cache-clock.php /tmp/duallearning-cache-clock.php
+          echo 'require_once("/tmp/duallearning-cache-clock.php");' >> moodle/config.php
           moodle-plugin-ci behat --profile chrome --tags="@format_duallearning"
 
       - name: Upload browser failure diagnostics
