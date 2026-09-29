@@ -31,6 +31,19 @@ require_once($CFG->dirroot . '/course/format/topics/lib.php');
  */
 class format_duallearning extends format_topics {
     /**
+     * Prepare role-specific state before core initialises the course editor.
+     *
+     * @return \stdClass|null Course record including format options.
+     */
+    public function get_course() {
+        $course = parent::get_course();
+        if ($course) {
+            \format_duallearning\local\student_view::refresh_role_state($course);
+        }
+        return $course;
+    }
+
+    /**
      * Offer authors a return route to the current unit above standard content.
      *
      * @return \renderable|null Teacher-only authoring link.

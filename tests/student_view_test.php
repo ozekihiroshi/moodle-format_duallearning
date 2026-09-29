@@ -28,6 +28,51 @@ use format_duallearning\local\student_view;
 #[\PHPUnit\Framework\Attributes\CoversClass(student_view::class)]
 final class student_view_test extends \advanced_testcase {
     /**
+     * Same-generation role changes cannot reuse the previous course-index state.
+     */
+    public function test_role_state_survives_same_second_switch_and_restore(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
+        $other = $this->getDataGenerator()->create_course(['format' => 'topics']);
+        $teacher = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($teacher->id, $course->id, 'editingteacher');
+        $this->setUser($teacher);
+        $context = \context_course::instance($course->id);
+        $roleid = $DB->get_field('role', 'id', ['shortname' => 'student'], MUST_EXIST);
+        $format = course_get_format($course);
+        $format->get_course();
+        $cache = \cache::make('core', 'courseeditorstate');
+        $teacherkey = \core_courseformat\base::session_cache($course);
+        $format->get_course();
+        $this->assertSame($teacherkey, \core_courseformat\base::session_cache($course));
+        $otherkey = \core_courseformat\base::session_cache($other);
+        $before = $DB->get_record('course', ['id' => $course->id]);
+        role_switch($roleid, $context);
+        try {
+            // Reproduce the core same-second collision, independently of wall-clock timing.
+            $cache->set($course->id, $teacherkey);
+            $format->get_course();
+            $studentkey = \core_courseformat\base::session_cache($course);
+            $this->assertNotSame($teacherkey, $studentkey);
+            $format->get_course();
+            $this->assertSame($studentkey, \core_courseformat\base::session_cache($course));
+            $this->assertFalse(has_capability('moodle/course:update', $context));
+            role_switch(0, $context);
+            $format->get_course();
+            $restoredkey = \core_courseformat\base::session_cache($course);
+            $this->assertNotSame($studentkey, $restoredkey);
+            $this->assertTrue(has_capability('moodle/course:update', $context));
+            $format->get_course();
+            $this->assertSame($restoredkey, \core_courseformat\base::session_cache($course));
+            $this->assertSame($otherkey, \core_courseformat\base::session_cache($other));
+            $this->assertEquals($before, $DB->get_record('course', ['id' => $course->id]));
+        } finally {
+            role_switch(0, $context);
+        }
+    }
+
+    /**
      * Only permitted student roles are offered; starting a check is read-only.
      */
     public function test_start_preserves_hidden_draft(): void {

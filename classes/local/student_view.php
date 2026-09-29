@@ -25,6 +25,36 @@ namespace format_duallearning\local;
  */
 class student_view {
     /**
+     * Separate course-index state when the current user's assumed role changes.
+     *
+     * Moodle 5.2 uses a second-resolution courseeditorstate generation. A rapid
+     * role switch can therefore retain the previous browser state. Keep the
+     * core numeric key shape, but use a distinct generation on role transitions,
+     * including restoration to the user's own role. No capabilities are changed.
+     *
+     * @param \stdClass $course Course record.
+     */
+    public static function refresh_role_state(\stdClass $course): void {
+        global $USER, $SESSION;
+        if (!isloggedin() || $course->format !== 'duallearning') {
+            return;
+        }
+        $context = \context_course::instance($course->id);
+        $roleid = $USER->access['rsw'][$context->path] ?? 0;
+        $identity = $USER->id . ':' . $roleid;
+        if (($SESSION->format_duallearning_viewroles[$course->id] ?? null) === $identity) {
+            return;
+        }
+        $cache = \cache::make('core', 'courseeditorstate');
+        $previous = $cache->get($course->id);
+        do {
+            $key = $course->cacherev . '_' . random_int(1, PHP_INT_MAX);
+        } while ($key === $previous);
+        $cache->set($course->id, $key);
+        $SESSION->format_duallearning_viewroles[$course->id] = $identity;
+    }
+
+    /**
      * Offer only permitted student-archetype roles for a visible course.
      *
      * @param \stdClass $course Course record.
