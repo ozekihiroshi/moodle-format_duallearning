@@ -41,9 +41,10 @@ final class student_view_test extends \advanced_testcase {
         $context = \context_course::instance($course->id);
         $roleid = $DB->get_field('role', 'id', ['shortname' => 'student'], MUST_EXIST);
         $format = course_get_format($course);
-        $format->get_course();
+        $course = $format->get_course();
         $cache = \cache::make('core', 'courseeditorstate');
         $teacherkey = \core_courseformat\base::session_cache($course);
+        $this->assertSame($teacherkey, $cache->get($course->id));
         $format->get_course();
         $this->assertSame($teacherkey, \core_courseformat\base::session_cache($course));
         $otherkey = \core_courseformat\base::session_cache($other);
@@ -54,6 +55,7 @@ final class student_view_test extends \advanced_testcase {
             $cache->set($course->id, $teacherkey);
             $format->get_course();
             $studentkey = \core_courseformat\base::session_cache($course);
+            $this->assertSame($studentkey, $cache->get($course->id));
             $this->assertNotSame($teacherkey, $studentkey);
             $format->get_course();
             $this->assertSame($studentkey, \core_courseformat\base::session_cache($course));

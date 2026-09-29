@@ -1,4 +1,4 @@
-@format @format_duallearning @javascript
+@format @format_duallearning @format_duallearning_student_view @javascript
 Feature: Authors check student-role visibility and return to their draft
   In order to check access without publishing unfinished material
   As an editing teacher

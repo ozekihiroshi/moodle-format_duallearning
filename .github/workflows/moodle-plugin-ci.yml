@@ -96,9 +96,16 @@ jobs:
           MOODLE_BEHAT_SELENIUM_IMAGE: selenium/standalone-chrome:latest
         run: |
           echo '$CFG->behat_increasetimeout = 3;' >> moodle/config.php
+          moodle-plugin-ci behat --profile chrome --tags="@format_duallearning"
+
+      - name: Student-role same-second cache regression
+        if: ${{ !cancelled() && matrix.php == '8.3' }}
+        env:
+          MOODLE_BEHAT_SELENIUM_IMAGE: selenium/standalone-chrome:latest
+        run: |
           cp moodle-format_duallearning/scripts/behat-cache-clock.php /tmp/duallearning-cache-clock.php
           echo 'require_once("/tmp/duallearning-cache-clock.php");' >> moodle/config.php
-          moodle-plugin-ci behat --profile chrome --tags="@format_duallearning"
+          moodle-plugin-ci behat --profile chrome --tags="@format_duallearning_student_view"
 
       - name: Upload browser failure diagnostics
         if: ${{ failure() && matrix.php == '8.3' }}
