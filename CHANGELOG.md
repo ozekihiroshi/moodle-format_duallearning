@@ -1,5 +1,12 @@
 # Change log
 
+## 0.1.0-alpha9 - 2026-09-29
+
+- Group existing materials with their visibility information and editing actions in unit authoring.
+- Add a standard Moodle student-role check and a route back to unit authoring without publishing hidden drafts. Role checks do not simulate an individual learner's access conditions.
+- Improve touch targets and wrapping for authoring and role-check controls.
+- Add permission and browser regression coverage for both learning modes, plus bilingual research-informed design principles and a first-time teacher evaluation kit. Participant evaluation remains pending.
+
 ## 0.1.0-alpha8 - 2026-09-29
 
 - Stack activity navigation on small screens with full-width touch targets, wrapping long lesson names while preserving keyboard order. Desktop navigation retains three columns.
