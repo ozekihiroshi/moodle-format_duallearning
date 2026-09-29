@@ -17,9 +17,9 @@ Feature: Authors check student-role visibility and return to their draft
       | author | AUTHOR | editingteacher |
       | learner | AUTHOR | student |
     And the following "activities" exist:
-      | activity | name | course | section | content |
-      | page | Private draft lesson | AUTHOR | 1 | Private draft body |
-      | page | Available lesson | AUTHOR | 2 | Available lesson body |
+      | activity | name | course | section | content | visible |
+      | page | Private draft lesson | AUTHOR | 1 | Private draft body | 0 |
+      | page | Available lesson | AUTHOR | 2 | Available lesson body | 1 |
     And the Dual Learning section "1" in course "AUTHOR" is hidden
     When I log in as "author"
     And I open Dual Learning authoring for section "1" in course "AUTHOR"
@@ -32,7 +32,10 @@ Feature: Authors check student-role visibility and return to their draft
     Then I should see "Continue building a unit"
     And I should see "Private draft lesson"
     And I should see "Unit: hidden"
-    And "Edit content/settings: Private draft lesson" "link" should exist
+    And "Edit content/settings" "link" should exist
+    When I follow "Edit content/settings"
+    Then the field "Name" matches value "Private draft lesson"
+    When I press "Cancel"
     When I log out
     And I log in as "learner"
     And I am on "Authoring course" course homepage

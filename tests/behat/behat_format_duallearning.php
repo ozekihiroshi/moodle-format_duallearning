@@ -36,6 +36,7 @@ class behat_format_duallearning extends behat_base {
         require_once($CFG->dirroot . '/course/lib.php');
         $course = $DB->get_record('course', ['shortname' => $shortname], '*', MUST_EXIST);
         $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => $sectionnum], '*', MUST_EXIST);
+        rebuild_course_cache($course->id, true);
         course_update_section($course, $section, (object) ['visible' => 0]);
     }
 
