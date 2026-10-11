@@ -1,29 +1,37 @@
 # Dual Learning course format
 
-**Design for how learners are supported: by a teacher, or primarily by the course itself.**
+Build a course around its learners. Dual Learning helps teachers organise
+materials, practice, submissions, and help within a Moodle course, with guided
+unit authoring and an overview that gives learners a place to continue.
 
-Dual Learning helps learners find where to continue, where to ask for help,
-and where to submit their work. It adds a focused overview above Moodle's
-familiar Topics sections and helps authors build units for either
-**Teacher guided** or **Self paced** learning. Choose the approach when starting
-the course; preparation and revision are available in both.
+Choose how learning is supported. **Teacher guided** courses can rely on a
+teacher's explanation and pacing; **Self paced** courses need more guidance
+in the materials themselves. Preparation and revision belong in both, and
+self-paced study can still include questions, feedback, and teacher assessment.
 
-Use the course during a supported class, then keep it available for practice
-and revision afterwards. The materials, activities, submissions, and learning
-records stay in the same course, so learners return to work they already know.
+Keep the work in one course. Moodle's familiar Topics sections, activities,
+submissions, and learning records remain available as teachers build units
+and learners return to practise or review.
 
-- **Give learners a clear starting point:** link to the first accessible,
-  incomplete activity with completion tracking enabled, in course order.
-- **Bring work and help closer together:** show external-tool links and, in
-  guided mode, forums alongside assignment information.
-- **Keep progress understandable:** distinguish materials marked complete from
-  assignment submission and published-grade status.
-- **Keep a consistent learning context:** select the course learning mode and retain
-  materials and learning history for continued study and revision.
+## Get the course format
 
-Component: `format_duallearning` · Moodle 5.2 · GPL v3 or later.
-The current release, [0.1.0-alpha7](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha7),
-is an alpha for evaluation.
+Dual Learning is published on [Moodle Marketplace](https://marketplace.moodle.com/plugins/format_duallearning).
+Download the installable package there, or use the attached ZIP from
+[GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
+Follow [requirements and installation](#requirements-and-installation) below.
+
+The documented release is [0.1.0-alpha10](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha10).
+It remains an alpha for evaluation on Moodle 5.2. Component:
+`format_duallearning`; licence: GPL v3 or later.
+
+Start with one unit. Choose a learning mode, save a hidden draft, add an
+explanation and a practice or submission activity, then use the student-role
+check to review the layout. This uses Moodle's role switch; it does not
+simulate an individual student's enrolment, groups, grades, or access.
+
+Use it independently. [LessonMark](https://github.com/ozekihiroshi/moodle-mod_lessonmark)
+can supply editable Markdown lessons, and the [Dual Learning theme](https://github.com/ozekihiroshi/moodle-theme_duallearning)
+can refine their visual presentation. Both are optional.
 
 ## Design direction and current scope
 
@@ -177,7 +185,7 @@ teacher usability evaluation remains open in #5.
 - No external account, service, API key, or JavaScript build step is required
   by the format itself.
 
-1. Download the installable ZIP from [GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
+1. Download the installable ZIP from [Moodle Marketplace](https://marketplace.moodle.com/plugins/format_duallearning) or [GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
 2. Install through **Site administration > Plugins > Install plugins**, or place
    the extracted `duallearning` directory in `course/format/duallearning`.
 3. Complete Moodle's standard plugin upgrade.
