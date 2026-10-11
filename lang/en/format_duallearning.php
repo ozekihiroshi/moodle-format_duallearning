@@ -117,3 +117,5 @@ $string['unitstarterhint'] = 'Give your unit a title and adapt the examples belo
 $string['unittext'] = 'What learners will read';
 $string['viewmaterial'] = 'View as teacher';
 $string['viewunit'] = 'View the unit and its activities';
+
+$string['personaldeadlinehint'] = 'Your due date:';

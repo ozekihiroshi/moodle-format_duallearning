@@ -56,6 +56,69 @@ final class overview_test extends \advanced_testcase {
         $this->assertStringContainsString($data['assignmentheading'], $html);
     }
     /**
+     * Due dates follow core overrides, extensions, timezone and explicit user isolation.
+     */
+    public function test_personal_deadlines(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course(['format' => 'duallearning']);
+        $a = $generator->create_user(['timezone' => 'Asia/Tokyo']);
+        $b = $generator->create_user(['timezone' => 'Europe/London']);
+        foreach ([$a, $b] as $user) {
+            $generator->enrol_user($user->id, $course->id, 'student');
+        }
+        $base = 1800000000;
+        $instance = $generator->create_module('assign', ['course' => $course->id, 'duedate' => $base]);
+        foreach ([1 => 2, 2 => 6] as $priority => $days) {
+            $group = $generator->create_group(['courseid' => $course->id]);
+            foreach ([$a, $b] as $user) {
+                $generator->create_group_member(['groupid' => $group->id, 'userid' => $user->id]);
+            }
+            $DB->insert_record('assign_overrides', (object) [
+                'assignid' => $instance->id, 'groupid' => $group->id,
+                'sortorder' => $priority, 'duedate' => $base + $days * DAYSECS,
+            ]);
+        }
+        $read = fn($user) => overview::build($course, $user->id);
+        $this->setUser($a);
+        $this->assertSame(userdate($base + 2 * DAYSECS), $read($a)['assignments'][0]['deadline']);
+        $override = (object) ['assignid' => $instance->id, 'userid' => $a->id, 'duedate' => $base + DAYSECS];
+        $override->id = $DB->insert_record('assign_overrides', $override);
+        $this->assertSame(userdate($base + DAYSECS), $read($a)['assignments'][0]['deadline']);
+        $flags = (object) ['assignment' => $instance->id, 'userid' => $a->id,
+            'extensionduedate' => $base + 5 * DAYSECS];
+        $flags->id = $DB->insert_record('assign_user_flags', $flags);
+        $this->assertSame(userdate($base + 5 * DAYSECS), $read($a)['assignments'][0]['deadline']);
+        $DB->set_field('assign_overrides', 'duedate', $base + 8 * DAYSECS, ['id' => $override->id]);
+        $this->assertSame(userdate($base + 8 * DAYSECS), $read($a)['assignments'][0]['deadline']);
+        $this->assertSame(get_string('personaldeadlinehint', 'format_duallearning'), $read($a)['deadlinehint']);
+        // Explicit B must not inherit A's dates even before changing the session user.
+        $this->assertSame(userdate($base + 2 * DAYSECS), $read($b)['assignments'][0]['deadline']);
+        $this->setUser($b);
+        $this->assertSame(userdate($base + 2 * DAYSECS), $read($b)['assignments'][0]['deadline']);
+        $this->assertSame(1, $DB->count_records('assign_user_flags'));
+        $this->setAdminUser();
+        $this->assertSame(userdate($base), overview::build($course, get_admin()->id)['assignments'][0]['deadline']);
+        $this->assertSame(get_string('deadlinehint', 'format_duallearning'),
+            overview::build($course, get_admin()->id)['deadlinehint']);
+        $this->setUser($a);
+        // A null user field follows core fallback; do not independently merge group values.
+        $DB->set_field('assign_overrides', 'duedate', null, ['id' => $override->id]);
+        $DB->set_field('assign_user_flags', 'extensionduedate', 0, ['id' => $flags->id]);
+        $this->assertSame(userdate($base), $read($a)['assignments'][0]['deadline']);
+        $DB->set_field('assign_overrides', 'duedate', 0, ['id' => $override->id]);
+        $this->assertSame(get_string('nodeadline', 'format_duallearning'), $read($a)['assignments'][0]['deadline']);
+        $DB->set_field('assign_user_flags', 'extensionduedate', $base + DAYSECS, ['id' => $flags->id]);
+        $this->assertSame(userdate($base + DAYSECS), $read($a)['assignments'][0]['deadline']);
+        $DB->delete_records('assign_overrides', ['assignid' => $instance->id]);
+        $DB->set_field('assign_user_flags', 'extensionduedate', 0, ['id' => $flags->id]);
+        $DB->set_field('assign', 'duedate', 0, ['id' => $instance->id]);
+        $this->assertSame(get_string('nodeadline', 'format_duallearning'), $read($a)['assignments'][0]['deadline']);
+    }
+
+    /**
      * Ungraded comments respect release, attempt, and plugin visibility.
      */
     public function test_ungraded_comments_returned(): void {

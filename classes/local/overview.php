@@ -76,7 +76,7 @@ class overview {
             'assignments' => $items['assignments'],
             'hasassignments' => !empty($items['assignments']),
             'assignmentheading' => get_string('assignmentheading', 'format_duallearning'),
-            'deadlinehint' => get_string('deadlinehint', 'format_duallearning'),
+            'deadlinehint' => get_string($teacher ? 'deadlinehint' : 'personaldeadlinehint', 'format_duallearning'),
             'timezone' => \core_date::get_user_timezone(),
             'statehint' => get_string('statehint', 'format_duallearning'),
         ];
@@ -190,6 +190,15 @@ class overview {
         $assignment = new \assign($cm->context, $cm, $course);
         $instance = $assignment->get_instance();
         $deadline = $instance->duedate;
+        if (!$teacher) {
+            // Resolve Moodle's user/group override priority before applying an extension.
+            $assignment->update_effective_access($userid);
+            $instance = $assignment->get_instance($userid);
+            $deadline = $instance->duedate;
+            $flags = $assignment->get_user_flags($userid, false);
+            // Match the assignment remaining-time calculation; an extension cannot shorten a due date.
+            $deadline = max($deadline, $flags->extensionduedate ?? 0);
+        }
         return $link + [
             'status' => get_string(
                 self::assignment_status($course, $cm, $assignment, $instance, $userid, $teacher),
