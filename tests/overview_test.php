@@ -80,9 +80,14 @@ final class overview_test extends \advanced_testcase {
         $DB->update_record('assign_submission', $submission);
         $grade = $assignment->get_user_grade($student->id, true, 0);
         $readstatus = fn() => overview::build($course, $student->id)['assignments'][0]['status'];
-        $submitted = get_string('submitted', 'format_duallearning');
+        $submitted = get_string('submittedungraded', 'format_duallearning');
         $returned = get_string('commentsreturned', 'format_duallearning');
         $this->assertSame($submitted, $readstatus());
+        $submission->status = 'draft';
+        $DB->update_record('assign_submission', $submission);
+        $this->assertSame(get_string('draft', 'format_duallearning'), $readstatus());
+        $submission->status = 'submitted';
+        $DB->update_record('assign_submission', $submission);
         $DB->insert_record('assignfeedback_comments', (object) [
             'assignment' => $instance->id, 'grade' => $grade->id,
             'commenttext' => 'Please compare the two calculations.', 'commentformat' => FORMAT_PLAIN,

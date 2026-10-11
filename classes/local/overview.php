@@ -234,6 +234,9 @@ class overview {
         if (self::has_returned_comments($assignment, $instance, $submission, $userid)) {
             return 'commentsreturned';
         }
+        if ((int) $instance->grade === 0 && $status === 'submitted') {
+            return 'submittedungraded';
+        }
         return self::has_published_grade($course, $assignment, $instance, $submission, $userid)
             ? 'graded' : $status;
     }

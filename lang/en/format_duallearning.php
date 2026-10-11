@@ -103,6 +103,7 @@ $string['studentviewreturn'] = 'Return to my role and unit authoring';
 $string['studentviewstart'] = 'Check with role: {$a}';
 $string['studentviewunavailable'] = 'No student role is available for you to switch to in this course. You can still review content as a teacher.';
 $string['submitted'] = 'Submitted; no published grade for this attempt';
+$string['submittedungraded'] = 'Submitted';
 $string['teacherreviewhint'] = 'Viewing uses your teacher permissions. Check individual student access separately.';
 $string['teacherstatus'] = 'Open assignment to review submissions and grades';
 $string['unitactionshint'] = 'Add only what this unit needs. Each choice opens the standard Moodle form; no activity is created until you save it.';

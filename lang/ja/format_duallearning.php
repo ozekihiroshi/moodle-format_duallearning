@@ -103,6 +103,7 @@ $string['studentviewreturn'] = '元のロールで単元の作成支援に戻る
 $string['studentviewstart'] = '{$a}ロールで確認';
 $string['studentviewunavailable'] = 'このコースで切り替え可能な学生ロールがありません。教材の内容は教師として確認できます。';
 $string['submitted'] = '提出済み・今回の提出の評点は未公開';
+$string['submittedungraded'] = '提出済み';
 $string['teacherreviewhint'] = '教師の権限で表示します。学生ごとのアクセス可否は別途確認してください。';
 $string['teacherstatus'] = '提出と採点を課題画面で確認';
 $string['unitactionshint'] = 'この単元に必要なものだけ加えてください。標準の作成画面が開き、そこで保存するまで活動は増えません。';
