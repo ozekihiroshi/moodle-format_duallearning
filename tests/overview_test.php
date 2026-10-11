@@ -133,8 +133,15 @@ final class overview_test extends \advanced_testcase {
         $flags = $assignment->get_user_flags($student->id, true);
         $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
         $DB->update_record('assign_user_flags', $flags);
-        grade_update('mod/assign', $course->id, 'mod', 'assign', $instance->id, 0,
-            (object) ['userid' => $student->id, 'rawgrade' => 75]);
+        grade_update(
+            'mod/assign',
+            $course->id,
+            'mod',
+            'assign',
+            $instance->id,
+            0,
+            (object) ['userid' => $student->id, 'rawgrade' => 75]
+        );
         $this->setUser($student);
         $status = fn() => overview::build($course, $student->id)['assignments'][0]['status'];
         $published = get_string('graded', 'format_duallearning');
