@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build"
 EXCLUDED_TOP_LEVEL = {".git", ".github", ".gitattributes", ".gitignore", "build", "scripts"}
 REQUIRED = {
+    "duallearning/amd/build/overview.min.js",
     "duallearning/LICENSE",
     "duallearning/README.md",
     "duallearning/format.php",

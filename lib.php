@@ -138,7 +138,7 @@ function format_duallearning_output_fragment_overview(array $args): string {
     if (empty($args['context']) || $args['context']->id != $context->id || $course->format !== 'duallearning') {
         throw new invalid_parameter_exception('Invalid overview context');
     }
-    // core_get_fragment has already called require_login for this validated context.
+    // The core_get_fragment service has already called require_login for this validated context.
     // Recheck access without reinitialising a page whose output has started.
     if (!can_access_course($course, $USER, '', true)) {
         throw new \moodle_exception('nopermissions', 'error', '', 'view course');
