@@ -87,3 +87,18 @@ F1 remains open. The plugin still selects the first incomplete tracked item, inc
 Per the user's decision, the Moodle core old-extension-date display finding remains recorded only. No upstream issue or reviewer message was sent. Own-product work takes priority. Product candidate: 9e8532e; main, release versions and deployment remain unchanged.
 
 Final candidate CI passed all jobs: https://github.com/ozekihiroshi/moodle-format_duallearning/actions/runs/38126743694 (9e8532e). This includes PHP 8.3/8.4 checks, PHPUnit, browser and student-role cache regressions, JavaScript build/lint and reproducible ZIP. The following commit records results only.
+
+
+## Submitted work without a visible current grade
+
+F1 now has a bounded guidance change. For an individual graded assignment that is submitted but has no grade visible for the current attempt, the overview says: “Your submission is recorded. No grade for this attempt is available to you yet. You can check its status or review available materials in the course outline.” It does not infer that a teacher is actively marking, promise a return date, say that resubmission is impossible, or expose hidden grading information.
+
+When that assignment is the first incomplete target, the primary label becomes “Check submission status” and the hint appears beside it. The same assignment URL remains selected. Otherwise, the hint appears in its assignment entry and the next item remains unchanged. The hint is not duplicated for the primary target. Completion rules, records and access restrictions are untouched; activities are not silently skipped. Ungraded comments-only submissions, drafts, reopened work, teacher summaries and published results do not get this grade-related hint. Existing result-review actions remain intact.
+
+The browser fixture is course21, Pending submission guidance, with assignment activity60 and review Page61 on Moodle5.2.4/Boost. Its fictional student's submission was seeded with Moodle APIs and direct test database writes; this turn did not exercise the submission form. The primary status link opened the recorded response and standard “Submitted for grading / Not marked” state. Completing and undoing the review Page refreshed the overview while retaining the submitted assignment and its guidance. The assignment remained incomplete. Earlier fixtures were preserved. Setup initially omitted the required markingallocation field; this fixture-only error was fixed before the successful run. The ignored pending-fixture.php retains duplicate protection.
+
+New automated regression covers Self paced and Teacher guided, pending work as primary target or as a secondary entry after completion, exactly one rendered hint, no review-result action for an unpublished result, unchanged incomplete state on read, and no grade hint for draft, reopened, ungraded or teacher states. Japanese text was added, but no Japanese core language pack or human participant evaluation was used. The suggestion to revisit available material does not establish that a suitable independent exercise exists: teachers still determine the learning sequence. No new recommendation engine or read-state tracking was introduced.
+
+Candidate a1abd21 remains on the audit branch. Main, public releases and production were not changed. Moodle core findings remain recorded only, per the user's decision.
+
+Final CI for a1abd21 passed all jobs: https://github.com/ozekihiroshi/moodle-format_duallearning/actions/runs/38127430802 . Both PHP versions, PHPUnit, coding/PHPDoc, JavaScript checks, browser regressions, same-second student-role cache and reproducible ZIP passed. The next commit records these results only.
