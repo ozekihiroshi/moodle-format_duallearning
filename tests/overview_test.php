@@ -101,8 +101,10 @@ final class overview_test extends \advanced_testcase {
         $this->assertSame(1, $DB->count_records('assign_user_flags'));
         $this->setAdminUser();
         $this->assertSame(userdate($base), overview::build($course, get_admin()->id)['assignments'][0]['deadline']);
-        $this->assertSame(get_string('deadlinehint', 'format_duallearning'),
-            overview::build($course, get_admin()->id)['deadlinehint']);
+        $this->assertSame(
+            get_string('deadlinehint', 'format_duallearning'),
+            overview::build($course, get_admin()->id)['deadlinehint']
+        );
         $this->setUser($a);
         // A null user field follows core fallback; do not independently merge group values.
         $DB->set_field('assign_overrides', 'duedate', null, ['id' => $override->id]);

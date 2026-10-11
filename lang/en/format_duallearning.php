@@ -69,6 +69,7 @@ $string['notsubmitted'] = 'Not submitted';
 $string['nounitsyet'] = 'Start with an outline to create your first unit.';
 $string['path'] = 'Self paced';
 $string['pathheading'] = 'Review materials and continue your work';
+$string['personaldeadlinehint'] = 'Your due date:';
 $string['pluginname'] = 'Dual Learning';
 $string['privacy:metadata'] = 'The overview does not store additional personal data.';
 $string['progress'] = 'Materials marked complete: {$a->done} / {$a->total}';
@@ -117,5 +118,3 @@ $string['unitstarterhint'] = 'Give your unit a title and adapt the examples belo
 $string['unittext'] = 'What learners will read';
 $string['viewmaterial'] = 'View as teacher';
 $string['viewunit'] = 'View the unit and its activities';
-
-$string['personaldeadlinehint'] = 'Your due date:';

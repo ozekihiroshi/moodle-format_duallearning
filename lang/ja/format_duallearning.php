@@ -69,6 +69,7 @@ $string['notsubmitted'] = '未提出';
 $string['nounitsyet'] = 'まず、ひな型から最初の単元を作りましょう。';
 $string['path'] = '自学自習型';
 $string['pathheading'] = '教材の確認・作業の続き';
+$string['personaldeadlinehint'] = 'あなたの提出期限：';
 $string['pluginname'] = 'Dual Learning';
 $string['privacy:metadata'] = '学習案内は個人データを追加保存しません。';
 $string['progress'] = '確認済みにした教材：{$a->done} / {$a->total} 件';
@@ -117,5 +118,3 @@ $string['unitstarterhint'] = '単元名を付け、下の例文をご自分の�
 $string['unittext'] = '学生に伝える内容';
 $string['viewmaterial'] = '教師として内容を確認';
 $string['viewunit'] = '単元の内容と活動を見る';
-
-$string['personaldeadlinehint'] = 'あなたの提出期限：';
