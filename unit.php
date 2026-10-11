@@ -66,7 +66,6 @@ if (!$section) {
     } else {
         echo html_writer::tag('p', get_string('nounitsyet', 'format_duallearning'));
     }
-
 } else {
     echo $OUTPUT->heading(get_section_name($course, $section), 3);
     $status = $section->visible ? 'unitshownhint' : 'unithiddenhint';
@@ -74,7 +73,8 @@ if (!$section) {
     $editurl = new moodle_url('/course/editsection.php', ['id' => $sectionid]);
     $editlink = html_writer::link($editurl, get_string('editunittext', 'format_duallearning'), ['class' => 'btn btn-secondary']);
     echo html_writer::tag('p', $editlink);
-    echo html_writer::tag('details',
+    echo html_writer::tag(
+        'details',
         html_writer::tag('summary', get_string('savedintro', 'format_duallearning'))
             . format_text($section->summary, $section->summaryformat, ['context' => $context]),
         ['class' => 'mb-3']

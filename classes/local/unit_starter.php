@@ -52,7 +52,8 @@ class unit_starter {
                 'class' => 'btn ' . ($page === 'author' ? 'btn-primary' : 'btn-outline-secondary'),
             ]);
         }
-        return \html_writer::tag('nav',
+        return \html_writer::tag(
+            'nav',
             \html_writer::tag('h2', get_string('buildcourse', 'format_duallearning'), ['class' => 'h4'])
                 . \html_writer::tag('p', get_string('buildcoursehint', 'format_duallearning'))
                 . \html_writer::div(implode(' ', $links), 'd-flex flex-wrap gap-2'),
