@@ -212,6 +212,7 @@ class overview {
         $reviewlabel = match ($status) {
             'graded' => get_string('reviewattemptgrade', 'format_duallearning'),
             'commentsreturned' => get_string('reviewattemptcomments', 'format_duallearning'),
+            'feedbackreturned' => get_string('reviewattemptfeedback', 'format_duallearning'),
             default => '',
         };
         return $link + [
@@ -254,8 +255,9 @@ class overview {
             'reopened' => 'reopened',
             default => 'notsubmitted',
         };
-        if (self::has_returned_comments($assignment, $instance, $submission, $userid)) {
-            return 'commentsreturned';
+        $feedback = self::returned_feedback_status($assignment, $instance, $submission, $userid);
+        if ($feedback !== '') {
+            return $feedback;
         }
         if ((int) $instance->grade === 0 && $status === 'submitted') {
             return 'submittedungraded';
@@ -265,34 +267,42 @@ class overview {
     }
 
     /**
-     * Detect released comments for an ungraded individual submission.
+     * Detect released feedback for an ungraded individual submission.
      *
      * @param \assign $assignment Assignment API object.
      * @param \stdClass $instance Assignment instance record.
      * @param \stdClass|null $submission Current submission record.
      * @param int $userid User identifier.
-     * @return bool Whether comments are available for the current attempt.
+     * @return string Feedback status language key, or empty when unavailable.
      */
-    private static function has_returned_comments(
+    private static function returned_feedback_status(
         \assign $assignment,
         \stdClass $instance,
         ?\stdClass $submission,
         int $userid
-    ): bool {
+    ): string {
         if ((int) $instance->grade !== 0 || !$submission || $submission->status !== 'submitted') {
-            return false;
+            return '';
         }
         if (
             $instance->markingworkflow
             && $assignment->get_grading_status($userid) !== ASSIGN_MARKING_WORKFLOW_STATE_RELEASED
         ) {
-            return false;
+            return '';
         }
         // Pass the attempt explicitly: the default lookup can create a submission record.
         $grade = $assignment->get_user_grade($userid, false, $submission->attemptnumber);
-        $comments = $assignment->get_feedback_plugin_by_type('comments');
-        return $grade && $comments && $comments->is_enabled() && $comments->is_visible()
-            && !$comments->is_empty($grade);
+        if (!$grade) {
+            return '';
+        }
+        // A generic action also covers files and comments returned together.
+        foreach (['file' => 'feedbackreturned', 'comments' => 'commentsreturned'] as $type => $status) {
+            $plugin = $assignment->get_feedback_plugin_by_type($type);
+            if ($plugin && $plugin->is_enabled() && $plugin->is_visible() && !$plugin->is_empty($grade)) {
+                return $status;
+            }
+        }
+        return '';
     }
 
     /**

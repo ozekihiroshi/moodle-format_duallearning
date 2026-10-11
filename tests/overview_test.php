@@ -177,6 +177,105 @@ final class overview_test extends \advanced_testcase {
     }
 
     /**
+     * File-only returns respect the current attempt and workflow in both modes.
+     */
+    public function test_ungraded_file_feedback_returned(): void {
+        global $DB, $CFG, $OUTPUT;
+        require_once($CFG->dirroot . '/mod/assign/locallib.php');
+        $this->resetAfterTest();
+        foreach (['path', 'guided'] as $mode) {
+            $this->setAdminUser();
+            $generator = $this->getDataGenerator();
+            $course = $generator->create_course(['format' => 'duallearning', 'learningmode' => $mode]);
+            $student = $generator->create_user();
+            $generator->enrol_user($student->id, $course->id, 'student');
+            $instance = $generator->create_module('assign', [
+                'course' => $course->id, 'grade' => 0, 'markingworkflow' => 1,
+                'assignfeedback_file_enabled' => 1, 'assignfeedback_comments_enabled' => 1,
+            ]);
+            $cm = get_coursemodule_from_instance('assign', $instance->id);
+            $context = \context_module::instance($cm->id);
+            $assignment = new \assign($context, $cm, $course);
+            $read = fn() => overview::build($course, $student->id)['assignments'][0];
+            $this->setUser($student);
+            $before = $DB->count_records('assign_submission');
+            $this->assertSame('', $read()['reviewlabel']);
+            $this->assertSame($before, $DB->count_records('assign_submission'));
+            $submission = $assignment->get_user_submission($student->id, true);
+            $submission->status = 'submitted';
+            $DB->update_record('assign_submission', $submission);
+            $flags = $assignment->get_user_flags($student->id, true);
+            $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
+            $DB->update_record('assign_user_flags', $flags);
+            $before = $DB->count_records('assign_grades');
+            $this->assertSame('', $read()['reviewlabel']);
+            $this->assertSame($before, $DB->count_records('assign_grades'));
+            $grade = $assignment->get_user_grade($student->id, true, 0);
+            $this->assertSame('', $read()['reviewlabel']);
+            $file = [
+                'contextid' => $context->id, 'component' => 'assignfeedback_file', 'filearea' => 'feedback_files',
+                'itemid' => $grade->id, 'filepath' => '/', 'filename' => 'private-response.txt',
+            ];
+            get_file_storage()->create_file_from_string($file, 'Private response content');
+            $label = get_string('reviewattemptfeedback', 'format_duallearning');
+            $this->assertSame($label, $read()['reviewlabel']);
+            $this->assertSame(get_string('feedbackreturned', 'format_duallearning'), $read()['status']);
+            $this->assertSame('', $read()['pendinghint']);
+            $this->assertStringContainsString('/mod/assign/view.php?id=' . $cm->id, $read()['url']);
+            $html = $OUTPUT->render_from_template('format_duallearning/overview', overview::build($course, $student->id));
+            $this->assertStringContainsString($label, $html);
+            $this->assertStringNotContainsString('private-response.txt', $html);
+            $this->assertStringNotContainsString('Private response content', $html);
+            $this->assertStringNotContainsString('pluginfile.php', $html);
+            foreach ([ASSIGN_MARKING_WORKFLOW_STATE_INMARKING, ASSIGN_MARKING_WORKFLOW_STATE_READYFORRELEASE] as $state) {
+                $flags->workflowstate = $state;
+                $DB->update_record('assign_user_flags', $flags);
+                $this->assertSame('', $read()['reviewlabel']);
+                $this->assertSame(get_string('submittedungraded', 'format_duallearning'), $read()['status']);
+            }
+            $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
+            $DB->update_record('assign_user_flags', $flags);
+            $this->assertSame($label, $read()['reviewlabel']);
+            $plugin = $assignment->get_feedback_plugin_by_type('file');
+            $plugin->set_config('enabled', 0);
+            $this->assertSame('', $read()['reviewlabel']);
+            $DB->insert_record('assignfeedback_comments', (object) [
+                'assignment' => $instance->id, 'grade' => $grade->id,
+                'commenttext' => 'Returned comments', 'commentformat' => FORMAT_PLAIN,
+            ]);
+            $this->assertSame(get_string('reviewattemptcomments', 'format_duallearning'), $read()['reviewlabel']);
+            $plugin->set_config('enabled', 1);
+            $this->assertSame($label, $read()['reviewlabel']);
+            $assignment->get_feedback_plugin_by_type('comments')->set_config('enabled', 0);
+            $this->assertSame($label, $read()['reviewlabel']);
+            foreach (['draft', 'reopened'] as $status) {
+                $submission->status = $status;
+                $DB->update_record('assign_submission', $submission);
+                $this->assertSame('', $read()['reviewlabel']);
+            }
+            $submission->latest = 0;
+            $DB->update_record('assign_submission', $submission);
+            $second = $assignment->get_user_submission($student->id, true, 1);
+            $second->status = 'submitted';
+            $DB->update_record('assign_submission', $second);
+            $this->assertSame('', $read()['reviewlabel']);
+            $secondgrade = $assignment->get_user_grade($student->id, true, 1);
+            $this->assertSame('', $read()['reviewlabel']);
+            $file['itemid'] = $secondgrade->id;
+            get_file_storage()->create_file_from_string($file, 'Current response');
+            $this->assertSame($label, $read()['reviewlabel']);
+            $DB->set_field('assign', 'markingworkflow', 0, ['id' => $instance->id]);
+            $this->assertSame($label, $read()['reviewlabel']);
+            // Files must not bypass the existing grade visibility rules for scored assignments.
+            $DB->set_field('assign', 'grade', 100, ['id' => $instance->id]);
+            $this->assertSame('', $read()['reviewlabel']);
+            $this->setAdminUser();
+            $this->assertSame('', overview::build($course, get_admin()->id)['assignments'][0]['reviewlabel']);
+        }
+    }
+
+
+    /**
      * Ungraded comments respect release, attempt, and plugin visibility.
      */
     public function test_ungraded_comments_returned(): void {
