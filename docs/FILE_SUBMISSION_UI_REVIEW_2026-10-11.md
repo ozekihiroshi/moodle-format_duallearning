@@ -2,7 +2,7 @@
 
 [日本語](FILE_SUBMISSION_UI_REVIEW_2026-10-11.ja.md)
 
-The return path works through real assignment forms. The complete file workflow is not yet a pass: uploads stalled after storing files, and download completion/content were not confirmed. This is a developer-run audit with fictional accounts, not a novice-user study.
+The return path works through real assignment forms in Self paced, Topics and Teacher guided. Student downloads were subsequently verified byte-for-byte. Unassisted automated uploads remain unresolved, so the complete file workflow is not an unconditional pass. This is a developer-run audit with fictional accounts, not a novice-user study.
 
 ## Setup
 
@@ -40,3 +40,29 @@ The Topics upload was left at the picker after the failure. Its full return/resu
 ## Next gate
 
 Resolve or explain the upload-response failure and verify a normal download's contents before treating the workflow as passed. Resume the Topics lifecycle and Teacher guided navigation after that. No product code changed during this audit and CI was not rerun; the successful 907e6b9 run remains the code reference. Mobile, assistive technology and independent users remain outside this audit.
+
+
+## Continuation: Topics, Teacher guided and download verification
+
+This section supersedes the pending comparison/download items above. Earlier observations are retained as a chronological record.
+
+The user's screenshot showed a manually saved Topics draft. On resuming browser control, Assignment72 was already Submitted for grading. This establishes successful manual saving/submission, but a screenshot alone does not establish whether an intermediate upload stall occurred. The user-provided file was left intact and its contents were not inspected.
+
+Topics completed two return cycles. The teacher released feedback-1.txt; the student saw it. Reopening created attempt 2, with the previous submission in history and no current feedback file. The student submitted the synthetic submission-2.txt, and the teacher's attempt-2 feedback area was empty. After feedback-2.txt was released, the student saw only that current feedback file, then reached Page73 through the standard course index. The inherited Released label and absent historical no-grade feedback also occurred here. This continuation did not repeat the Topics In marking visibility check.
+
+Teacher guided completed the same two-attempt cycle. Its overview changed from Submitted to Submitted; feedback returned after the first release. Reopening changed it to Resubmission required, removed the previous review link and made Assignment75 the next target. After resubmission, it showed Submitted without a feedback-review link. The teacher's second-attempt feedback area was empty. Releasing feedback-2.txt restored the current-attempt review action, which opened the standard assignment with feedback-2.txt and the old submission separately in history. The student returned via the course breadcrumb and Next item to check to Page76. Preparation was marked complete solely to exercise navigation. In marking visibility was not repeated in this course.
+
+Both guided-mode feedback downloads were verified using normal student-facing links. The downloaded files matched their local synthetic source files by SHA-256:
+
+| File | Bytes | SHA-256 |
+| --- | --- | --- |
+| feedback-1.txt | 67 | C06077A7D808F67CDF11220703538304BE744810E3B1C8A6B0AE5D8E6758721C |
+| feedback-2.txt | 90 | 49FC411A4C00C947B1B631631DF7F32A36CEFA35D455F5600CF1A8CDF5F0C63B |
+
+The first was downloaded as D:/Downloads/feedback-1 (1).txt and the second as D:/Downloads/feedback-2.txt. This verifies these two guided-course downloads; it does not retrospectively certify every earlier download attempt.
+
+Automated upload recovery remains a limitation. Topics and Teacher guided needed Close → Files after a stalled response. In Teacher guided, an empty refreshed list was transient: retrying before the first upload had settled produced submission-2.txt and submission-2 (1).txt. The synthetic duplicate was deleted using the standard file dialog, and only submission-2.txt was saved and formally submitted. An initial teacher save also contained no feedback file; the later successful upload was confirmed in the list before saving. Do not treat an empty refresh as proof that an upload failed, or a click on Save as proof that a file was included. No browser protection settings or core code were changed.
+
+With submission-only completion, both Dual Learning modes can point to the follow-up material before feedback exists. The overview does not claim the feedback has been read or that the student has mastered the material. Whether a feedback-dependent activity should be offered at that point remains a course-design question, not a newly validated readiness rule.
+
+The planned two-attempt navigation comparison is now covered, subject to upload recovery. The remaining technical gate is isolating the stalled automated upload response from ordinary manual behaviour. Independent-user, mobile and assistive-technology evaluation remain outside this audit. No product code changed; no new CI run was required for this documentation update.
