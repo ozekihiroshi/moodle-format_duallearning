@@ -2,7 +2,7 @@
 
 [日本語](FILE_SUBMISSION_UI_REVIEW_2026-10-11.ja.md)
 
-The return path works through real assignment forms in Self paced, Topics and Teacher guided. Student downloads were subsequently verified byte-for-byte. Unassisted automated uploads remain unresolved, so the complete file workflow is not an unconditional pass. This is a developer-run audit with fictional accounts, not a novice-user study.
+The return path works through real assignment forms in Self paced, Topics and Teacher guided. Student downloads were subsequently verified byte-for-byte. The upload stall was subsequently isolated to the active Chrome debugging connection: the user confirmed normal manual behaviour after disconnecting it. Automated uploads with that connection remain unsuitable for an unconditional UI pass. This is a developer-run audit with fictional accounts, not a novice-user study.
 
 ## Setup
 
@@ -66,3 +66,18 @@ Automated upload recovery remains a limitation. Topics and Teacher guided needed
 With submission-only completion, both Dual Learning modes can point to the follow-up material before feedback exists. The overview does not claim the feedback has been read or that the student has mastered the material. Whether a feedback-dependent activity should be offered at that point remains a course-design question, not a newly validated readiness rule.
 
 The planned two-attempt navigation comparison is now covered, subject to upload recovery. The remaining technical gate is isolating the stalled automated upload response from ordinary manual behaviour. Independent-user, mobile and assistive-technology evaluation remain outside this audit. No product code changed; no new CI run was required for this documentation update.
+
+
+## Upload diagnosis: dependence on the debugging connection
+
+The controlled comparison identified a test-environment dependency. The user reported that a manual upload also stalled while the ChatGPT Chrome debugging connection was active. After cancelling that connection and following the reload/manual-upload comparison, the user reported that the picker returned normally. This rules out automated file selection/click timing as the sole explanation and does not justify a Dual Learning code change. It does not identify the exact defect inside Chrome, the extension or its request-interception implementation.
+
+The failed automated upload was inspected in standard Topics, using upload-probe.txt in an unsaved teacher feedback draft. A temporary Apache response-header log recorded the upload as HTTP 200, Content-Type text/plain, Sec-Fetch-Site same-origin and Sec-Fetch-Dest iframe, with no X-Frame-Options, Content-Security-Policy or Location response header. The JSON renderer's special handling for uploaded files in lib/classes/output/core_renderer_ajax.php matches this text/plain response. The browser nevertheless displayed a blocked page in the upload iframe and YUI _uploadComplete raised a SecurityError while reading its document. Close → Files showed that upload-probe.txt had been stored in the draft.
+
+The connected manual comparison produced the same server response headers and the user confirmed the stall. The disconnected successful result is user-observed evidence; the captured server log does not contain a separately identifiable successful request, so it is not claimed as a network trace of the successful control.
+
+Only response status, path without query, selected headers and fetch metadata were logged. No cookies, credentials or request bodies were logged. The temporary Apache configuration was removed and Apache configuration validation passed before a graceful reload. A session timeout after the diagnostic log configuration reload was handled by logging in again and was kept separate from the original upload failure.
+
+No grading changes were saved during diagnosis. Read-only verification after cleanup found exactly feedback-1.txt for Topics attempt 1 and feedback-2.txt for attempt 2 in the published feedback file areas. Diagnostic files remained unsaved draft data; they were not published as student feedback. Product code, Moodle core, release artifacts and browser protection settings were unchanged.
+
+For subsequent file-upload checks, use manual operation with the debugging connection detached and reconnect afterwards for inspection. Do not retry a stalled upload merely because the picker is still spinning: the file may already have reached the draft area. Further debugging of the connection itself should use an isolated reproduction. This diagnostic gate is closed for deciding whether to modify Dual Learning; resolving the automation connection's internal behaviour is a separate tooling issue.
