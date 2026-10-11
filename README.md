@@ -20,8 +20,8 @@ Download the installable package there, or use the attached ZIP from
 [GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
 Follow [requirements and installation](#requirements-and-installation) below.
 
-The published baseline is [0.1.0-alpha10](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha10).
-This branch prepares **0.1.0-alpha11**; see its [release notes](docs/RELEASE_NOTES_0.1.0-alpha11.md).
+The current release is [0.1.0-alpha11](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha11).
+See the [release notes](docs/RELEASE_NOTES_0.1.0-alpha11.md) and [publication checks](docs/PUBLICATION_0.1.0-alpha11.md).
 It remains an alpha for evaluation on Moodle 5.2. Component:
 `format_duallearning`; licence: GPL v3 or later.
 

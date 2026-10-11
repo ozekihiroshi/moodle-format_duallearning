@@ -1,6 +1,6 @@
 # Moodle Marketplace listing
 
-Copy-ready metadata for the alpha11 release candidate for the published format_duallearning listing.
+Metadata for the published alpha11 format_duallearning release. The live listing uses shorter opening sentences and separate authoring, learner guidance, integration and current-scope sections.
 
 ## Identity
 
@@ -53,7 +53,7 @@ The plugin stores its course-level learning-mode option. Author-created outlines
 ## Version release notes
 
 Use the English [alpha11 release notes](RELEASE_NOTES_0.1.0-alpha11.md).
-The tag and release URL above are planned identifiers until publication.
+Published on GitHub and Moodle Marketplace on 11 October 2026. See [publication checks](PUBLICATION_0.1.0-alpha11.md).
 
 ## Screenshots
 
