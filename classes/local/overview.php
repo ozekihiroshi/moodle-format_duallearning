@@ -52,6 +52,7 @@ class overview {
         $items = self::collect_items($course, $userid, $teacher, $mode);
         $next = self::first_incomplete($items['targets']);
         return [
+            'hascontent' => !empty($items['targets']) || !empty($items['shortcuts']) || !empty($items['assignments']),
             'heading' => get_string($mode->heading_string(), 'format_duallearning'),
             'next' => $next,
             'nextlabel' => get_string('next', 'format_duallearning'),

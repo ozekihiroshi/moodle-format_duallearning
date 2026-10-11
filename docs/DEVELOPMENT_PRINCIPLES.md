@@ -4,7 +4,7 @@ English | [日本語](DEVELOPMENT_PRINCIPLES.ja.md)
 
 Policy ID: DL-INDEPENDENCE-AND-COOPERATION  
 Established: 2026-09-29  
-Document revision: 3
+Document revision: 4
 
 ## 1. Purpose and scope
 
@@ -29,6 +29,20 @@ The chain from less operational effort, to more time for teachers to revise mate
 Even without an empirical research setting, keep learning outcomes in view as design hypotheses. When drawing on existing research, check its sources, populations, conditions, and limitations; do not present it as proof of this product's effectiveness. Identify the origins and unknowns of hypotheses derived from judgement or imagination as well. Distinguish research-informed suggestions, design reasoning, functional checks, observations of actual use, and assessments of learning outcomes.
 
 Support teachers in providing explanations, practice, checks, and revision without imposing a single model of a good lesson. Outcomes also depend on content, learners, and teaching practice. When observation is unavailable, record hypotheses and design reviews and continue improving without claiming validation. Do not automatically introduce learner tracking or new data collection for evaluation.
+
+### Require a reason for complexity
+
+**Less complexity for teachers. More clarity for learners.**
+
+**Every feature must justify its complexity.**
+
+Treat these as guiding principles, not claims that the current product has achieved them. Apply them to retaining existing features as well as adding new ones. Name the intended user and task, the unnecessary decisions removed, the new concepts and transitions introduced, and the evidence for the tradeoff. Consider removal, consolidation, clearer presentation and safer defaults before adding another control or setting.
+
+Preserve Moodle's capabilities, permissions, accessibility and access to advanced settings. Reduce operating effort without removing information needed to decide about visibility, submission, assessment or deadlines. Fewer visible controls are not automatically simpler; important actions must remain discoverable.
+
+Evaluate five dimensions: author decisions, learner orientation and next action, suitability for teacher-guided and self-paced work, compatibility with standard Moodle, and consistency of the interaction model. Compare equivalent tasks against standard Topics and Boost. Record the exact version and configuration, and separate code inspection, developer walkthroughs, first-time participant observations and learning-outcome evidence. Do not substitute successful CI or a developer's familiarity for participant evaluation.
+
+For each proposed change, record: user/task → observed problem or hypothesis → value and added complexity → simpler alternatives → evidence and unverified scope → retain, simplify, combine, remove or defer → next acceptance check. This is a development review record, not a form imposed on teachers or learners. Keep the three plugins independently useful.
 
 ## 2. Independence
 

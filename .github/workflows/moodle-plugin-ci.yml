@@ -66,6 +66,19 @@ jobs:
           --plugin ./moodle-format_duallearning
           --db-host=127.0.0.1
 
+      - name: JavaScript build and lint
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci grunt
+
+      - name: Upload compiled JavaScript
+        if: ${{ !cancelled() && matrix.php == '8.3' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: compiled-amd-${{ github.sha }}
+          path: moodle-format_duallearning/amd/build
+          if-no-files-found: error
+          retention-days: 7
+
       - name: PHP lint
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci phplint

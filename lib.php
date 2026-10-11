@@ -123,3 +123,26 @@ function format_duallearning_inplace_editable($itemtype, $itemid, $newvalue): ?\
     }
     return null;
 }
+
+/**
+ * Refresh the current user's overview using standard course access checks.
+ *
+ * @param array $args Fragment arguments including the validated context.
+ * @return string Rendered overview, or an empty string when there is no content.
+ */
+function format_duallearning_output_fragment_overview(array $args): string {
+    global $USER, $OUTPUT;
+    $courseid = clean_param($args['courseid'] ?? 0, PARAM_INT);
+    $course = get_course($courseid);
+    $context = context_course::instance($courseid);
+    if (empty($args['context']) || $args['context']->id != $context->id || $course->format !== 'duallearning') {
+        throw new invalid_parameter_exception('Invalid overview context');
+    }
+    // core_get_fragment has already called require_login for this validated context.
+    // Recheck access without reinitialising a page whose output has started.
+    if (!can_access_course($course, $USER, '', true)) {
+        throw new \moodle_exception('nopermissions', 'error', '', 'view course');
+    }
+    $data = \format_duallearning\local\overview::build($course, $USER->id);
+    return $OUTPUT->render_from_template('format_duallearning/overview', $data);
+}

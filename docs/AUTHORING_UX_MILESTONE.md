@@ -1,5 +1,7 @@
 # Next milestone: understanding through authoring
 
+> Update 2026-10-11: the material below records the earlier plan and status. See the [design and implementation audit](DESIGN_IMPLEMENTATION_AUDIT_2026-10-11.md) for current source findings and the next evaluation baseline.
+
 English | [日本語](AUTHORING_UX_MILESTONE.ja.md)
 
 2026-09-29. Document revision: 3. Status: development direction and evaluation plan. The proposed interface and acceptance criteria describe future work, not implemented features or demonstrated benefits.

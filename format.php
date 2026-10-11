@@ -31,16 +31,29 @@ if ($displaysection === null) {
         'moodle/course:sectionvisibility',
     ], $context);
     if ($PAGE->user_is_editing() && $canauthor) {
-        $continueurl = new moodle_url('/course/format/duallearning/unit.php', ['courseid' => $course->id]);
-        echo html_writer::div(html_writer::link($continueurl, get_string('continueunit', 'format_duallearning'), [
-            'class' => 'btn btn-primary',
-        ]), 'mb-3');
+        $hasunits = false;
+        foreach (get_fast_modinfo($course)->get_section_info_all() as $section) {
+            // Match the selectable units on the authoring page, including hidden drafts.
+            if ((int) $section->sectionnum !== 0 && !$section->component) {
+                $hasunits = true;
+                break;
+            }
+        }
+        if ($hasunits) {
+            $continueurl = new moodle_url('/course/format/duallearning/unit.php', ['courseid' => $course->id]);
+            echo html_writer::div(html_writer::link($continueurl, get_string('continueunit', 'format_duallearning'), [
+                'class' => 'btn btn-primary',
+            ]), 'mb-3');
+        }
         $url = new moodle_url('/course/format/duallearning/author.php', ['courseid' => $course->id]);
         echo html_writer::div(html_writer::link($url, get_string('startunit', 'format_duallearning'), [
-            'class' => 'btn btn-secondary',
+            'class' => $hasunits ? 'btn btn-secondary' : 'btn btn-primary',
         ]), 'mb-3');
     }
     $panel = \format_duallearning\local\overview::build($course, $USER->id);
-    echo $OUTPUT->render_from_template('format_duallearning/overview', $panel);
+    echo html_writer::div($OUTPUT->render_from_template('format_duallearning/overview', $panel), '', [
+        'id' => 'duallearning-overview', 'aria-live' => 'polite',
+    ]);
+    $PAGE->requires->js_call_amd('format_duallearning/overview', 'init', [$course->id, $context->id]);
 }
 require($CFG->dirroot . '/course/format/topics/format.php');

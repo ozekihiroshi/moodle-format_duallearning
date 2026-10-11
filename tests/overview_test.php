@@ -39,7 +39,9 @@ final class overview_test extends \advanced_testcase {
         $this->setUser($student);
         $data = overview::build($course, $student->id);
         $this->assertFalse($data['hasassignments']);
+        $this->assertFalse($data['hascontent']);
         $html = $OUTPUT->render_from_template('format_duallearning/overview', $data);
+        $this->assertSame('', trim($html));
         $this->assertStringNotContainsString($data['assignmentheading'], $html);
         $this->assertStringNotContainsString($data['statehint'], $html);
         $this->getDataGenerator()->create_module('assign', ['course' => $course->id, 'visible' => 0]);
@@ -47,6 +49,7 @@ final class overview_test extends \advanced_testcase {
         $visible = $this->getDataGenerator()->create_module('assign', ['course' => $course->id, 'name' => 'Visible assignment']);
         $data = overview::build($course, $student->id);
         $this->assertTrue($data['hasassignments']);
+        $this->assertTrue($data['hascontent']);
         $this->assertCount(1, $data['assignments']);
         $this->assertSame($visible->name, $data['assignments'][0]['name']);
         $html = $OUTPUT->render_from_template('format_duallearning/overview', $data);
