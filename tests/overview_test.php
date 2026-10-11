@@ -109,6 +109,65 @@ final class overview_test extends \advanced_testcase {
         $this->assertSame($submitted, $readstatus());
     }
     /**
+     * Retained grades must not imply that a new attempt has been graded.
+     */
+    public function test_grade_publication_is_specific_to_current_attempt(): void {
+        global $DB, $CFG;
+        require_once($CFG->dirroot . '/mod/assign/locallib.php');
+        require_once($CFG->libdir . '/gradelib.php');
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
+        $student = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
+        $instance = $this->getDataGenerator()->create_module('assign', [
+            'course' => $course->id, 'grade' => 100, 'markingworkflow' => 1,
+        ]);
+        $cm = get_coursemodule_from_instance('assign', $instance->id);
+        $assignment = new \assign(\context_module::instance($cm->id), $cm, $course);
+        $submission = $assignment->get_user_submission($student->id, true);
+        $submission->status = 'submitted';
+        $DB->update_record('assign_submission', $submission);
+        $firstgrade = $assignment->get_user_grade($student->id, true, 0);
+        $DB->set_field('assign_grades', 'grade', 75, ['id' => $firstgrade->id]);
+        $flags = $assignment->get_user_flags($student->id, true);
+        $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
+        $DB->update_record('assign_user_flags', $flags);
+        grade_update('mod/assign', $course->id, 'mod', 'assign', $instance->id, 0,
+            (object) ['userid' => $student->id, 'rawgrade' => 75]);
+        $this->setUser($student);
+        $status = fn() => overview::build($course, $student->id)['assignments'][0]['status'];
+        $published = get_string('graded', 'format_duallearning');
+        $pending = get_string('submitted', 'format_duallearning');
+        $this->assertSame($published, $status());
+        $submission->attemptnumber = 1;
+        $DB->update_record('assign_submission', $submission);
+        $before = $DB->count_records('assign_grades');
+        $this->assertSame($pending, $status());
+        $this->assertSame($before, $DB->count_records('assign_grades'));
+        $secondgrade = $assignment->get_user_grade($student->id, true, 1);
+        $this->assertSame($pending, $status());
+        $DB->set_field('assign', 'markingworkflow', 0, ['id' => $instance->id]);
+        $this->assertSame($pending, $status());
+        // A gradebook override does not establish grading of the current attempt.
+        $item = \grade_item::fetch(['itemtype' => 'mod', 'itemmodule' => 'assign', 'iteminstance' => $instance->id]);
+        $item->update_final_grade($student->id, 80, 'test');
+        $this->assertSame($pending, $status());
+        $DB->set_field('assign_grades', 'grade', 0, ['id' => $secondgrade->id]);
+        $this->assertSame($published, $status());
+        $DB->set_field('assign', 'markingworkflow', 1, ['id' => $instance->id]);
+        $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_INMARKING;
+        $DB->update_record('assign_user_flags', $flags);
+        $this->assertSame($pending, $status());
+        $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
+        $DB->update_record('assign_user_flags', $flags);
+        $this->assertSame($published, $status());
+        $item->set_hidden(1);
+        $this->assertSame($pending, $status());
+        $item->set_hidden(0);
+        $this->assertSame($published, $status());
+    }
+    /**
      * Next activity follows moved subsections and keeps visibility restrictions.
      */
     public function test_next_activity_follows_subsections(): void {

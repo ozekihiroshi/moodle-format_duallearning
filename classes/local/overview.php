@@ -289,6 +289,11 @@ class overview {
         if (!$submission || $submission->status !== 'submitted') {
             return false;
         }
+        // A retained gradebook grade may belong to an earlier attempt.
+        $attemptgrade = $assignment->get_user_grade($userid, false, $submission->attemptnumber);
+        if (!$attemptgrade || $attemptgrade->grade === null || (float) $attemptgrade->grade < 0) {
+            return false;
+        }
         $info = grade_get_grades($course->id, 'mod', 'assign', $instance->id, $userid);
         $item = $info->items[0] ?? null;
         $grade = $item->grades[$userid] ?? null;
