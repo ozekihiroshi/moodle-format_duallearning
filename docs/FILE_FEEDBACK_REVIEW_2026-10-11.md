@@ -35,3 +35,15 @@ The regression must cover unreleased and released files, empty or disabled feedb
 ## Limits
 
 No product source changed in this audit, so the existing passing a1abd21 CI run remains the product validation reference (GitHub Actions 38127430802). File uploads/download bytes, teacher form workflow, Teacher guided end-to-end behaviour, mobile and assistive technology remain untested here. The next step is the bounded F1 correction and its regressions, not a claim that the overall audit is complete.
+
+## F1 correction and regression — 11 October 2026
+
+Implemented in 907e6b9. For individual no-grade assignments, the overview now checks the current attempt's standard file-feedback plugin after the workflow-release guard. Files produce “Submitted; feedback returned” and “View this attempt’s feedback”. When comments and files coexist, the same generic action covers both. Comments-only and scored-assignment behaviour remain unchanged. Japanese strings are included.
+
+The automated regression covers both Self paced and Teacher guided: absent submission/grade records without creating them on read, empty feedback, In marking and Ready for release, Released, disabled file feedback, comments-only fallback, mixed feedback, disabled comments, draft/reopened submissions, a new attempt with no response, a new response on that attempt, workflow disabled, scored-assignment guard, and teacher visibility. Rendered output links to the standard assignment page without filenames, file contents or pluginfile URLs.
+
+In the same Moodle 5.2.4 lab, the actual student account first saw no result action when only the old response existed. A second response file was then seeded on attempt 1 (grade ID 11). In marking showed no action and no file on the standard page. After release, the new overview action opened the standard page displaying attempt-2-feedback.txt. Adding a current comment preserved the generic action, which opened both the current comment and file. These checks used the student browser; teacher upload/release operations were scripted fixtures. The Topics fixture was retained without a new response.
+
+The core-history observation and initial disabled-comments fixture error remain recorded above; this correction does not address them. A complete upload/download workflow, mobile, assistive technology and third-party user observation remain outside this regression.
+
+Validation passed: [Moodle Plugin CI 38128778057](https://github.com/ozekihiroshi/moodle-format_duallearning/actions/runs/38128778057), commit 907e6b9. PHP 8.3/8.4 PHPUnit, coding/PHPDoc checks, JavaScript build/lint, learner browser regression, student-role cache regression and reproducible ZIP all passed. PHP 8.4 reported 35 tests and 340 assertions.
