@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Prioritise named saved drafts and direct Continue editing actions when hidden units exist; keep new-unit creation secondary and show every draft choice.
+
 - Show a consistent authoring entry and saved-unit/draft list to authorised teachers even when editing is off.
 - Add reversible introduction clearing while preserving the title and text entered after clearing.
 - Distinguish a saved unit introduction from separate learning materials, and keep draft visibility and recovery links on screen.

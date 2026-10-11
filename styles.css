@@ -60,3 +60,18 @@ body:has(.duallearning-activity-navigation) .activity-navigation {
     min-height: 44px;
     white-space: normal;
 }
+
+.duallearning-saved-drafts {
+    list-style: none;
+    padding: 0;
+}
+
+.duallearning-saved-drafts > li {
+    margin-bottom: 1rem;
+}
+
+.duallearning-authoring-navigation .btn {
+    min-height: 44px;
+    white-space: normal;
+    max-width: 100%;
+}

@@ -75,4 +75,36 @@ final class unit_starter_test extends \advanced_testcase {
             $this->assertEquals($count, $DB->count_records('course_sections', ['course' => $course->id]));
         }
     }
+
+    /**
+     * Resume choices include each hidden unit, excluding visible units and student access.
+     */
+    public function test_navigation_prioritises_saved_drafts(): void {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning', 'numsections' => 0]);
+        $empty = unit_starter::navigation($course);
+        $this->assertStringNotContainsString('data-region="saved-drafts"', $empty);
+        $this->assertSame(1, substr_count($empty, 'btn btn-primary'));
+
+        $first = unit_starter::create($course, 'First draft', '', FORMAT_HTML);
+        $second = unit_starter::create($course, 'Second draft', '', FORMAT_HTML);
+        $published = unit_starter::create($course, 'Published unit', '', FORMAT_HTML);
+        course_update_section($course, $published, (object) ['visible' => 1]);
+        $html = unit_starter::navigation($course);
+        $this->assertStringContainsString('Resume a saved draft (2)', $html);
+        foreach ([$first, $second] as $draft) {
+            $this->assertStringContainsString('sectionid=' . $draft->id, $html);
+            $this->assertStringContainsString('Continue editing: ' . $draft->name, $html);
+        }
+        $this->assertStringNotContainsString('Published unit', $html);
+        $this->assertSame(2, substr_count($html, 'btn btn-primary'));
+        $this->assertLessThan(strpos($html, 'author.php'), strpos($html, 'First draft'));
+
+        $student = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
+        $this->setUser($student);
+        $this->assertSame('', unit_starter::navigation($course));
+    }
+
 }
