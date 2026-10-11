@@ -45,6 +45,7 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->navbar->add(get_string('continueunit', 'format_duallearning'));
 
 echo $OUTPUT->header();
+echo \format_duallearning\local\unit_starter::navigation($course);
 echo $OUTPUT->heading(get_string('continueunit', 'format_duallearning'));
 if (!$section) {
     echo html_writer::tag('p', get_string('chooseunit', 'format_duallearning'));
@@ -56,18 +57,16 @@ if (!$section) {
         $url = new moodle_url('/course/format/duallearning/unit.php', [
             'courseid' => $courseid, 'sectionid' => $item->id,
         ]);
-        $links[] = html_writer::link($url, get_section_name($course, $item));
+        $visibility = get_string($item->visible ? 'unitshownlabel' : 'unitdraftlabel', 'format_duallearning');
+        $links[] = html_writer::link($url, get_section_name($course, $item)) . ' '
+            . html_writer::span($visibility, 'badge text-bg-secondary');
     }
     if ($links) {
         echo html_writer::alist($links);
     } else {
         echo html_writer::tag('p', get_string('nounitsyet', 'format_duallearning'));
     }
-    echo html_writer::link(
-        new moodle_url('/course/format/duallearning/author.php', ['courseid' => $courseid]),
-        get_string('startunit', 'format_duallearning'),
-        ['class' => 'btn btn-secondary']
-    );
+
 } else {
     echo $OUTPUT->heading(get_section_name($course, $section), 3);
     $status = $section->visible ? 'unitshownhint' : 'unithiddenhint';
@@ -75,24 +74,11 @@ if (!$section) {
     $editurl = new moodle_url('/course/editsection.php', ['id' => $sectionid]);
     $editlink = html_writer::link($editurl, get_string('editunittext', 'format_duallearning'), ['class' => 'btn btn-secondary']);
     echo html_writer::tag('p', $editlink);
-    $studentroles = \format_duallearning\local\student_view::roles($course);
-    if ($studentroles) {
-        echo html_writer::tag('p', get_string('studentviewhint', 'format_duallearning'));
-        foreach ($studentroles as $roleid => $rolename) {
-            $switchurl = \format_duallearning\local\student_view::start_url($course, $sectionid, $roleid);
-            echo html_writer::div(
-                $OUTPUT->single_button(
-                    $switchurl,
-                    get_string('studentviewstart', 'format_duallearning', $rolename),
-                    'post'
-                ),
-                'duallearning-student-view mb-3'
-            );
-        }
-    } else {
-        $hint = $course->visible ? 'studentviewunavailable' : 'studentviewcoursehidden';
-        echo html_writer::tag('p', get_string($hint, 'format_duallearning'));
-    }
+    echo html_writer::tag('details',
+        html_writer::tag('summary', get_string('savedintro', 'format_duallearning'))
+            . format_text($section->summary, $section->summaryformat, ['context' => $context]),
+        ['class' => 'mb-3']
+    );
     $items = \format_duallearning\local\unit_actions::existing($course, $sectionid);
     if ($items) {
         echo $OUTPUT->heading(get_string('existingmaterials', 'format_duallearning'), 4);
@@ -120,6 +106,9 @@ if (!$section) {
         }
         echo html_writer::alist($rows, ['class' => 'list-unstyled']);
     }
+    if (!$items) {
+        echo html_writer::tag('p', get_string('nomaterialsyet', 'format_duallearning'), ['class' => 'alert alert-info']);
+    }
     echo $OUTPUT->heading(get_string('addmaterials', 'format_duallearning'), 4);
     $actions = \format_duallearning\local\unit_actions::build($course, $sectionid);
     foreach ($actions as $action) {
@@ -134,6 +123,24 @@ if (!$section) {
     }
     if (!$actions) {
         echo html_writer::tag('p', get_string('noaddactions', 'format_duallearning'));
+    }
+    $studentroles = \format_duallearning\local\student_view::roles($course);
+    if ($studentroles) {
+        echo html_writer::tag('p', get_string('studentviewhint', 'format_duallearning'));
+        foreach ($studentroles as $roleid => $rolename) {
+            $switchurl = \format_duallearning\local\student_view::start_url($course, $sectionid, $roleid);
+            echo html_writer::div(
+                $OUTPUT->single_button(
+                    $switchurl,
+                    get_string('studentviewstart', 'format_duallearning', $rolename),
+                    'post'
+                ),
+                'duallearning-student-view mb-3'
+            );
+        }
+    } else {
+        $hint = $course->visible ? 'studentviewunavailable' : 'studentviewcoursehidden';
+        echo html_writer::tag('p', get_string($hint, 'format_duallearning'));
     }
     $viewurl = new moodle_url('/course/section.php', ['id' => $sectionid]);
     echo html_writer::tag('p', html_writer::link($viewurl, get_string('viewunit', 'format_duallearning')));

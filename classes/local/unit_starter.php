@@ -39,6 +39,28 @@ class unit_starter {
     }
 
     /**
+     * Keep creation and recovery links available on every authoring page.
+     *
+     * @param \stdClass $course Course record; the caller must check authoring access.
+     * @return string Navigation HTML.
+     */
+    public static function navigation(\stdClass $course): string {
+        $links = [];
+        foreach (['author' => 'startunit', 'unit' => 'continueunit'] as $page => $label) {
+            $url = new \moodle_url('/course/format/duallearning/' . $page . '.php', ['courseid' => $course->id]);
+            $links[] = \html_writer::link($url, get_string($label, 'format_duallearning'), [
+                'class' => 'btn ' . ($page === 'author' ? 'btn-primary' : 'btn-outline-secondary'),
+            ]);
+        }
+        return \html_writer::tag('nav',
+            \html_writer::tag('h2', get_string('buildcourse', 'format_duallearning'), ['class' => 'h4'])
+                . \html_writer::tag('p', get_string('buildcoursehint', 'format_duallearning'))
+                . \html_writer::div(implode(' ', $links), 'd-flex flex-wrap gap-2'),
+            ['class' => 'border rounded p-3 mb-3', 'aria-label' => get_string('buildcourse', 'format_duallearning')]
+        );
+    }
+
+    /**
      * Return editable learner-facing starter text for the current mode.
      *
      * @param string $mode Learning mode.

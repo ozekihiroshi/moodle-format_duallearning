@@ -64,8 +64,10 @@ $form->set_data((object) [
     'summary_editor' => ['text' => \format_duallearning\local\unit_starter::summary($mode), 'format' => FORMAT_HTML],
 ]);
 echo $OUTPUT->header();
+echo \format_duallearning\local\unit_starter::navigation($course);
 echo $OUTPUT->heading(get_string('startunit', 'format_duallearning'));
 echo html_writer::tag('p', get_string('unitmode', 'format_duallearning', get_string($mode, 'format_duallearning')));
 echo html_writer::tag('p', get_string('unitstarterhint', 'format_duallearning'));
+$PAGE->requires->js_call_amd('format_duallearning/intro_actions', 'init');
 $form->display();
 echo $OUTPUT->footer();

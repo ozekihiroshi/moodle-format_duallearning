@@ -37,6 +37,20 @@ class unit_starter extends \moodleform {
         $mform->addElement('text', 'name', get_string('unitname', 'format_duallearning'), ['maxlength' => 255]);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
+        $mform->addElement('static', 'introhint', '', get_string('unitintrohint', 'format_duallearning'));
+        $controls = \html_writer::tag('button', get_string('clearintro', 'format_duallearning'), [
+            'type' => 'button', 'class' => 'btn btn-outline-secondary', 'data-action' => 'clear-intro',
+        ]) . ' ' . \html_writer::tag('button', get_string('undoclearintro', 'format_duallearning'), [
+            'type' => 'button', 'class' => 'btn btn-outline-secondary', 'data-action' => 'undo-clear-intro', 'disabled' => true,
+        ]);
+        $controls .= \html_writer::tag('span', '', ['role' => 'status', 'class' => 'd-block mt-2']);
+        $mform->addElement('static', 'introactions', '', \html_writer::div($controls, 'mb-2', [
+            'data-region' => 'intro-actions', 'hidden' => true,
+            'data-cleared' => get_string('introcleared', 'format_duallearning'),
+            'data-restored' => get_string('introrestored', 'format_duallearning'),
+            'data-changed' => get_string('introchanged', 'format_duallearning'),
+            'data-loading' => get_string('introloading', 'format_duallearning'),
+        ]));
         $mform->addElement('editor', 'summary_editor', get_string('unittext', 'format_duallearning'), null, [
             'context' => $this->_customdata['context'],
             'maxfiles' => 0,

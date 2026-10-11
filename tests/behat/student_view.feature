@@ -29,7 +29,7 @@ Feature: Authors check student-role visibility and return to their draft
     And I should not see "Private draft lesson"
     And I should see "Available lesson"
     When I press "Return to my role and unit authoring"
-    Then I should see "Continue building a unit"
+    Then I should see "Open units and drafts"
     And I should see "Private draft lesson"
     And I should see "Unit: hidden"
     And "Edit content/settings" "link" should exist
