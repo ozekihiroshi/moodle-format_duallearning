@@ -37,7 +37,7 @@ Feature: Teachers can start and recover authoring without knowing edit mode
     When I follow "Create a unit"
     And I follow "Open units and drafts"
     Then I should see "Draft — hidden from learners"
-    When I follow "Daily temperatures"
+    When I click on "a[href*='/course/format/duallearning/unit.php'][href*='sectionid=']" "css_element"
     Then "Edit the unit introduction" "link" should exist
     And "Add an explanation" "link" should exist
     When I log out

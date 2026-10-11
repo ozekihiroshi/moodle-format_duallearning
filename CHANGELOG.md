@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased
+
+- Show a consistent authoring entry and saved-unit/draft list to authorised teachers even when editing is off.
+- Add reversible introduction clearing while preserving the title and text entered after clearing.
+- Distinguish a saved unit introduction from separate learning materials, and keep draft visibility and recovery links on screen.
+- Add authoring recovery and student-visibility browser regressions.
+
 ## 0.1.0-alpha11 - 2026-10-11
 
 - Make the new-unit action primary in an empty course and hide the unused learner overview until content is available.
