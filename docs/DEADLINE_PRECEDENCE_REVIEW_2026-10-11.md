@@ -38,3 +38,16 @@ Core sources inspected in the lab: mod/assign/locallib.php::override_exists, upd
 Local ignored reproduction scripts: moodle-rescue/build/dual-learning-audit-20261011/comparison/deadline-fixture.php and deadline-state.php. Fixture creation refuses duplicates. Dual activity IDs49–52 (assignment7–10); Topics53–56 (assignment11–14). All are unsubmitted and retained. Direct override seeding does not certify teacher UI acceptance of every combination.
 
 No product code, version, main or deployment changed. Documentation and local fixtures only; CI was not rerun. The prior product-code [CI passed](https://github.com/ozekihiroshi/moodle-format_duallearning/actions/runs/38123627322). This is developer verification, not usability research or proof of learning effectiveness.
+
+
+## Implemented: personal due date in the overview
+
+The candidate now displays “Your due date” for learners. It calls Moodle's update_effective_access with the explicit student ID, then uses the later of that due date and the student's extension, matching the standard remaining-time rule. Each summary creates a fresh assignment object. Reading flags does not create records. Teacher summaries continue to show the base deadline. Submission cutoff rules, the core assignment renderer and stored dates are unchanged.
+
+Browser regression confirmed A's four dates as 22,21,25,28 October, B's as 22 October throughout, and the original extension-only assignment as 20 October for A versus 18 October for B. Completing and undoing preparation refreshed the overview without reverting the personal dates. The teacher retained base dates. These checks used Boost and the actual separate accounts; Japanese label source was updated to あなたの提出期限：, but the lab has no Japanese core language pack, so Japanese UI rendering was not tested.
+
+Automated regression covers group priority, an earlier explicit user override, later extension, a later override after extension, user isolation even when session and requested user differ, user timezones, teacher dates/labels, null/zero overrides, absent due date, extension with zero due date and no creation of flags during reads. Core's null fallback is preserved rather than independently merging groups.
+
+Product commit 8fa764d was followed by style-only correction af2102e. The first CI passed PHPUnit (33 tests, 240 assertions) but rejected test-call formatting and language-key order; these were corrected. Final validation is recorded below. No main merge, release version change or production deployment was performed. Core's mixed old-extension/new-override display remains a separate finding. The standard course activity-date label can still differ from the personal overview when there is an extension, because the core label does not include it.
+
+Final CI for af2102e: https://github.com/ozekihiroshi/moodle-format_duallearning/actions/runs/38126102054 — all jobs passed: PHP 8.3/8.4, PHPUnit, coding/PHPDoc checks, JavaScript build/lint, browser regression, same-second student-role cache regression and reproducible ZIP. The following commit changes documentation only.
