@@ -199,11 +199,15 @@ class overview {
             // Match the assignment remaining-time calculation; an extension cannot shorten a due date.
             $deadline = max($deadline, $flags->extensionduedate ?? 0);
         }
+        $status = self::assignment_status($course, $cm, $assignment, $instance, $userid, $teacher);
+        $reviewlabel = match ($status) {
+            'graded' => get_string('reviewattemptgrade', 'format_duallearning'),
+            'commentsreturned' => get_string('reviewattemptcomments', 'format_duallearning'),
+            default => '',
+        };
         return $link + [
-            'status' => get_string(
-                self::assignment_status($course, $cm, $assignment, $instance, $userid, $teacher),
-                'format_duallearning'
-            ),
+            'status' => get_string($status, 'format_duallearning'),
+            'reviewlabel' => $reviewlabel,
             'deadline' => $deadline ? userdate($deadline) : get_string('nodeadline', 'format_duallearning'),
         ];
     }

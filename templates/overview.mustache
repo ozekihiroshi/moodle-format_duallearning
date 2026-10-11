@@ -16,7 +16,9 @@
         <details class="mb-3"{{^collapseassignments}} open{{/collapseassignments}}>
             <summary class="h5">{{assignmentheading}}</summary>
             <ul>{{#assignments}}<li class="mb-3"><a href="{{url}}">{{{name}}}</a><br>
-                <strong>{{status}}</strong><br>{{deadlinehint}} {{deadline}}</li>{{/assignments}}</ul>
+                <strong>{{status}}</strong><br>{{deadlinehint}} {{deadline}}
+                {{#reviewlabel}}<br><a class="btn btn-outline-secondary mt-2" href="{{url}}">{{reviewlabel}}
+                    <span class="visually-hidden"> — {{{name}}}</span></a>{{/reviewlabel}}</li>{{/assignments}}</ul>
             <p class="small">{{timezone}} · {{statehint}}</p>
         </details>
         {{/hasassignments}}

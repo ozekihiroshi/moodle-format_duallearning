@@ -145,9 +145,11 @@ final class overview_test extends \advanced_testcase {
         $DB->update_record('assign_submission', $submission);
         $grade = $assignment->get_user_grade($student->id, true, 0);
         $readstatus = fn() => overview::build($course, $student->id)['assignments'][0]['status'];
+        $review = fn() => overview::build($course, $student->id)['assignments'][0]['reviewlabel'];
         $submitted = get_string('submittedungraded', 'format_duallearning');
         $returned = get_string('commentsreturned', 'format_duallearning');
         $this->assertSame($submitted, $readstatus());
+        $this->assertSame('', $review());
         $submission->status = 'draft';
         $DB->update_record('assign_submission', $submission);
         $this->assertSame(get_string('draft', 'format_duallearning'), $readstatus());
@@ -158,18 +160,25 @@ final class overview_test extends \advanced_testcase {
             'commenttext' => 'Please compare the two calculations.', 'commentformat' => FORMAT_PLAIN,
         ]);
         $this->assertSame($returned, $readstatus());
+        $html = $GLOBALS['OUTPUT']->render_from_template('format_duallearning/overview', overview::build($course, $student->id));
+        $this->assertStringContainsString('btn btn-outline-secondary', $html);
+        $this->assertStringContainsString('visually-hidden', $html);
+        $this->assertSame(get_string('reviewattemptcomments', 'format_duallearning'), $review());
         $comments = $assignment->get_feedback_plugin_by_type('comments');
         $comments->set_config('enabled', 0);
         $this->assertSame($submitted, $readstatus());
+        $this->assertSame('', $review());
         $comments->set_config('enabled', 1);
         $DB->set_field('assign', 'markingworkflow', 1, ['id' => $instance->id]);
         $flags = $assignment->get_user_flags($student->id, true);
         $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_INMARKING;
         $DB->update_record('assign_user_flags', $flags);
         $this->assertSame($submitted, $readstatus());
+        $this->assertSame('', $review());
         $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
         $DB->update_record('assign_user_flags', $flags);
         $this->assertSame($returned, $readstatus());
+        $this->assertSame(get_string('reviewattemptcomments', 'format_duallearning'), $review());
         $submission->status = 'reopened';
         $DB->update_record('assign_submission', $submission);
         $this->assertSame(get_string('reopened', 'format_duallearning'), $readstatus());
@@ -177,6 +186,7 @@ final class overview_test extends \advanced_testcase {
         $submission->attemptnumber = 1;
         $DB->update_record('assign_submission', $submission);
         $this->assertSame($submitted, $readstatus());
+        $this->assertSame('', $review());
     }
     /**
      * Retained grades must not imply that a new attempt has been graded.
@@ -214,35 +224,46 @@ final class overview_test extends \advanced_testcase {
         );
         $this->setUser($student);
         $status = fn() => overview::build($course, $student->id)['assignments'][0]['status'];
+        $review = fn() => overview::build($course, $student->id)['assignments'][0]['reviewlabel'];
         $published = get_string('graded', 'format_duallearning');
         $pending = get_string('submitted', 'format_duallearning');
         $this->assertSame($published, $status());
+        $this->assertSame(get_string('reviewattemptgrade', 'format_duallearning'), $review());
         $submission->attemptnumber = 1;
         $DB->update_record('assign_submission', $submission);
         $before = $DB->count_records('assign_grades');
         $this->assertSame($pending, $status());
+        $this->assertSame('', $review());
         $this->assertSame($before, $DB->count_records('assign_grades'));
         $secondgrade = $assignment->get_user_grade($student->id, true, 1);
         $this->assertSame($pending, $status());
+        $this->assertSame('', $review());
         $DB->set_field('assign', 'markingworkflow', 0, ['id' => $instance->id]);
         $this->assertSame($pending, $status());
+        $this->assertSame('', $review());
         // A gradebook override does not establish grading of the current attempt.
         $item = \grade_item::fetch(['itemtype' => 'mod', 'itemmodule' => 'assign', 'iteminstance' => $instance->id]);
         $item->update_final_grade($student->id, 80, 'test');
         $this->assertSame($pending, $status());
+        $this->assertSame('', $review());
         $DB->set_field('assign_grades', 'grade', 0, ['id' => $secondgrade->id]);
         $this->assertSame($published, $status());
+        $this->assertSame(get_string('reviewattemptgrade', 'format_duallearning'), $review());
         $DB->set_field('assign', 'markingworkflow', 1, ['id' => $instance->id]);
         $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_INMARKING;
         $DB->update_record('assign_user_flags', $flags);
         $this->assertSame($pending, $status());
+        $this->assertSame('', $review());
         $flags->workflowstate = ASSIGN_MARKING_WORKFLOW_STATE_RELEASED;
         $DB->update_record('assign_user_flags', $flags);
         $this->assertSame($published, $status());
+        $this->assertSame(get_string('reviewattemptgrade', 'format_duallearning'), $review());
         $item->set_hidden(1);
         $this->assertSame($pending, $status());
+        $this->assertSame('', $review());
         $item->set_hidden(0);
         $this->assertSame($published, $status());
+        $this->assertSame(get_string('reviewattemptgrade', 'format_duallearning'), $review());
     }
     /**
      * Next activity follows moved subsections and keeps visibility restrictions.
