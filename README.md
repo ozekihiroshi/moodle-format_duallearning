@@ -20,7 +20,8 @@ Download the installable package there, or use the attached ZIP from
 [GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
 Follow [requirements and installation](#requirements-and-installation) below.
 
-The documented release is [0.1.0-alpha10](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha10).
+The published baseline is [0.1.0-alpha10](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha10).
+This branch prepares **0.1.0-alpha11**; see its [release notes](docs/RELEASE_NOTES_0.1.0-alpha11.md).
 It remains an alpha for evaluation on Moodle 5.2. Component:
 `format_duallearning`; licence: GPL v3 or later.
 
@@ -56,8 +57,7 @@ needed; experienced authors can use the actions without reading them.
 
 Readiness checks, a redesigned initial mode-selection screen, and assisted
 changes between learning designs are not yet implemented. Standard activity
-forms retain their usual settings. Reduced authoring effort has not yet been
-measured with teachers or compared with Topics.
+forms retain their usual settings. Developer-run comparisons with Topics are recorded in the [audit](docs/AUTHORING_COMPARISON_2026-10-11.md). Reduced authoring effort has not yet been measured with first-time teachers.
 
 ## Choose the learning design before authoring
 
@@ -91,7 +91,7 @@ see the current scope above and the reviewer guide for this release.
 | Overview emphasis | Review materials and continue your work | Current work and submissions |
 | Next activity | First accessible incomplete activity with completion tracking, in course order | The same learner-specific next-activity guidance |
 | Work links | Accessible external-tool / LTI activities, such as a Lab | The same external-tool links, plus accessible forums |
-| Assignment information | Submission state, published-grade status, and base deadline | The same information, with standard assignment links for teacher review |
+| Assignment information | Submission state, current-attempt results, and the learner’s effective due date | The same information, with standard assignment links for teacher review |
 | Underlying course | Existing Topics sections, activities, and records | The same sections, activities, and records |
 
 The teacher chooses one **Learning mode** for the whole course. It is not a
@@ -114,6 +114,10 @@ settings; this is a continuation aid, not an adaptive learning recommendation.
 The materials count shows manually marked completion for activities other than
 assignments. Assignment information is shown separately, including states such
 as not submitted, draft, submitted, resubmission required, and a published grade.
+
+After manual completion changes, the overview refreshes without a page reload.
+Current-attempt review actions lead to released grades, comments or feedback files.
+Reopened work does not reuse the previous attempt’s result.
 
 A learner can therefore distinguish "I marked the reading complete" from "I
 submitted the assignment". Opening the standard assignment page gives access
@@ -222,8 +226,9 @@ and assessment:
 
 - The materials count measures manual completion, not mastery or assignment
   acceptance. It excludes assignments and automatically tracked activities.
-- Displayed deadlines are assignment base deadlines. Open the assignment to
-  check individual overrides and extensions.
+- Learners see their effective assignment due date, including Moodle user/group
+  overrides and individual extensions. Teachers see the base date. Standard
+  assignment pages retain the detailed deadline and submission-cutoff rules.
 - Group submission details are delegated to the standard assignment page.
 - Published-grade status is a summary; grades and feedback are read on the
   assignment page.

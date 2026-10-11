@@ -1,13 +1,13 @@
 # Moodle Marketplace listing
 
-Copy-ready metadata for the alpha7 update to the existing format_duallearning submission.
+Copy-ready metadata for the alpha11 release candidate for the published format_duallearning listing.
 
 ## Identity
 
 - Name: Dual Learning
 - Component: `format_duallearning`
 - Plugin type: Course format
-- Version: `0.1.0-alpha7` (`2026091901`)
+- Version: `0.1.0-alpha11` (`2026101100`)
 - Maturity: Alpha
 - Supported Moodle version: Moodle 5.2
 - Licence: GNU GPL v3 or later
@@ -25,7 +25,7 @@ For authors, the format provides an editable unit outline suited to the chosen a
 
 Actions remain visible while optional hints can be opened when needed. Authors do not need to fill in an additional design questionnaire or choose an experience level. Visibility information and reminders to save form changes remain visible.
 
-For learners, a focused overview above standard Topics sections shows the next accessible incomplete activity with completion tracking, work links, materials progress, and assignment state. Progress and the next learning action appear before work links and assignments. Lists of up to five entries start expanded; longer lists can be opened when needed. Teacher-guided mode also includes accessible question forums. Materials marked complete, assignment submissions, and published grades are distinguished. Standard activity pages remain the place for detailed grades, feedback, individual extensions, and group submissions.
+For learners, a focused overview above standard Topics sections shows the next accessible incomplete activity with completion tracking, work links, materials progress, and assignment state. Progress and the next learning action appear before work links and assignments. Lists of up to five entries start expanded; longer lists can be opened when needed. Teacher-guided mode also includes accessible question forums. Materials marked complete, assignment submissions, and published grades are distinguished. Learners see their effective due date, including Moodle overrides and individual extensions, and can open the current attempt’s released results. Standard activity pages remain the place for detailed grades, feedback and group submissions.
 
 Changing the learning mode changes the overview; it does not automatically adapt the teaching content to a different learning design. It does not rewrite activities, completion records, submissions, grades, deadlines, or restrictions.
 
@@ -46,21 +46,14 @@ The plugin stores its course-level learning-mode option. Author-created outlines
 - Source: https://github.com/ozekihiroshi/moodle-format_duallearning
 - Documentation: https://github.com/ozekihiroshi/moodle-format_duallearning#readme
 - Issues: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
-- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha7
+- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha11
 - Branch: main
-- Tag: v0.1.0-alpha7
+- Tag: v0.1.0-alpha11
 
 ## Version release notes
 
-Keep the next learning action visible in long courses.
-
-- Show progress and the next incomplete activity before work links and assignments.
-- Keep all accessible links in course order using keyboard-accessible disclosures. Lists of up to five entries start expanded; longer lists start collapsed.
-- Remove Python Lab-specific instructions from the generic overview in English and Japanese, including courses with non-Python external tools.
-- Add regression tests and refresh English overview screenshots.
-- Prepare a teacher authoring evaluation kit. Actual teacher usability evaluation remains pending.
-
-Moodle 5.2; Alpha maturity. No changes to course content, submissions, grades or completion records. Fixes GitHub issues #8 and #9.
+Use the English [alpha11 release notes](RELEASE_NOTES_0.1.0-alpha11.md).
+The tag and release URL above are planned identifiers until publication.
 
 ## Screenshots
 
@@ -72,6 +65,6 @@ format also supports Boost. Overview images 01 and 03 show the alpha7 layout
 using a test teacher's Student role preview. Progress figures in these captures
 are illustrative role-preview state, not evidence of a real learner's work.
 
-Upload the alpha7 ZIP to the existing submission and replace screenshot 01
-with the refreshed file. The other four primary listing images remain valid.
+Upload the alpha11 ZIP to the published plugin after release validation.
+Existing alpha7 screenshots illustrate the earlier layout; they do not show every alpha11 improvement.
 Marketplace acceptance and automated review must be confirmed on the site.

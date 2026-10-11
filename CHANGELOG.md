@@ -1,5 +1,16 @@
 # Change log
 
+## 0.1.0-alpha11 - 2026-10-11
+
+- Make the new-unit action primary in an empty course and hide the unused learner overview until content is available.
+- Refresh the learner overview after marking a material complete or undoing completion, without reloading the course page.
+- Require a grade for the current assignment attempt before showing a published-grade result; do not reuse an earlier attempt's grade.
+- Show neutral submitted wording for assignments without a grade, and distinguish a pending graded submission from work that needs resubmission.
+- Display the learner's effective due date, respecting Moodle's user/group overrides and individual extensions. Teacher summaries retain the base date.
+- Add direct actions to view the current attempt's released grade, comments or feedback files, while respecting Moodle's visibility and marking workflow.
+- Validate overview refresh access against the current user and course context, and include compiled JavaScript in the installable ZIP.
+- Add regression coverage and bilingual developer audit records for authoring, access conditions, deadlines and the submission/feedback cycle.
+
 ## 0.1.0-alpha10 - 2026-09-30
 
 - Refresh course-index display state when switching to a student role or returning to the original role, including rapid transitions within the same second.

@@ -2,11 +2,11 @@
 
 ## Purpose and scope
 
-Dual Learning supports authoring for a teacher-guided or primarily self-paced course. Authors normally choose the approach at the start; both include preparation and revision. Alpha2 adds authoring tools to the existing learner overview. It does not automatically convert teaching materials when the learning mode changes.
+Dual Learning supports authoring for a teacher-guided or primarily self-paced course. Authors normally choose the approach at the start; both include preparation and revision. Alpha11 improves authoring entry, completion refresh and current-attempt assignment guidance. It does not automatically convert teaching materials when the learning mode changes.
 
 ## Installation and upgrade
 
-Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026091901 upgrades earlier alpha releases through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
+Install the release ZIP using Moodle's plugin installer. It contains one top-level duallearning directory. Version 2026101100 upgrades earlier alpha releases through the normal plugin upgrade process. No new tables, custom backup fields, external services, or build steps are introduced.
 
 ## Authoring check
 
@@ -31,14 +31,21 @@ For long courses, verify the next action appears before the work links and assig
 
 ## Boundaries
 
-Standard activity settings and quiz question editing are not replaced. Assignment overrides and group submissions are detailed on standard activity pages; the overview shows the base deadline. Readiness checks and assisted changes of learning design are not implemented. Classroom usability improvements have not been quantified.
+Standard activity settings and quiz question editing are not replaced. Assignment overrides and group submissions are detailed on standard activity pages; learners see their effective due date, while teachers see the base deadline. Readiness checks and assisted changes of learning design are not implemented. Classroom usability improvements have not been quantified.
 
 ## Automated checks
 
-GitHub Actions checks Moodle 5.2 with PHP 8.3 and 8.4: lint, Code Checker and PHPDoc with zero warnings, plugin validation, savepoints, PHPUnit, Chrome Behat (4 scenarios / 72 steps), and reproducible ZIP generation. Tests cover draft creation, authorisation, cross-course section rejection, module permissions, and return routes after moving activities.
+GitHub Actions checks Moodle 5.2 with PHP 8.3 and 8.4: lint, Code Checker and PHPDoc with zero warnings, plugin validation, savepoints, PHPUnit, Chrome Behat and same-second student-role cache regression, and reproducible ZIP generation. Tests cover draft creation, authorisation, cross-course section rejection, module permissions, and return routes after moving activities.
 
 Workflow runs: https://github.com/ozekihiroshi/moodle-format_duallearning/actions
 
 ## Subsection navigation check
 
 Create a subsection between two standard activities. As a learner, verify that the overview, previous/next links and activity selector follow displayed order in both learning modes. Test entry into and return from the subsection. Hidden/restricted content remains excluded. The replacement footer is used only when necessary; themes using Moodle's course index retain standard index navigation.
+
+
+## Alpha11 review focus
+
+In both modes, check completion and undo without a course reload. Reopen an assignment after a published result and verify that only the current attempt can supply a result action. For no-grade assignments, check released comments/files and their absence before release. Compare individual extensions and user/group overrides with Moodle's effective due date. A student role switch is a layout check, not a simulation of another student's enrolment or access conditions.
+
+See [release notes](RELEASE_NOTES_0.1.0-alpha11.md) and the [file workflow audit](FILE_SUBMISSION_UI_REVIEW_2026-10-11.md) for developer evidence and its limits. In the observed Chrome test setup, file uploads required disconnecting the debugging session for normal manual operation.
