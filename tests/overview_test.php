@@ -56,6 +56,62 @@ final class overview_test extends \advanced_testcase {
         $this->assertStringContainsString($data['assignmentheading'], $html);
     }
     /**
+     * Recorded submissions get status guidance without skipping or changing completion.
+     */
+    public function test_pending_submission_guidance(): void {
+        global $CFG, $DB, $OUTPUT;
+        require_once($CFG->dirroot . '/mod/assign/locallib.php');
+        require_once($CFG->libdir . '/completionlib.php');
+        $this->resetAfterTest();
+        $CFG->enablecompletion = 1;
+        foreach (['path', 'guided'] as $mode) {
+            $this->setAdminUser();
+            $generator = $this->getDataGenerator();
+            $course = $generator->create_course([
+                'format' => 'duallearning', 'learningmode' => $mode, 'enablecompletion' => 1,
+            ]);
+            $student = $generator->create_user();
+            $generator->enrol_user($student->id, $course->id, 'student');
+            $instance = $generator->create_module('assign', [
+                'course' => $course->id, 'grade' => 100, 'completion' => COMPLETION_TRACKING_MANUAL,
+            ]);
+            $page = $generator->create_module('page', [
+                'course' => $course->id, 'completion' => COMPLETION_TRACKING_MANUAL,
+            ]);
+            $cm = get_coursemodule_from_instance('assign', $instance->id);
+            $assignment = new \assign(\context_module::instance($cm->id), $cm, $course);
+            $submission = $assignment->get_user_submission($student->id, true);
+            $submission->status = 'submitted';
+            $DB->update_record('assign_submission', $submission);
+            $this->setUser($student);
+            $data = overview::build($course, $student->id);
+            $this->assertSame(get_string('checksubmission', 'format_duallearning'), $data['nextlabel']);
+            $this->assertStringContainsString('id=' . $cm->id, $data['next']['url']);
+            $hint = get_string('submissionrecordedhint', 'format_duallearning');
+            $html = $OUTPUT->render_from_template('format_duallearning/overview', $data);
+            $this->assertSame(1, substr_count($html, $hint));
+            $this->assertSame('', $data['assignments'][0]['reviewlabel']);
+            $completion = new \completion_info($course);
+            $this->assertEquals(COMPLETION_INCOMPLETE, $completion->get_data($cm, false, $student->id)->completionstate);
+            $completion->update_state($cm, COMPLETION_COMPLETE, $student->id);
+            $data = overview::build($course, $student->id);
+            $this->assertStringContainsString('id=' . $page->cmid, $data['next']['url']);
+            $this->assertSame($hint, $data['assignments'][0]['pendinghint']);
+            foreach (['draft', 'reopened'] as $status) {
+                $submission->status = $status;
+                $DB->update_record('assign_submission', $submission);
+                $this->assertSame('', overview::build($course, $student->id)['assignments'][0]['pendinghint']);
+            }
+            $submission->status = 'submitted';
+            $DB->update_record('assign_submission', $submission);
+            $DB->set_field('assign', 'grade', 0, ['id' => $instance->id]);
+            $this->assertSame('', overview::build($course, $student->id)['assignments'][0]['pendinghint']);
+            $this->setAdminUser();
+            $this->assertSame('', overview::build($course, get_admin()->id)['assignments'][0]['pendinghint']);
+        }
+    }
+
+    /**
      * Due dates follow core overrides, extensions, timezone and explicit user isolation.
      */
     public function test_personal_deadlines(): void {

@@ -51,12 +51,21 @@ class overview {
         );
         $items = self::collect_items($course, $userid, $teacher, $mode);
         $next = self::first_incomplete($items['targets']);
+        $nextpending = false;
+        foreach ($items['assignments'] as &$assignment) {
+            if ($next && $assignment['url'] === $next['url'] && $assignment['pendinghint']) {
+                $nextpending = true;
+                // Show the hint beside the primary action rather than repeating it in the list.
+                $assignment['pendinghint'] = '';
+            }
+        }
+        unset($assignment);
         return [
             'hascontent' => !empty($items['targets']) || !empty($items['shortcuts']) || !empty($items['assignments']),
             'heading' => get_string($mode->heading_string(), 'format_duallearning'),
             'next' => $next,
-            'nextlabel' => get_string('next', 'format_duallearning'),
-            'explanation' => get_string('explanation', 'format_duallearning'),
+            'nextlabel' => get_string($nextpending ? 'checksubmission' : 'next', 'format_duallearning'),
+            'explanation' => get_string($nextpending ? 'submissionrecordedhint' : 'explanation', 'format_duallearning'),
             'progress' => !$teacher && $items['manualtotal'] ? get_string(
                 'progress',
                 'format_duallearning',
@@ -208,6 +217,7 @@ class overview {
         return $link + [
             'status' => get_string($status, 'format_duallearning'),
             'reviewlabel' => $reviewlabel,
+            'pendinghint' => $status === 'submitted' ? get_string('submissionrecordedhint', 'format_duallearning') : '',
             'deadline' => $deadline ? userdate($deadline) : get_string('nodeadline', 'format_duallearning'),
         ];
     }
