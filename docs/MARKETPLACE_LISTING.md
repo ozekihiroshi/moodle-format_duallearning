@@ -1,13 +1,13 @@
 # Moodle Marketplace listing
 
-Metadata for the published alpha11 format_duallearning release. The live listing uses shorter opening sentences and separate authoring, learner guidance, integration and current-scope sections.
+Metadata prepared for the alpha12 format_duallearning release. The live listing uses shorter opening sentences and separate authoring, learner guidance, integration and current-scope sections.
 
 ## Identity
 
 - Name: Dual Learning
 - Component: `format_duallearning`
 - Plugin type: Course format
-- Version: `0.1.0-alpha11` (`2026101100`)
+- Version: `0.1.0-alpha12` (`2026101200`)
 - Maturity: Alpha
 - Supported Moodle version: Moodle 5.2
 - Licence: GNU GPL v3 or later
@@ -23,7 +23,7 @@ Dual Learning helps authors design a course for how learners will be supported: 
 
 For authors, the format provides an editable unit outline suited to the chosen approach. Start with a title and learner-facing text, save a hidden draft, then add explanations, practice questions, and submission activities through Moodle's standard forms. Existing-material links make it easy to reopen content, settings, and quiz questions. A contextual return link leads back to the same unit from standard activity and editing pages.
 
-Actions remain visible while optional hints can be opened when needed. Authors do not need to fill in an additional design questionnaire or choose an experience level. Visibility information and reminders to save form changes remain visible.
+Return to saved work through Open existing units, including hidden drafts. Use Moodle’s standard activity/resource chooser to add Page, File, URL, Quiz, Assignment or another available type to the same unit. Optional student-role checks can be opened when needed. Authors do not need to fill in an additional design questionnaire or choose an experience level. Visibility information and reminders to save form changes remain visible.
 
 For learners, a focused overview above standard Topics sections shows the next accessible incomplete activity with completion tracking, work links, materials progress, and assignment state. Progress and the next learning action appear before work links and assignments. Lists of up to five entries start expanded; longer lists can be opened when needed. Teacher-guided mode also includes accessible question forums. Materials marked complete, assignment submissions, and published grades are distinguished. Learners see their effective due date, including Moodle overrides and individual extensions, and can open the current attempt’s released results. Standard activity pages remain the place for detailed grades, feedback and group submissions.
 
@@ -46,14 +46,14 @@ The plugin stores its course-level learning-mode option. Author-created outlines
 - Source: https://github.com/ozekihiroshi/moodle-format_duallearning
 - Documentation: https://github.com/ozekihiroshi/moodle-format_duallearning#readme
 - Issues: https://github.com/ozekihiroshi/moodle-format_duallearning/issues
-- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha11
+- Release: https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha12
 - Branch: main
-- Tag: v0.1.0-alpha11
+- Tag: v0.1.0-alpha12
 
 ## Version release notes
 
-Use the English [alpha11 release notes](RELEASE_NOTES_0.1.0-alpha11.md).
-Published on GitHub and Moodle Marketplace on 11 October 2026. See [publication checks](PUBLICATION_0.1.0-alpha11.md).
+Use the English [alpha12 release notes](RELEASE_NOTES_0.1.0-alpha12.md).
+Publication is pending final release checks; do not infer publication from this preparation document.
 
 ## Screenshots
 
@@ -65,6 +65,6 @@ format also supports Boost. Overview images 01 and 03 show the alpha7 layout
 using a test teacher's Student role preview. Progress figures in these captures
 are illustrative role-preview state, not evidence of a real learner's work.
 
-Upload the alpha11 ZIP to the published plugin after release validation.
-Existing alpha7 screenshots illustrate the earlier layout; they do not show every alpha11 improvement.
+Upload the alpha12 ZIP to the published plugin after release validation.
+Existing alpha7 screenshots illustrate the earlier layout; they do not show every alpha12 improvement.
 Marketplace acceptance and automated review must be confirmed on the site.

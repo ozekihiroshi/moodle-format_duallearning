@@ -20,8 +20,9 @@ Download the installable package there, or use the attached ZIP from
 [GitHub Releases](https://github.com/ozekihiroshi/moodle-format_duallearning/releases).
 Follow [requirements and installation](#requirements-and-installation) below.
 
-The current release is [0.1.0-alpha11](https://github.com/ozekihiroshi/moodle-format_duallearning/releases/tag/v0.1.0-alpha11).
-See the [release notes](docs/RELEASE_NOTES_0.1.0-alpha11.md) and [publication checks](docs/PUBLICATION_0.1.0-alpha11.md).
+This source version is 0.1.0-alpha12. See the [release notes](docs/RELEASE_NOTES_0.1.0-alpha12.md).
+Published packages are available through the Marketplace and GitHub Releases links above;
+[alpha11 publication checks](docs/PUBLICATION_0.1.0-alpha11.md) document the preceding release.
 It remains an alpha for evaluation on Moodle 5.2. Component:
 `format_duallearning`; licence: GPL v3 or later.
 
@@ -52,8 +53,9 @@ for independent study.
 Start with a mode-specific, editable outline; save a hidden draft; then add
 explanations, practice questions, and submission activities using standard
 Moodle forms. Reopen existing materials from one place and return directly to
-their unit from activity and editing pages. Optional hints can be expanded when
-needed; experienced authors can use the actions without reading them.
+their unit from activity and editing pages. Choose materials through Moodle’s
+standard activity/resource chooser; optional student-role checks can be expanded
+when needed. Standard course editing remains available.
 
 Readiness checks, a redesigned initial mode-selection screen, and assisted
 changes between learning designs are not yet implemented. Standard activity
@@ -161,7 +163,7 @@ work. Learners do not need to switch modes to revisit these materials.
 ### Continue authoring from one place
 
 Reopen content, activity settings and quiz questions directly. Add materials
-with visible actions; open optional hints only when needed. This image uses
+in an earlier release, before the standard activity/resource chooser. This image uses
 the separate developer-test unit, not changes to the completed Python courses.
 
 ![Unit authoring actions with optional hints closed](docs/screenshots/06-authoring-actions.jpg)
@@ -251,19 +253,20 @@ The format does not send that data to an external service.
 
 ### Build and revise a unit
 
-1. Choose the course learning mode and turn editing on.
-2. Select **Start a unit from an outline**, give it a title, and adapt the text.
-   Preparation, learning steps, help, and revision are part of the editable text,
-   not extra mandatory fields.
-3. Save the hidden draft. Use **Add an explanation**, **Add practice questions**,
-   or **Collect submitted work** as needed. These open standard Moodle forms.
-4. Use the existing-material links to revise content, settings, and quiz questions.
+1. Choose the course learning mode. Authorised teachers can open unit authoring even with editing off.
+2. Select **Create a new unit**, give it a title, and adapt the introduction.
+   **Clear introduction** and its undo action let you replace the example text.
+3. Save the hidden draft. Use **Add an activity or resource** to select Page,
+   File (including PDF), URL, Quiz, Assignment or another available type.
+   Moodle's standard form saves the material in the selected unit.
+4. Choose **Open existing units** from the course to return to saved work,
+   including hidden drafts. Existing-material links reopen content, settings and quiz questions.
    **Back to unit authoring** returns to the same unit. Save form changes first.
 5. Check the materials and use Moodle's normal visibility controls when ready.
 
-Hints start collapsed and are optional. Visibility information and unsaved-form
+Optional student-role checks start collapsed. Visibility information and unsaved-form
 reminders remain visible. This is an authoring aid, not an automatic course
-builder or a replacement for activity settings. The outline is stored as a
+builder or a replacement for activity settings. The introduction is stored as a
 standard section summary; activities, grading, and submissions remain standard.
 
 Design documents for the next iteration (Japanese; not released features):
