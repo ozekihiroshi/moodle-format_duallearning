@@ -1,6 +1,6 @@
 # Moodle Marketplace listing
 
-Metadata prepared for the alpha12 format_duallearning release. The live listing uses shorter opening sentences and separate authoring, learner guidance, integration and current-scope sections.
+Metadata for the published alpha12 format_duallearning release. The live listing uses shorter opening sentences and separate authoring, learner guidance, integration and current-scope sections.
 
 ## Identity
 
@@ -53,7 +53,7 @@ The plugin stores its course-level learning-mode option. Author-created outlines
 ## Version release notes
 
 Use the English [alpha12 release notes](RELEASE_NOTES_0.1.0-alpha12.md).
-Publication is pending final release checks; do not infer publication from this preparation document.
+Published on GitHub and Moodle Marketplace on 12 October 2026. See [publication checks](PUBLICATION_0.1.0-alpha12.md).
 
 ## Screenshots
 
@@ -65,6 +65,6 @@ format also supports Boost. Overview images 01 and 03 show the alpha7 layout
 using a test teacher's Student role preview. Progress figures in these captures
 are illustrative role-preview state, not evidence of a real learner's work.
 
-Upload the alpha12 ZIP to the published plugin after release validation.
+The CI-generated alpha12 ZIP was uploaded and Marketplace automated tests passed.
 Existing alpha7 screenshots illustrate the earlier layout; they do not show every alpha12 improvement.
-Marketplace acceptance and automated review must be confirmed on the site.
+Marketplace version ID: 28596; public Download points to alpha12.
