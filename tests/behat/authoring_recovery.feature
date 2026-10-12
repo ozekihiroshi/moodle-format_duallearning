@@ -34,12 +34,19 @@ Feature: Teachers can start and recover authoring without knowing edit mode
     When I press "Create hidden draft"
     Then I should see "Saved draft"
     And I should see "No separate learning materials have been added yet."
-    When I follow "Create a unit"
+    And "Create a unit" "link" should not exist
+    And "Continue editing" "link" should not exist
+    When I follow "Back to the course"
+    And I follow "Create a unit"
     And I follow "Open units and drafts"
     Then I should see "Draft — hidden from learners"
     When I click on "a[aria-label='Continue editing: Daily temperatures']" "css_element"
     Then "Edit the unit introduction" "link" should exist
     And "Add an explanation" "link" should exist
+    And I should see "Choose one to start"
+    And "Check with role: Student" "button" should not be visible
+    When I click on "Check student visibility and preview" "text"
+    Then "Check with role: Student" "button" should be visible
     When I log out
     And I log in as "learner"
     And I am on "Authoring recovery" course homepage
