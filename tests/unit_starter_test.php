@@ -93,9 +93,9 @@ final class unit_starter_test extends \advanced_testcase {
         course_update_section($course, $published, (object) ['visible' => 1]);
         $html = unit_starter::navigation($course);
         $this->assertStringContainsString('Resume a saved draft (2)', $html);
-        foreach ([$first, $second] as $draft) {
-            $this->assertStringContainsString('sectionid=' . $draft->id, $html);
-            $this->assertStringContainsString('Continue editing: ' . $draft->name, $html);
+        foreach ([$first->id => 'First draft', $second->id => 'Second draft'] as $id => $name) {
+            $this->assertStringContainsString('sectionid=' . $id, $html);
+            $this->assertStringContainsString('Continue editing: ' . $name, $html);
         }
         $this->assertStringNotContainsString('Published unit', $html);
         $this->assertSame(2, substr_count($html, 'btn btn-primary'));
@@ -106,5 +106,4 @@ final class unit_starter_test extends \advanced_testcase {
         $this->setUser($student);
         $this->assertSame('', unit_starter::navigation($course));
     }
-
 }
