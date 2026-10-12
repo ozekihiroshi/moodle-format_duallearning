@@ -113,19 +113,18 @@ if (!$section) {
         echo html_writer::tag('p', get_string('nomaterialsyet', 'format_duallearning'), ['class' => 'alert alert-info']);
     }
     echo $OUTPUT->heading(get_string('addmaterials', 'format_duallearning'), 3);
-    echo html_writer::tag('p', get_string('chooseonematerial', 'format_duallearning'));
-    $actions = \format_duallearning\local\unit_actions::build($course, $sectionid);
-    foreach ($actions as $action) {
-        $link = html_writer::link($action['url'], $action['title'], ['class' => 'btn btn-primary']);
-        $help = html_writer::tag(
-            'details',
-            html_writer::tag('summary', get_string('actionhelp', 'format_duallearning', $action['title']))
-                . html_writer::tag('p', $action['hint'], ['class' => 'mt-2']),
-            ['class' => 'mt-2']
+    echo html_writer::tag('p', get_string('choosematerialtype', 'format_duallearning'));
+    $chooser = \format_duallearning\local\unit_actions::chooser($course, $sectionid);
+    if ($chooser) {
+        $PAGE->requires->js_call_amd('core_courseformat/activitychooser', 'init', [$course->id]);
+        // Use the standard chooser button without course-editor-only insertion actions.
+        $chooserdata = $chooser->export_for_template($OUTPUT);
+        $chooserdata->hasactionlinks = false;
+        echo $OUTPUT->render_from_template(
+            'core_courseformat/local/content/addresourceoractivitybutton',
+            $chooserdata,
         );
-        echo html_writer::div($link . $help, 'mb-3');
-    }
-    if (!$actions) {
+    } else {
         echo html_writer::tag('p', get_string('noaddactions', 'format_duallearning'));
     }
     echo html_writer::start_tag('details', ['class' => 'mt-4']);

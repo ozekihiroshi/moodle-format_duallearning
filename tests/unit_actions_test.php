@@ -83,17 +83,11 @@ final class unit_actions_test extends \advanced_testcase {
         $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
         $section = unit_starter::create($course, 'Draft', '', FORMAT_HTML);
         $before = $DB->count_records('course_modules', ['course' => $course->id]);
-        $actions = unit_actions::build($course, $section->id);
-        $expected = ['page', 'quiz', 'assign'];
-        if (\core\plugininfo\mod::get_enabled_plugin('lessonmark')) {
-            array_splice($expected, 1, 0, ['lessonmark']);
-        }
-        $this->assertSame($expected, array_column($actions, 'module'));
-        foreach ($actions as $action) {
-            $url = new \moodle_url($action['url']);
-            $this->assertEquals($section->id, $url->get_param('sectionid'));
-            $this->assertEquals($course->id, $url->get_param('course'));
-        }
+        $chooser = unit_actions::chooser($course, $section->id);
+        $data = $chooser->export_for_template($GLOBALS['OUTPUT']);
+        $this->assertEquals($section->id, $data->sectionid);
+        $this->assertEquals($section->section, $data->sectionnum);
+        $this->assertEquals($section->id, $data->sectionreturnid);
         $this->assertEquals($before, $DB->count_records('course_modules', ['course' => $course->id]));
         $this->assertEquals(0, $DB->get_field('course_sections', 'visible', ['id' => $section->id]));
     }
@@ -108,22 +102,7 @@ final class unit_actions_test extends \advanced_testcase {
         $other = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
         $section = unit_starter::create($other, 'Other course', '', FORMAT_HTML);
         $this->expectException(\moodle_exception::class);
-        unit_actions::build($course, $section->id);
-    }
-
-    /**
-     * Disabled modules are not offered as available authoring choices.
-     */
-    public function test_disabled_module_is_not_offered(): void {
-        global $DB;
-        $this->resetAfterTest();
-        $this->setAdminUser();
-        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
-        $section = unit_starter::create($course, 'Draft', '', FORMAT_HTML);
-        $DB->set_field('modules', 'visible', 0, ['name' => 'quiz']);
-        \core_plugin_manager::reset_caches();
-        $actions = unit_actions::build($course, $section->id);
-        $this->assertNotContains('quiz', array_column($actions, 'module'));
+        unit_actions::chooser($course, $section->id);
     }
 
     /**
@@ -138,6 +117,6 @@ final class unit_actions_test extends \advanced_testcase {
         $this->getDataGenerator()->enrol_user($student->id, $course->id, 'student');
         $this->setUser($student);
         $this->expectException(\required_capability_exception::class);
-        unit_actions::build($course, $section->id);
+        unit_actions::chooser($course, $section->id);
     }
 }

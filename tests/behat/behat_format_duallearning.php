@@ -56,4 +56,64 @@ class behat_format_duallearning extends behat_base {
         ]);
         $this->getSession()->visit($url->out(false));
     }
+    /**
+     * Compare the standard chooser with the unit entry, using browser actions for both.
+     *
+     * @When I choose :activity for section :sectionnum in :shortname through its authoring entry
+     * @param string $activity Activity name.
+     * @param int $sectionnum Section number.
+     * @param string $shortname Course short name.
+     */
+    public function choose_material($activity, $sectionnum, $shortname): void {
+        global $DB;
+        $course = $DB->get_record('course', ['shortname' => $shortname], '*', MUST_EXIST);
+        if ($course->format !== 'duallearning') {
+            $this->getSession()->visit((new moodle_url('/course/view.php', ['id' => $course->id]))->out(false));
+            $this->execute('behat_navigation::i_turn_editing_mode_on');
+            $this->execute('behat_course::i_add_to_section_using_the_activity_chooser', [$activity, $sectionnum]);
+            return;
+        }
+        $this->open_unit_authoring($sectionnum, $shortname);
+        $this->execute('behat_general::i_click_on', [get_string('addresourceoractivity'), 'button']);
+        // New fixture users start on the standard All tab.
+        $this->execute('behat_general::i_click_on_in_the', [
+            $activity, 'link', get_string('addresourceoractivity'), 'dialogue',
+        ]);
+        $this->execute('behat_general::i_click_on_in_the', [
+            get_string('addselectedactivity', 'course'), 'button', get_string('addresourceoractivity'), 'dialogue',
+        ]);
+    }
+
+    /**
+     * Check saved resources, their insertion target and the retained hidden state.
+     *
+     * @Then the three comparison materials belong to hidden section :sectionnum in :shortname
+     * @param int $sectionnum Section number.
+     * @param string $shortname Course short name.
+     */
+    public function check_materials($sectionnum, $shortname): void {
+        global $DB;
+        $course = $DB->get_record('course', ['shortname' => $shortname], '*', MUST_EXIST);
+        $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => $sectionnum], '*', MUST_EXIST);
+        if ($section->visible || $DB->count_records('course_modules', ['course' => $course->id]) !== 3) {
+            throw new \Exception('Expected exactly three activities in a still-hidden draft.');
+        }
+        foreach (['page', 'resource', 'url'] as $type) {
+            $instance = $DB->get_record($type, ['course' => $course->id], '*', MUST_EXIST);
+            $cm = get_coursemodule_from_instance($type, $instance->id, $course->id, false, MUST_EXIST);
+            if ((int) $cm->section !== (int) $section->id) {
+                throw new \Exception('Material saved outside the selected unit: ' . $type);
+            }
+            if ($type === 'resource') {
+                $files = get_file_storage()->get_area_files(
+                    \context_module::instance($cm->id)->id,
+                    'mod_resource', 'content', 0, 'id', false
+                );
+                $file = reset($files);
+                if (!$file || $file->get_filename() !== 'temperatures.pdf' || $file->get_filesize() === 0) {
+                    throw new \Exception('Uploaded PDF was not retained.');
+                }
+            }
+        }
+    }
 }

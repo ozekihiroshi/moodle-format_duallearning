@@ -42,8 +42,8 @@ Feature: Teachers can start and recover authoring without knowing edit mode
     Then I should see "Draft — hidden from learners"
     When I click on "Daily temperatures" "link" in the "[data-region=unit-list]" "css_element"
     Then "Edit the unit introduction" "link" should exist
-    And "Add an explanation" "link" should exist
-    And I should see "Choose one to start"
+    And "Add an activity or resource" "button" should exist
+    And I should see "Choose a resource or activity for this unit"
     And "Check with role: Student" "button" should not be visible
     When I click on "Check student visibility and preview" "text"
     Then "Check with role: Student" "button" should be visible

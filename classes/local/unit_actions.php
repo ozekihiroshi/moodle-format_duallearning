@@ -68,38 +68,22 @@ class unit_actions {
     }
 
     /**
-     * Build permitted authoring actions using a stable section identifier.
+     * Return Moodle's chooser control for the selected unit without changing edit mode.
      *
      * @param \stdClass $course Course record.
-     * @param int $sectionid Section identifier, not its position.
-     * @return array Actions with URLs and explanatory text.
+     * @param int $sectionid Stable section identifier.
+     * @return \core_courseformat\output\local\content\activitychooserbutton|null Standard control, if permitted.
      */
-    public static function build(\stdClass $course, int $sectionid): array {
-        global $CFG;
-        require_once($CFG->dirroot . '/course/lib.php');
+    public static function chooser(\stdClass $course, int $sectionid):
+            ?\core_courseformat\output\local\content\activitychooserbutton {
         unit_starter::require_access($course);
         $section = get_fast_modinfo($course)->get_section_info_by_id($sectionid, MUST_EXIST);
-        $context = \context_course::instance($course->id);
-        $actions = [];
-        if (!has_capability('moodle/course:manageactivities', $context)) {
-            return $actions;
+        if (!has_capability('moodle/course:manageactivities', \context_course::instance($course->id))) {
+            return null;
         }
-        foreach (['page', 'lessonmark', 'quiz', 'assign'] as $module) {
-            if (!course_allowed_module($course, $module)) {
-                continue;
-            }
-            $actions[] = [
-                'module' => $module,
-                'title' => get_string('add' . $module, 'format_duallearning'),
-                'hint' => get_string('add' . $module . 'hint', 'format_duallearning'),
-                'url' => (new \moodle_url('/course/modedit.php', [
-                    'course' => $course->id,
-                    'sectionid' => $section->id,
-                    'add' => $module,
-                    'sr' => $section->sectionnum,
-                ]))->out(false),
-            ];
-        }
-        return $actions;
+        return new \core_courseformat\output\local\content\activitychooserbutton(
+            section: $section,
+            sectionreturn: $section,
+        );
     }
 }
