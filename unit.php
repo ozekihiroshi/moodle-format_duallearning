@@ -45,9 +45,9 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->navbar->add(get_string('continueunit', 'format_duallearning'));
 
 echo $OUTPUT->header();
-echo \format_duallearning\local\unit_starter::navigation($course);
-echo $OUTPUT->heading(get_string('continueunit', 'format_duallearning'));
 if (!$section) {
+    echo \format_duallearning\local\unit_starter::navigation($course);
+    echo $OUTPUT->heading(get_string('continueunit', 'format_duallearning'));
     echo html_writer::tag('p', get_string('chooseunit', 'format_duallearning'));
     $links = [];
     foreach ($modinfo->get_section_info_all() as $item) {
