@@ -41,7 +41,7 @@ The former Add an explanation label compounded the issue by naming a purpose rat
 4. Keep standard resource names visible. Explanations may describe purpose, but must not silently decide the resource type on the teacher's behalf.
 5. Retain standard forms and save behaviour. Avoid broad form simplification based on this single participant's difficulty.
 
-`SIMPLE_AUTHORING_SPEC.ja.md` SA-04 and its second-stage implementation currently encourage direct purpose-based links. That intent must be reconciled with principle revision 5: assistance should clarify choices without making its shortlist appear to be the complete set of Moodle capabilities. This audit records the conflict; the replacement flow is not yet implemented or user-validated.
+`SIMPLE_AUTHORING_SPEC.ja.md` SA-04 and its second-stage implementation currently encourage direct purpose-based links. That intent must be reconciled with principle revision 5: assistance should clarify choices without making its shortlist appear to be the complete set of Moodle capabilities. This was the pre-change audit. The follow-up below records the replacement implementation; participant validation remains separate.
 
 ## Acceptance checks for the next implementation
 
@@ -64,4 +64,19 @@ The implementation reuses the core chooser's section data, button template, Java
 
 Developer inspection on the local lab confirmed the chooser opens with editing off, retains the selected section ID in Page/File/URL targets, and shows the standard Resources category and existing starred items. At 390px width the chooser opens and fits the viewport. This is a desktop narrow-viewport check, not an iPhone or assistive-technology evaluation. The participant's saved introduction and Page remain present; no participant activity was changed.
 
-A comparative browser regression creates Page, PDF-as-File and URL in Topics and Dual Learning, checks the saved section and PDF, cancels an additional Page, and checks hidden materials remain absent for a student. Results will be recorded after CI completes. Independent first-time and experienced-teacher evaluation, actual iPhone upload, screen-reader use, and discovery of an installed optional plugin remain separate acceptance work.
+A comparative browser regression creates Page, PDF-as-File and URL in Topics and Dual Learning, checks the saved section and PDF, cancels an additional Page, and checks hidden materials remain absent for a student. The completed CI results are recorded below. Independent first-time and experienced-teacher evaluation, actual iPhone upload, screen-reader use, and discovery of an installed optional plugin remain separate acceptance work.
+
+## Verified comparison results
+
+Code commit `55c1336` passed [CI 38193401052](https://github.com/ozekihiroshi/moodle-format_duallearning/actions/runs/38193401052) on Moodle 5.2.4 (Build 20261005). PHP 8.3 and 8.4 each passed 36 PHPUnit tests / 344 assertions, PHP lint, code and documentation checks, plugin validation and JavaScript build/lint. Browser regression passed 12 scenarios / 257 steps, followed by the separate student-role cache regression (2 scenarios / 54 steps). The reproducible ZIP check also passed. The initial run exposed coding-style issues and a PHPUnit renderer setup error; both were corrected before this successful run.
+
+| Check | Standard Topics | Dual Learning unit entry |
+| --- | --- | --- |
+| Page through the standard chooser; save and display its text | Passed | Passed |
+| File through the chooser; upload a real PDF and save/return | Passed | Passed |
+| URL through the chooser; save/return | Passed | Passed |
+| All three resources saved in the selected section | Passed | Passed |
+| Cancel a fourth resource; exactly three remain | Passed | Passed |
+| Hidden section retained; resources absent from the student course page | Passed | Passed |
+
+The comparison used isolated Behat fixtures. PDF upload was exercised through the standard file manager in Selenium, not seeded into storage. These results establish functional parity for the tested tasks; they do not establish a reduction in novice confusion or learning gains. No production release, tag, or main-branch integration was performed.
