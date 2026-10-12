@@ -80,3 +80,48 @@ Code commit `55c1336` passed [CI 38193401052](https://github.com/ozekihiroshi/mo
 | Hidden section retained; resources absent from the student course page | Passed | Passed |
 
 The comparison used isolated Behat fixtures. PDF upload was exercised through the standard file manager in Selenium, not seeded into storage. These results establish functional parity for the tested tasks; they do not establish a reduction in novice confusion or learning gains. No production release, tag, or main-branch integration was performed.
+
+## Purpose review after adopting the standard chooser
+
+**Retain the change conditionally.** There is no evidence that this change removed the core ability to structure units, resume authoring or guide learners. Resource coverage and consistency with standard editing improved. Purpose-based guidance and the shortest route to a known activity were reduced. Overall usability and learning improvement are not established.
+
+### Evidence and scope
+
+On 12 October 2026, compared `ec81e72` (before the chooser change) with verified code `55c1336`. Reviewed principle revision 5, the authoring milestone, unit UI, creation service, learning modes, learner overview/navigation and regression coverage. This review changes documentation only; the successful CI for unchanged runtime code was not rerun.
+
+The participant subsequently reported entering a URL on iPhone, saving/displaying it, and finding re-editing satisfactory. This is participant self-report, not directly observed interaction. The conversation suggested a URL task and prompted saving/re-editing, and the participant had already used earlier screens. Do not count this as an unassisted first encounter or a timed before/after comparison. The participant reported no prior iPhone PDF-upload experience; actual iPhone PDF upload remains untested.
+
+### Five evaluation axes
+
+| Axis | Retained or improved | Cost, limit and judgement |
+| --- | --- | --- |
+| Author decisions | Unit title, visibility, saved materials, editing and return routes remain together; File/URL are now reachable from the unit entry | Opening the chooser and selecting a type adds decisions. Reachability improved; lower overall novice cognitive burden is not established |
+| Learner clarity | Next incomplete material, ordered navigation, personal deadlines and submission/feedback code are unchanged; existing regressions passed | No new learner mobile journey or learning-outcome evaluation; authoring success does not establish learner improvement |
+| Guided and self-paced learning | Mode-specific starter text, headings and guided question-forum shortcuts remain; completion and role-preview regressions cover both modes | This does not validate the educational adequacy of either mode; their presentation policies do not automate whole-course learning design |
+| Moodle consistency | Standard chooser/forms, saves/cancel, permissions and visibility preserved; equivalent Page/File/URL tasks compared with Topics | Core terminology and the number of options remain; standardisation alone is not evidence of ease of use |
+| Interaction consistency | Removes a partial custom list competing with the standard list; unit list, creation, re-editing and role checks remain | Users familiar with the old direct buttons must select again; expert speed and relearning costs are unmeasured |
+
+### Explicit loss of assistance
+
+The old unit page offered direct Page, optional LessonMark, Quiz and Assignment links with individual hints. For a known type, a single link opened the form. The current route requires at least three actions: open chooser, select type, Add; search or category changes add more. This is a structural comparison, not a measured time or error-rate result.
+
+The old Quiz hint explained adding questions and checking feedback; the Assignment hint explained submission types. These strings still exist but are no longer rendered on the unit page. Current examples cover only Page/File/URL. Support for translating “check understanding” or “collect submitted work” into Quiz/Assignment has therefore weakened. The dedicated LessonMark entry also disappeared; installed optional-plugin discoverability remains unverified. Record these costs rather than claiming all assistance was retained.
+
+### Remaining Dual Learning value
+
+Its role remains contextual. Around standard material selection it gathers the unit being edited, saved materials, visibility, re-editing, student-role checks and return paths. On the learning side it derives guidance from visibility, completion, deadlines and submission state. Many underlying capabilities also exist in Moodle; distinct value lies in how they are arranged around teaching and learning work. The size of this added value over Topics has not yet been measured.
+
+Code evidence: `unit.php`, `classes/local/unit_starter.php`, `classes/local/authoring_navigation.php`, `classes/local/student_view.php`, `classes/local/overview.php`, `classes/local/mode/`, and `classes/output/ordered_activity_navigation.php`. The change mainly replaced the limited `unit_actions::build()` list and the unit's addition controls. The other listed core classes, navigation and templates have no diff across the comparison. Unchanged code is not proof of absence of bugs; existing regression results provide bounded additional evidence.
+
+Completion configuration matters. `overview::collect_completion()` includes completion-enabled materials; `first_incomplete()` selects the next among those targets. Saving a resource does not automatically establish a learning pathway. This is an existing condition, not a new chooser regression. The Page/PDF/URL comparison proves storage and hidden visibility, not a complete learner-resumption journey through those newly created resources.
+
+### Decision and next acceptance work
+
+Keep the standard chooser while evaluating the remaining gaps. Do not immediately restore a parallel button list, wizard or novice mode.
+
+1. Give a teacher an outcome: add a short explanation, prepare a check of understanding and collect submitted work. Do not supply resource names or click instructions first. Observe type choice, return to the unit and understanding of publication state; record confusion between introduction and Page, difficulty finding Quiz/Assignment, and unnecessary creation.
+2. Observe a new first-time participant and an experienced Moodle teacher separately. Compare with Topics using equivalent content, permissions and devices; record order effects, stops, assistance, wrong turns, actions and time. Do not reclassify this continuing participant as wholly unfamiliar.
+3. In both guided and self-paced courses, use dedicated test materials with deliberately configured visibility, availability and completion. As a learner, read, follow a link, return, complete/undo and resume; prioritise iPhone. Do not publish participant drafts merely to test this.
+4. If repeated confusion occurs at the purpose-to-type choice, trial a minimal explanatory aid around standard selection. A partial fixed list is not the default remedy. Avoid adding mandatory steps for experienced users.
+
+Bound the conclusion: **core capability retention and better resource reachability have evidence. Purpose-based assistance has a real reduction; total author burden, learner benefits and expert effects still need evaluation.**
