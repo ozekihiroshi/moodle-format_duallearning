@@ -20,8 +20,9 @@ Feature: Choose standard learning resources for the same hidden unit
     And I set the following fields to these values:
       | Name | Temperature explanation |
       | Page content | Monday is 18 C. Tuesday is 21 C. |
-    And I press "Save and return to course"
-    And I choose "File" for section "1" in "COMPARE" through its authoring entry
+    And I press "Save and display"
+    Then I should see "Monday is 18 C. Tuesday is 21 C."
+    When I choose "File" for section "1" in "COMPARE" through its authoring entry
     And I set the field "Name" to "Temperature PDF"
     And I upload "course/format/duallearning/tests/fixtures/temperatures.pdf" file to "Select files" filemanager
     And I press "Save and return to course"
@@ -29,8 +30,7 @@ Feature: Choose standard learning resources for the same hidden unit
     And I set the following fields to these values:
       | Name | Temperature reference |
       | External URL | https://example.org/temperatures |
-    And I press "Save and display"
-    Then I should see "Temperature reference"
+    And I press "Save and return to course"
     When I choose "Page" for section "1" in "COMPARE" through its authoring entry
     And I set the field "Name" to "Cancelled material"
     And I press "Cancel"

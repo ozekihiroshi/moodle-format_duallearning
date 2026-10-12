@@ -55,3 +55,13 @@ Observe a first-time teacher and an experienced teacher separately. Record assis
 - [Moodle 5.2: Course homepage](https://docs.moodle.org/502/en/Course_homepage): editing mode, sections and course navigation.
 - [Moodle 5.2: File resource](https://docs.moodle.org/502/en/File_resource): existing files as resources.
 - [Earlier comparison](AUTHORING_COMPARISON_2026-10-11.md) and [participant recovery record](AUTHORING_RECOVERY_2026-10-12.md). Earlier versions and assisted trials are not interchangeable with this audit.
+
+## Implementation follow-up: standard chooser
+
+The unit entry now opens Moodle's standard activity/resource chooser. The former fixed Page/LessonMark/Quiz/Assignment shortlist has been removed. A short explanation maps Page to text/images, File to an existing PDF and URL to a web link; it does not choose a type for the teacher.
+
+The implementation reuses the core chooser's section data, button template, JavaScript and standard creation forms. Course-editor-only insertion actions (such as subsection insertion) are not rendered on the separate unit screen. The full standard course editing route remains available. No edit-mode preference is changed merely by opening the unit screen, and no resource is created until its form is saved.
+
+Developer inspection on the local lab confirmed the chooser opens with editing off, retains the selected section ID in Page/File/URL targets, and shows the standard Resources category and existing starred items. At 390px width the chooser opens and fits the viewport. This is a desktop narrow-viewport check, not an iPhone or assistive-technology evaluation. The participant's saved introduction and Page remain present; no participant activity was changed.
+
+A comparative browser regression creates Page, PDF-as-File and URL in Topics and Dual Learning, checks the saved section and PDF, cancels an additional Page, and checks hidden materials remain absent for a student. Results will be recorded after CI completes. Independent first-time and experienced-teacher evaluation, actual iPhone upload, screen-reader use, and discovery of an installed optional plugin remain separate acceptance work.

@@ -84,7 +84,10 @@ final class unit_actions_test extends \advanced_testcase {
         $section = unit_starter::create($course, 'Draft', '', FORMAT_HTML);
         $before = $DB->count_records('course_modules', ['course' => $course->id]);
         $chooser = unit_actions::chooser($course, $section->id);
-        $data = $chooser->export_for_template($GLOBALS['OUTPUT']);
+        $page = new \moodle_page();
+        $page->set_context(\context_course::instance($course->id));
+        $page->set_course($course);
+        $data = $chooser->export_for_template($page->get_renderer('core'));
         $this->assertEquals($section->id, $data->sectionid);
         $this->assertEquals($section->section, $data->sectionnum);
         $this->assertEquals($section->id, $data->sectionreturnid);
@@ -118,5 +121,26 @@ final class unit_actions_test extends \advanced_testcase {
         $this->setUser($student);
         $this->expectException(\required_capability_exception::class);
         unit_actions::chooser($course, $section->id);
+    }
+    /**
+     * Section editing permission alone must not offer activity creation.
+     */
+    public function test_section_editor_without_activity_permission_has_no_chooser(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course(['format' => 'duallearning']);
+        $section = unit_starter::create($course, 'Draft', '', FORMAT_HTML);
+        $teacher = $this->getDataGenerator()->create_user();
+        $this->getDataGenerator()->enrol_user($teacher->id, $course->id, 'editingteacher');
+        $roleid = $DB->get_field('role', 'id', ['shortname' => 'editingteacher'], MUST_EXIST);
+        assign_capability(
+            'moodle/course:manageactivities',
+            CAP_PREVENT,
+            $roleid,
+            \context_course::instance($course->id)->id,
+        );
+        $this->setUser($teacher);
+        $this->assertNull(unit_actions::chooser($course, $section->id));
     }
 }

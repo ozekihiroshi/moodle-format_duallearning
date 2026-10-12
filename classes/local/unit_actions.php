@@ -16,6 +16,8 @@
 
 namespace format_duallearning\local;
 
+use core_courseformat\output\local\content\activitychooserbutton;
+
 /**
  * Offers standard activity forms for a specific unit without creating content.
  *
@@ -74,14 +76,13 @@ class unit_actions {
      * @param int $sectionid Stable section identifier.
      * @return \core_courseformat\output\local\content\activitychooserbutton|null Standard control, if permitted.
      */
-    public static function chooser(\stdClass $course, int $sectionid):
-            ?\core_courseformat\output\local\content\activitychooserbutton {
+    public static function chooser(\stdClass $course, int $sectionid): ?activitychooserbutton {
         unit_starter::require_access($course);
         $section = get_fast_modinfo($course)->get_section_info_by_id($sectionid, MUST_EXIST);
         if (!has_capability('moodle/course:manageactivities', \context_course::instance($course->id))) {
             return null;
         }
-        return new \core_courseformat\output\local\content\activitychooserbutton(
+        return new activitychooserbutton(
             section: $section,
             sectionreturn: $section,
         );

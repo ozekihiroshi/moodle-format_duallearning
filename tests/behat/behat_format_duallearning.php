@@ -107,7 +107,11 @@ class behat_format_duallearning extends behat_base {
             if ($type === 'resource') {
                 $files = get_file_storage()->get_area_files(
                     \context_module::instance($cm->id)->id,
-                    'mod_resource', 'content', 0, 'id', false
+                    'mod_resource',
+                    'content',
+                    0,
+                    'id',
+                    false,
                 );
                 $file = reset($files);
                 if (!$file || $file->get_filename() !== 'temperatures.pdf' || $file->get_filesize() === 0) {
