@@ -46,7 +46,6 @@ $PAGE->navbar->add(get_string('continueunit', 'format_duallearning'));
 
 echo $OUTPUT->header();
 if (!$section) {
-    echo \format_duallearning\local\unit_starter::navigation($course);
     echo $OUTPUT->heading(get_string('continueunit', 'format_duallearning'));
     echo html_writer::tag('p', get_string('chooseunit', 'format_duallearning'));
     $links = [];
@@ -62,10 +61,14 @@ if (!$section) {
             . html_writer::span($visibility, 'badge text-bg-secondary');
     }
     if ($links) {
-        echo html_writer::alist($links);
+        echo html_writer::alist($links, ['data-region' => 'unit-list']);
     } else {
         echo html_writer::tag('p', get_string('nounitsyet', 'format_duallearning'));
     }
+    $createurl = new moodle_url('/course/format/duallearning/author.php', ['courseid' => $courseid]);
+    echo html_writer::tag('p', html_writer::link($createurl, get_string('startunit', 'format_duallearning'), [
+        'class' => 'btn btn-outline-secondary',
+    ]));
 } else {
     echo $OUTPUT->heading(get_section_name($course, $section), 2);
     $status = $section->visible ? 'unitshownhint' : 'unithiddenhint';

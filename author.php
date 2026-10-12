@@ -64,7 +64,10 @@ $form->set_data((object) [
     'summary_editor' => ['text' => \format_duallearning\local\unit_starter::summary($mode), 'format' => FORMAT_HTML],
 ]);
 echo $OUTPUT->header();
-echo \format_duallearning\local\unit_starter::navigation($course);
+echo html_writer::tag('p', html_writer::link(
+    new moodle_url('/course/format/duallearning/unit.php', ['courseid' => $courseid]),
+    get_string('continueunit', 'format_duallearning')
+));
 echo $OUTPUT->heading(get_string('startunit', 'format_duallearning'));
 echo html_writer::tag('p', get_string('unitmode', 'format_duallearning', get_string($mode, 'format_duallearning')));
 echo html_writer::tag('p', get_string('unitstarterhint', 'format_duallearning'));

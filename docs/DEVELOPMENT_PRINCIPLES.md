@@ -4,7 +4,7 @@ English | [日本語](DEVELOPMENT_PRINCIPLES.ja.md)
 
 Policy ID: DL-INDEPENDENCE-AND-COOPERATION  
 Established: 2026-09-29  
-Document revision: 4
+Document revision: 5
 
 ## 1. Purpose and scope
 
@@ -43,6 +43,16 @@ Preserve Moodle's capabilities, permissions, accessibility and access to advance
 Evaluate five dimensions: author decisions, learner orientation and next action, suitability for teacher-guided and self-paced work, compatibility with standard Moodle, and consistency of the interaction model. Compare equivalent tasks against standard Topics and Boost. Record the exact version and configuration, and separate code inspection, developer walkthroughs, first-time participant observations and learning-outcome evidence. Do not substitute successful CI or a developer's familiarity for participant evaluation.
 
 For each proposed change, record: user/task → observed problem or hypothesis → value and added complexity → simpler alternatives → evidence and unverified scope → retain, simplify, combine, remove or defer → next acceptance check. This is a development review record, not a form imposed on teachers or learners. Keep the three plugins independently useful.
+
+### Balance guidance with familiar workflows
+
+**Help newcomers find their way. Preserve fluency for experienced users.**
+
+Consider both groups. Reduce uncertainty for first-time users while preserving familiar Moodle terminology, standard editing routes, and direct access to advanced functions. Guidance should be available when needed and easy to skip; avoid forcing experienced users through repeated explanations or extra steps. Do not add separate experience modes unless their value justifies the additional complexity.
+
+Treat each observation as evidence in context. A beginner's difficulty identifies a problem worth investigating, but does not by itself establish a solution for every user. Record the participant's experience, task, device and assistance, and distinguish an individual preference from a recurring problem. Compare proposed changes with the standard workflow and assess both discoverability for newcomers and continuity and efficiency for experienced users. If either group has not been observed, retain that gap explicitly.
+
+Prefer clearer labels, grouping, defaults and removal of redundant controls before introducing another route or concept. Familiarity is not a reason to preserve a demonstrated barrier indefinitely; when a change is justified, record its benefit, the relearning cost, and how standard capabilities remain accessible. Balance the needs of both groups rather than optimising the whole product around one participant.
 
 ## 2. Independence
 

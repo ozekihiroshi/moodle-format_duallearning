@@ -39,7 +39,7 @@ class unit_starter {
     }
 
     /**
-     * Keep creation and recovery links available on every authoring page.
+     * Provide two entry points without duplicating the unit list.
      *
      * @param \stdClass $course Course record; the caller must check authoring access.
      * @return string Navigation HTML.
@@ -49,35 +49,24 @@ class unit_starter {
         if (!has_all_capabilities(['moodle/course:update', 'moodle/course:sectionvisibility'], $context)) {
             return '';
         }
-        $drafts = [];
+        $hasunits = false;
         foreach (get_fast_modinfo($course)->get_section_info_all() as $section) {
-            if ((int) $section->sectionnum === 0 || $section->component || $section->visible) {
-                continue;
+            if ((int) $section->sectionnum !== 0 && !$section->component) {
+                $hasunits = true;
+                break;
             }
-            $url = new \moodle_url('/course/format/duallearning/unit.php', [
-                'courseid' => $course->id, 'sectionid' => $section->id,
-            ]);
-            $name = get_section_name($course, $section);
-            $drafts[] = \html_writer::tag('h3', $name, ['class' => 'h5 text-break'])
-                . \html_writer::link($url, get_string('resumedraft', 'format_duallearning'), [
-                    'class' => 'btn btn-primary',
-                    'aria-label' => get_string('resumedraftnamed', 'format_duallearning', strip_tags($name)),
-                ]);
         }
-        $heading = $drafts ? get_string('saveddrafts', 'format_duallearning', count($drafts))
-            : get_string('buildcourse', 'format_duallearning');
+        $heading = get_string('buildcourse', 'format_duallearning');
         $content = \html_writer::tag('h2', $heading, ['class' => 'h4']);
-        $content .= \html_writer::tag('p', get_string($drafts ? 'resumedraftshint' : 'buildcoursehint', 'format_duallearning'));
-        if ($drafts) {
-            $content .= \html_writer::alist($drafts, [
-                'class' => 'duallearning-saved-drafts', 'data-region' => 'saved-drafts',
-            ]);
-        }
+        $content .= \html_writer::tag('p', get_string('buildcoursehint', 'format_duallearning'));
+        $pages = $hasunits ? ['unit' => 'continueunit', 'author' => 'startunit']
+            : ['author' => 'startunit', 'unit' => 'continueunit'];
+        $primary = $hasunits ? 'unit' : 'author';
         $links = [];
-        foreach (['author' => 'startunit', 'unit' => 'continueunit'] as $page => $label) {
+        foreach ($pages as $page => $label) {
             $url = new \moodle_url('/course/format/duallearning/' . $page . '.php', ['courseid' => $course->id]);
             $links[] = \html_writer::link($url, get_string($label, 'format_duallearning'), [
-                'class' => 'btn ' . (!$drafts && $page === 'author' ? 'btn-primary' : 'btn-outline-secondary'),
+                'class' => 'btn ' . ($page === $primary ? 'btn-primary' : 'btn-outline-secondary'),
             ]);
         }
         $content .= \html_writer::div(implode(' ', $links), 'd-flex flex-wrap gap-2');
