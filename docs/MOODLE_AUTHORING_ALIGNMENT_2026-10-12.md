@@ -125,3 +125,35 @@ Keep the standard chooser while evaluating the remaining gaps. Do not immediatel
 4. If repeated confusion occurs at the purpose-to-type choice, trial a minimal explanatory aid around standard selection. A partial fixed list is not the default remedy. Avoid adding mandatory steps for experienced users.
 
 Bound the conclusion: **core capability retention and better resource reachability have evidence. Purpose-based assistance has a real reduction; total author burden, learner benefits and expert effects still need evaluation.**
+
+## Agreed acceptance baseline and next participant tasks
+
+Use standard Moodle as the baseline. Improvement over an earlier Dual Learning version alone is insufficient. For equivalent users, goals and conditions, check for added unnecessary decisions, errors, dead ends, relearning and workload. Do not assume every metric can improve simultaneously. Any disadvantage must identify the affected users, cost, concrete benefit, evidence, simpler alternative and reason for acceptance. An unverified benefit does not justify a tradeoff; retain it as an open decision. Permissions, data preservation and access to standard capabilities must not be sacrificed for convenience.
+
+Run the next participant tasks separately. First give only the goal: prepare one question to check whether students who read about Monday at 18 degrees and Tuesday at 21 degrees understand the temperature difference. From the current unit, ask which material they would choose and why, using the screen alone. Initially stop at selection; do not require detailed question configuration or publication. Then give a separate goal: collect students' written explanations of the temperature difference in their own words. Do not provide resource names or the expected button first.
+
+Record the selected item, participant reasoning, uncertainty and assistance. Mark any task requiring instructions as assisted. This is a continuing participant, not a wholly new user. Do not claim superiority or no disadvantage relative to Topics until an equivalent baseline comparison is made. Neither task result is available at the time of this entry.
+
+
+## Purpose-to-type selection: participant reports and minimal guidance
+
+For checking understanding, the participant reported choosing Quiz. This does not establish question creation or saving. For collecting written work, the participant reported uncertainty and tentatively chose Feedback. Assignment and Online text were then explained, and the participant acknowledged understanding. The second selection required assistance. Saved activities and unsaved form contents were not inspected. Both findings are conversational self-reports, not an independent first-time-user comparison.
+
+The selection UI is standard Moodle's, so this uncertainty alone does not establish a regression relative to Topics. Distinguish the reduction in the old Dual Learning purpose-based guidance from difficulty in the standard type choice itself. An equivalent participant comparison with Topics has not been performed.
+
+The next minimal trial adds one sentence to the existing EN/JA examples: “To collect written work or files from students, choose Assignment.” It adds no custom button, mandatory action or standard-form change. The cost is one more sentence to read; the hypothesised benefit is clearer mapping from submission intent to activity name. A successful retry by the participant who already received the explanation cannot establish the sentence's effect. Evaluation with a new participant and of narrow-screen reading burden remains open.
+
+The next task is an assisted evaluation of the standard Assignment form: prepare an activity that accepts typed student text, observing whether submission settings are found, other settings cause uncertainty, and saving returns to the same unit. Do not save or discard any existing Feedback form input on the participant's behalf. Publishing the activity or notifying students is outside this task.
+
+
+## Release evaluation checkpoint
+
+The participant completed the submission / teacher grading / student feedback-view cycle and reported checking it on iPhone. Desktop screenshots show the course overview changing from submitted-with-no-published-grade to current-attempt-grade-published, with a working link back to the graded assignment. The participant understood the requested improvement to their answer. Actual revision and resubmission were not performed in this session.
+
+The participant described the pending-grade display as understandable with familiarity in smartphone operation, rather than immediately clear to everyone. Confusion between the authoring and student-practice courses was introduced by the evaluation setup and facilitator instructions; it is not attributed to the plugin. The Grade versus Submissions distinction belongs to standard Moodle, and the participant understood it after explanation.
+
+The participant explicitly accepted the grade link's destination and asked that minor scrolling details not displace the main product goals. No anchor change is included on that basis. VoiceOver testing is postponed until after this corrective release. These are assisted continuing-participant findings, not a fresh novice or comprehensive mobile accessibility evaluation.
+
+## Release wording follow-up
+
+Following the request to include outstanding corrective candidates, existing English and Japanese guidance now names Quiz and Assignment by purpose, distinguishes Submissions from individual Grade on the teacher overview, and labels the current-attempt grade action as grade and feedback. No new required interaction, button or custom grading screen is introduced. The label is also used when a grade has no comments; visibility and publication checks are unchanged. The usability benefit of these wording changes remains to be evaluated.

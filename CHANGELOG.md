@@ -1,15 +1,15 @@
 # Change log
 
-## Unreleased
+## 0.1.0-alpha12 - 2026-10-12
 
-- Separate draft selection from editing a selected unit; keep optional student-role checks and preview behind a disclosure.
-
-- Prioritise named saved drafts and direct Continue editing actions when hidden units exist; keep new-unit creation secondary and show every draft choice.
-
-- Show a consistent authoring entry and saved-unit/draft list to authorised teachers even when editing is off.
-- Add reversible introduction clearing while preserving the title and text entered after clearing.
-- Distinguish a saved unit introduction from separate learning materials, and keep draft visibility and recovery links on screen.
-- Add authoring recovery and student-visibility browser regressions.
+- Make existing units and hidden drafts reachable from the course and new-unit screen, including when editing is off for authorised teachers. Prioritise Open existing units when units exist and Create a new unit in an empty course.
+- Correct the scope of authoring navigation so the selected unit opens without repeated create/resume controls.
+- Add reversible clearing of the unit introduction while preserving its title and protecting text entered after clearing.
+- Clarify saved-unit visibility and the distinction between a unit introduction and separate learning materials.
+- Use Moodle's standard activity/resource chooser in unit authoring, retaining the target unit and standard Page, File, URL, Quiz and Assignment forms. Clarify the purposes of Quiz and Assignment.
+- Clarify teacher guidance for submission lists versus individual grading, and name both grade and feedback in the student review action.
+- Keep optional student-role checks and preview in a disclosure; preserve standard course editing and permission checks.
+- Add regression coverage for authoring recovery, Page/PDF/URL placement and hidden-material access. Document assisted iPhone evaluation and remaining accessibility checks.
 
 ## 0.1.0-alpha11 - 2026-10-11
 
