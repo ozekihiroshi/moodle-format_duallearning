@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Separate draft selection from editing a selected unit; keep optional student-role checks and preview behind a disclosure.
+
 - Prioritise named saved drafts and direct Continue editing actions when hidden units exist; keep new-unit creation secondary and show every draft choice.
 
 - Show a consistent authoring entry and saved-unit/draft list to authorised teachers even when editing is off.
