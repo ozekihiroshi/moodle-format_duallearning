@@ -25,7 +25,7 @@ Feature: Guided authoring and standard editing share the same unit
     Then I should see "<hint>"
     And I should see "Saved materials: 1"
     And I should see "Unit: hidden"
-    And "Edit content/settings: Draft explanation" "link" should not be visible
+    And "Edit content/settings" "link" should not be visible
     When I press "Open standard course editing"
     Then I should see "Draft explanation"
     And "Back to unit authoring" "link" should exist
@@ -33,7 +33,7 @@ Feature: Guided authoring and standard editing share the same unit
     Then I should see "Saved materials: 1"
     And I should see "Unit: hidden"
     When I click on "Draft explanation" "text" in the "#guide-existing + p + ul" "css_element"
-    And I follow "Edit content/settings: Draft explanation"
+    And I click on "Edit content/settings" "link" in the "#guide-existing + p + ul" "css_element"
     Then the field "Name" matches value "Draft explanation"
     When I press "Cancel"
     And I log out

@@ -19,12 +19,12 @@ Feature: Completion changes refresh the learner overview
       | page | Test material | LIVE | 1 | Read this material | 1 |
     When I log in as "learner"
     And I am on "Live overview" course homepage
-    Then I should see "Materials marked complete: 0 / 1"
+    Then I should see "Self-marked activities: 0 / 1"
     When I press "Mark Test material as done"
-    Then I should see "Materials marked complete: 1 / 1"
+    Then I should see "Self-marked activities: 1 / 1"
     And I should see "Currently available tracked activities are complete."
     When I press "Test material is marked as done. Press to undo."
-    Then I should see "Materials marked complete: 0 / 1"
+    Then I should see "Self-marked activities: 0 / 1"
     And I should see "Next item to check"
     And I should not see "Currently available tracked activities are complete."
 
