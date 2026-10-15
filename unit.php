@@ -76,10 +76,13 @@ if (!$section) {
     echo $OUTPUT->heading(get_string('unitguide', 'format_duallearning'), 3);
     $mode = course_get_format($course)->get_format_options()['learningmode'] ?? 'path';
     echo html_writer::tag('p', get_string(
-        $mode === 'guided' ? 'guideguided' : 'guidepath', 'format_duallearning'
+        $mode === 'guided' ? 'guideguided' : 'guidepath',
+        'format_duallearning'
     ));
     echo html_writer::tag('p', get_string(
-        $items ? 'guidematerialssaved' : 'guideintroductionsaved', 'format_duallearning', count($items)
+        $items ? 'guidematerialssaved' : 'guideintroductionsaved',
+        'format_duallearning',
+        count($items)
     ));
     $actions = $items
         ? ['guide-existing' => 'existingmaterials', 'guide-add' => 'addmaterials', 'guide-review' => 'checkandpreview']
@@ -123,11 +126,10 @@ if (!$section) {
                     ]);
                 }
             }
+            $visibility = html_writer::span(' — ' . implode(' · ', $item['visibility']), 'small text-muted');
             $rows[] = html_writer::tag(
                 'details',
-                html_writer::tag('summary', $name . html_writer::span(
-                    ' — ' . implode(' · ', $item['visibility']), 'small text-muted'
-                ))
+                html_writer::tag('summary', $name . $visibility)
                     . html_writer::div(implode(' ', $links), 'duallearning-authoring-actions'),
                 ['class' => 'border rounded p-3 mb-3']
             );
