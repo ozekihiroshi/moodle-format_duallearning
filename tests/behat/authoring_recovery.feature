@@ -45,7 +45,7 @@ Feature: Teachers can start and recover authoring without knowing edit mode
     And "Add an activity or resource" "button" should exist
     And I should see "Choose a resource or activity for this unit"
     And "Check with role: Student" "button" should not be visible
-    When I click on "Check student visibility and preview" "text"
+    When I click on "Open student-role checks and unit view" "text"
     Then "Check with role: Student" "button" should be visible
     When I log out
     And I log in as "learner"

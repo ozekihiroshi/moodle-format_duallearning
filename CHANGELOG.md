@@ -1,5 +1,13 @@
 # Change log
 
+## 0.1.0-alpha13 - 2026-10-15
+
+- Add an optional unit authoring guide for teacher-guided and self-paced courses, showing suitable actions for an empty or populated unit.
+- Keep standard course editing available in the same unit. Clarify that teachers can continue there and edit an open material through its Settings.
+- Group existing-material actions into disclosures and separate authoring, adding materials, and learner-access checks without removing standard Moodle choices.
+- Clarify that manual completion counts do not include automatic quiz or submission completion and do not certify understanding.
+- Document component independence and add authoring-guide regression coverage.
+
 ## 0.1.0-alpha12 - 2026-10-12
 
 - Make existing units and hidden drafts reachable from the course and new-unit screen, including when editing is off for authorised teachers. Prioritise Open existing units when units exist and Create a new unit in an empty course.

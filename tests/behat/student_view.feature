@@ -24,7 +24,7 @@ Feature: Authors check student-role visibility and return to their draft
     When I log in as "author"
     And I open Dual Learning authoring for section "1" in course "AUTHOR"
     Then I should see "Unit: hidden"
-    When I click on "Check student visibility and preview" "text"
+    When I click on "Open student-role checks and unit view" "text"
     And I press "Check with role: Student"
     Then I should see "You are checking with a switched role"
     And I should not see "Private draft lesson"
@@ -34,7 +34,8 @@ Feature: Authors check student-role visibility and return to their draft
     And I should see "Private draft lesson"
     And I should see "Unit: hidden"
     And "Edit content/settings" "link" should exist
-    When I follow "Edit content/settings"
+    When I click on "Private draft lesson" "text" in the "#guide-existing + p + ul" "css_element"
+    And I follow "Edit content/settings"
     Then the field "Name" matches value "Private draft lesson"
     When I press "Cancel"
     When I log out

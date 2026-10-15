@@ -71,6 +71,30 @@ if (!$section) {
     ]));
 } else {
     echo $OUTPUT->heading(get_section_name($course, $section), 2);
+    $items = \format_duallearning\local\unit_actions::existing($course, $sectionid);
+    echo html_writer::start_div('border rounded p-3 mb-3', ['data-region' => 'unit-guide']);
+    echo $OUTPUT->heading(get_string('unitguide', 'format_duallearning'), 3);
+    $mode = course_get_format($course)->get_format_options()['learningmode'] ?? 'path';
+    echo html_writer::tag('p', get_string(
+        $mode === 'guided' ? 'guideguided' : 'guidepath', 'format_duallearning'
+    ));
+    echo html_writer::tag('p', get_string(
+        $items ? 'guidematerialssaved' : 'guideintroductionsaved', 'format_duallearning', count($items)
+    ));
+    $actions = $items
+        ? ['guide-existing' => 'existingmaterials', 'guide-add' => 'addmaterials', 'guide-review' => 'checkandpreview']
+        : ['guide-add' => 'addmaterials', 'guide-review' => 'checkandpreview'];
+    $links = [];
+    foreach ($actions as $anchor => $label) {
+        $links[] = html_writer::link('#' . $anchor, get_string($label, 'format_duallearning'), [
+            'class' => 'btn ' . (!$links ? 'btn-primary' : 'btn-outline-secondary'),
+        ]);
+    }
+    echo html_writer::div(implode(' ', $links), 'd-flex flex-wrap gap-2');
+    echo html_writer::end_div();
+    $standardurl = new moodle_url('/course/section.php', ['id' => $sectionid, 'edit' => 1]);
+    echo $OUTPUT->single_button($standardurl, get_string('standardediting', 'format_duallearning'), 'post');
+    echo html_writer::tag('p', get_string('standardeditinghint', 'format_duallearning'), ['class' => 'small']);
     $status = $section->visible ? 'unitshownhint' : 'unithiddenhint';
     echo html_writer::tag('p', get_string($status, 'format_duallearning'));
     $editurl = new moodle_url('/course/editsection.php', ['id' => $sectionid]);
@@ -82,9 +106,8 @@ if (!$section) {
             . format_text($section->summary, $section->summaryformat, ['context' => $context]),
         ['class' => 'mb-3']
     );
-    $items = \format_duallearning\local\unit_actions::existing($course, $sectionid);
     if ($items) {
-        echo $OUTPUT->heading(get_string('existingmaterials', 'format_duallearning'), 4);
+        echo $OUTPUT->heading(get_string('existingmaterials', 'format_duallearning'), 3, '', 'guide-existing');
         echo html_writer::tag('p', get_string('teacherreviewhint', 'format_duallearning'));
         $rows = [];
         foreach ($items as $item) {
@@ -100,11 +123,13 @@ if (!$section) {
                     ]);
                 }
             }
-            $rows[] = html_writer::div(
-                html_writer::tag('strong', $name)
-                    . html_writer::tag('p', implode(' · ', $item['visibility']), ['class' => 'my-2'])
+            $rows[] = html_writer::tag(
+                'details',
+                html_writer::tag('summary', $name . html_writer::span(
+                    ' — ' . implode(' · ', $item['visibility']), 'small text-muted'
+                ))
                     . html_writer::div(implode(' ', $links), 'duallearning-authoring-actions'),
-                'border rounded p-3 mb-3'
+                ['class' => 'border rounded p-3 mb-3']
             );
         }
         echo html_writer::alist($rows, ['class' => 'list-unstyled']);
@@ -112,7 +137,7 @@ if (!$section) {
     if (!$items) {
         echo html_writer::tag('p', get_string('nomaterialsyet', 'format_duallearning'), ['class' => 'alert alert-info']);
     }
-    echo $OUTPUT->heading(get_string('addmaterials', 'format_duallearning'), 3);
+    echo $OUTPUT->heading(get_string('addmaterials', 'format_duallearning'), 3, '', 'guide-add');
     echo html_writer::tag('p', get_string('choosematerialtype', 'format_duallearning'));
     $chooser = \format_duallearning\local\unit_actions::chooser($course, $sectionid);
     if ($chooser) {
@@ -127,8 +152,11 @@ if (!$section) {
     } else {
         echo html_writer::tag('p', get_string('noaddactions', 'format_duallearning'));
     }
-    echo html_writer::start_tag('details', ['class' => 'mt-4']);
-    echo html_writer::tag('summary', get_string('checkandpreview', 'format_duallearning'));
+    echo html_writer::start_div('mt-4', ['id' => 'guide-review']);
+    echo $OUTPUT->heading(get_string('checkandpreview', 'format_duallearning'), 3);
+    echo html_writer::tag('p', get_string('guidereviewhint', 'format_duallearning'));
+    echo html_writer::start_tag('details');
+    echo html_writer::tag('summary', get_string('studentviewoptions', 'format_duallearning'));
     $studentroles = \format_duallearning\local\student_view::roles($course);
     if ($studentroles) {
         echo html_writer::tag('p', get_string('studentviewhint', 'format_duallearning'));
@@ -150,6 +178,7 @@ if (!$section) {
     $viewurl = new moodle_url('/course/section.php', ['id' => $sectionid]);
     echo html_writer::tag('p', html_writer::link($viewurl, get_string('viewunit', 'format_duallearning')));
     echo html_writer::end_tag('details');
+    echo html_writer::end_div();
     echo html_writer::tag(
         'details',
         html_writer::tag('summary', get_string('authoringhelp', 'format_duallearning'))

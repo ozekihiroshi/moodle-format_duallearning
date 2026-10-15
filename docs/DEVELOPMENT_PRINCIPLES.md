@@ -4,7 +4,7 @@ English | [日本語](DEVELOPMENT_PRINCIPLES.ja.md)
 
 Policy ID: DL-INDEPENDENCE-AND-COOPERATION  
 Established: 2026-09-29  
-Document revision: 5
+Document revision: 6
 
 ## 1. Purpose and scope
 
@@ -53,6 +53,18 @@ Consider both groups. Reduce uncertainty for first-time users while preserving f
 Treat each observation as evidence in context. A beginner's difficulty identifies a problem worth investigating, but does not by itself establish a solution for every user. Record the participant's experience, task, device and assistance, and distinguish an individual preference from a recurring problem. Compare proposed changes with the standard workflow and assess both discoverability for newcomers and continuity and efficiency for experienced users. If either group has not been observed, retain that gap explicitly.
 
 Prefer clearer labels, grouping, defaults and removal of redundant controls before introducing another route or concept. Familiarity is not a reason to preserve a demonstrated barrier indefinitely; when a change is justified, record its benefit, the relearning cost, and how standard capabilities remain accessible. Balance the needs of both groups rather than optimising the whole product around one participant.
+
+### The meaning of Dual and the product direction
+
+Dual refers to learning supported by a teacher conducting a class and learning that can proceed through Moodle materials without a teacher explaining them at that moment. These approaches need different arrangements of explanation, practice, checks, questions and feedback. Provide course settings and authoring workflows that make both easier to build. Learning without an immediate teacher does not imply that material authors, assessors or people answering questions are unnecessary.
+
+The Course Format leads this support for the two approaches. It must work with Boost and standard activities rather than relying on a dedicated theme to make its basic design usable. Help beginners find actions from their purposes while preserving experienced users' standard workflows.
+
+The Theme values visual design. It provides value with standard formats and, when combined with the Course Format, understands its structure and makes its intent and priorities visually clearer. Preserve meaningful order, hierarchy and functions while refining colours, typography, spacing, alignment, emphasis and responsive layout.
+
+Evaluate whether learners can understand the structure and proceed without getting lost. In this simulation, do not turn the expression "enjoyable learning" into a measurement of emotion or motivation. Review the Theme's aesthetic order against explicit colour and layout rules, recording reasons for exceptions. Do not treat compliance with these rules as proof of learning outcomes.
+
+Build both approaches from the same substantial teaching material and walk through them as a learner. Compare the Course Format with Boost and standard activities against standard Moodle, then hold the content fixed while comparing the Theme. Evaluate LessonMark independently with a standard format and Boost before testing affected combinations. Distinguish automated content loading from UI authoring and do not substitute developer simulations for first-time participant evidence.
 
 ## 2. Independence
 
